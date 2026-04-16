@@ -16,6 +16,13 @@ const fadeUp = {
   transition: { duration: 1 }
 };
 
+const imageModules = import.meta.glob('/public/Directorios/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
+        eager: true,
+        import: 'default',
+});
+
+const carouselImages = Object.values(imageModules).sort((a, b) => String(a).localeCompare(String(b)));
+
 const getSearchParamsFromUrl = (url) => {
     const query = url.includes("?") ? url.split("?")[1] : "";
     return new URLSearchParams(query);
@@ -138,11 +145,11 @@ const BuscadorSection = () => {
         <div className="h-screen relative text-white flex justify-center">
             <Carousel plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]} className="absolute inset-0 w-full h-full" opts={{ loop: true }}>
                 <CarouselContent>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index}>
+                    {(carouselImages.length ? carouselImages : Array.from({ length: 5 }, (_, index) => `https://picsum.photos/1920/1080?random=${index + 1}`)).map((imageSrc, index) => (
+                        <CarouselItem key={`${imageSrc}-${index}`}>
                             <div className="relative w-full h-screen">
                                 <img
-                                    src={`/Fotos/Foto ${index + 1}.jpg`}
+                                    src={imageSrc}
                                     alt={`Foto de galería ${index + 1}`}
                                     className="object-cover w-full h-full absolute inset-0"
                                     onError={(e) => { e.target.src = 'https://picsum.photos/1920/1080?random='+index; }}

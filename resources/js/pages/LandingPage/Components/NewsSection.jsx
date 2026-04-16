@@ -38,7 +38,7 @@ export default function NewsSection() {
             <div className="bg-[#739419] p-3 md:p-4 rounded-3xl py-8 md:py-10 shadow-xl">
                 <div className="container mx-auto px-2 md:px-4">
                     <div className="text-center mb-12 ">
-                        <h2 className="text-4xl font-bold text-white">Últimas Noticias</h2>
+                        <h2 className="text-4xl font-bold text-white">Eventos Recientes</h2>
                         <p className="text-white mt-2">Mantente al día con las últimas novedades de la reserva.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
