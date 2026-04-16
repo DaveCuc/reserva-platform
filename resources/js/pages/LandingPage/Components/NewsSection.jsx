@@ -2,14 +2,15 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Card, CardTitle } from "@/Components/ui/card";
+import { ArrowUpRight } from 'lucide-react';
 
 export default function NewsSection() {
     const newsData = [
         {
             id: 1,
             category: "Turismo Sostenible",
-            title: "TALLER: TURISMO COMUNITARIO SOSTENIBLE",
+            title: "Taller: Turismo comunitario sostenible",
             excerpt: "El turismo responsable es la base para el progreso local y la conservación de nuestro patrimonio.",
             imageUrl: "/storage/landing-page/NEW1.jpg",
             slug: "#",
@@ -42,26 +43,35 @@ export default function NewsSection() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {newsData.map((news) => (
-                            <Card key={news.id} className="flex flex-col overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-shadow duration-300">
-                                <CardHeader className="p-4 pb-0">
-                                    <div className="relative w-full h-64 overflow-hidden rounded-3xl bg-white/10 flex items-center justify-center">
-                                        <img
-                                            src={news.imageUrl}
-                                            alt={news.title}
-                                            className="object-contain w-full h-full p-4"
-                                        />
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="p-6 flex-grow">
-                                    <Badge variant="outline" className="mb-2">{news.category}</Badge>
-                                    <CardTitle className="text-xl font-semibold mb-2 text-black leading-tight">{news.title}</CardTitle>
-                                    <p className="text-black text-sm">{news.excerpt}</p>
-                                </CardContent>
-                                <CardFooter className="p-6 pt-0">
-                                    <Button asChild variant="landing_page_secondary" className=" text-white">
-                                        <Link href={news.slug}>Leer más</Link>
+                            <Card key={news.id} className="group relative min-h-[500px] overflow-hidden rounded-[28px] border-0 bg-black shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
+                                <img
+                                    src={news.imageUrl}
+                                    alt={news.title}
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/75 to-black/8" />
+
+                                <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
+                                    <Badge variant="outline" className="mb-3 w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                                        {news.category}
+                                    </Badge>
+
+                                    <CardTitle className="mb-3 text-2xl font-bold leading-tight text-white line-clamp-3">
+                                        {news.title}
+                                    </CardTitle>
+
+                                    <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
+                                        {news.excerpt}
+                                    </p>
+
+                                    <Button asChild variant="landing_page_secondary" className="w-fit rounded-full px-5 py-2 text-sm font-semibold">
+                                        <Link href={news.slug} className="inline-flex items-center gap-2">
+                                            Read Post
+                                            <ArrowUpRight className="h-4 w-4" />
+                                        </Link>
                                     </Button>
-                                </CardFooter>
+                                </div>
                             </Card>
                         ))}
                     </div>
