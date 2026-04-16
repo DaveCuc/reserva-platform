@@ -32,16 +32,14 @@ const InfoSection = () => {
         <section className="p-10 max-w-7xl mx-auto">
             <div className="bg-[#739419] p-5 rounded-3xl py-15 text-white">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-2xl font-bold mb-4">RESERVA DE LA BIOSFERA</h2>
+                    <h2 className="text-2xl font-bold mb-4">Reserva de la Biosfera</h2>
                     <p className="mb-4">
-                        Lorem ipsum , dolor sit amet, consectetur adipiscing elit. Vestíbulo ornare, sapien nec cursus tristique, libero urna facilisis quam, quis viverra justo tellus id eros. Vivamus vehicula nec arcu ac efficitur. Aenean a malesuada justo, nec cursus sapien. Proin nec porta erat. Suspendisse potenti. Curabitur pulvinar aliquet sapien, a interdum libero congue et. Quisque ut ligula arcu. Cras a consequat diam, a scelerisque lorem. Integer ac lectus non orci aliquet imperdiet.
+                        La Reserva de la Biosfera Tehuacán-Cuicatlán, reconocida como Patrimonio Mixto de la Humanidad por la UNESCO, abarca un vasto territorio entre los estados de Puebla y Oaxaca. Este mapa interactivo te permite visualizar la magnitud de su riqueza natural, desde los densos bosques de cactáceas hasta las zonas de importancia histórica y arqueológica.
                     </p>
-                    <p className="mb-4">
-                        Lorem ipsum , dolor sit amet, consectetur adipiscing elit. Vestíbulo ornare, sapien nec cursus tristique, libero urna facilisis quam, quis viverra justo tellus id eros.
-                    </p>
-                    <p>Ruta 1</p>
-                    <p>Ruta 2</p>
-                    <p>Ruta 3</p>
+                    <p className="mb-4"> Navega a través de las diferentes regiones para planificar tu visita. Selecciona las rutas para descubrir los ecosistemas únicos, identificar los centros ecoturísticos y conocer la ubicación exacta de las comunidades que lideran los esfuerzos de conservación y turismo sostenible.</p>
+                    <p>Ruta de la sal: Ubicación y recorridos en la zona de Zapotitlán Salinas.</p>
+                    <p>Ruta del café: Puntos de interés y fincas en la región de la Sierra.</p>
+                    <p>Ruta de las cactáceas: Senderos y áreas de conservación en el Valle de Tehuacán.</p>
                 </div>
             </div>
         </section>

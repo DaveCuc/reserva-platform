@@ -32,12 +32,12 @@ const CursoSection = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="order-2 md:order-1">
                             <h2 className="text-3xl font-bold text-white mb-4">Cursos</h2>
-                            <p className="text-white font-semibold mb-6">Certificados</p>
+                            <p className="text-white font-semibold mb-6">Capacitación Certificada</p>
                             <p className="text-white mb-4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                               Nuestro programa de formación está diseñado para empoderar a los prestadores de servicios turísticos locales. A través de módulos especializados en gestión, prácticas de sostenibilidad y atención al visitante, brindamos las herramientas necesarias para elevar la calidad de las experiencias dentro de la Reserva.
                             </p>
                             <p className="text-white mb-4">
-                                Lorem ipsum , dolor sit amet, consectetur adipiscing elit. Vestíbulo ornare, sapien nec cursus tristique, libero urna facilisis quam, quis viverra justo tellus id eros. Vivamus vehicula nec arcu ac efficitur. Aenean a malesuada justo, nec cursus sapien.
+                                Todos los cursos cuentan con el respaldo académico y la certificación del Instituto Tecnológico de Tehuacán (ITT) y el Departamento de Estudios de Posgrado e Investigación (DEPI). Esta alianza garantiza un estándar de excelencia y avala la profesionalización técnica de las comunidades.
                             </p>
                         </div>
                         <div className="order-1 md:order-2">
