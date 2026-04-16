@@ -1,0 +1,116 @@
+import React from "react";
+import { Head, Link } from "@inertiajs/react";
+import { CircleDollarSign, File, LayoutDashboard, ListChecks, ArrowLeft } from "lucide-react";
+import MainLayout from "@/Layouts/MainLayout";
+
+import { TitleForm, DescriptionForm, PriceForm } from "./Components/SimpleForms";
+import { CategoryForm } from "./Components/CategoryForm";
+import { ImageForm } from "./Components/ImageForm";
+import { AttachmentForm } from "./Components/AttachmentForm";
+import { ChaptersForm } from "./Components/ChaptersForm";
+import { Actions } from "./Components/Actions";
+
+const IconBadge = ({ icon: Icon }) => (
+  <div className="p-2 bg-[#eafee0] rounded-full mr-2">
+    <Icon className="h-6 w-6 text-[#43570e]" />
+  </div>
+);
+
+const Banner = ({ label }) => (
+  <div className="w-full bg-yellow-400 p-4 text-center text-sm text-yellow-900 font-medium">
+    {label}
+  </div>
+);
+
+export default function CourseEditor({ course, categories }) {
+  const mappedCategories = categories.map((cat) => ({
+    label: cat.name,
+    value: cat.id,
+  }));
+
+  const requiredFields = [
+    course.title,
+    course.description,
+    course.image_url,
+    course.price,
+    course.category_id,
+    course.chapters?.some(chapter => chapter.is_published)
+  ];
+
+  const totalFields = requiredFields.length;
+  const completedFields = requiredFields.filter(Boolean).length;
+  const completionText = `(${completedFields}/${totalFields})`;
+  const isComplete = requiredFields.every(Boolean);
+
+  return (
+    <MainLayout>
+      <Head title={`Editar Curso: ${course.title}`} />
+      
+      {!course.is_published && (
+        <Banner label="Este curso no es visible para los estudiantes hasta que lo publiques." />
+      )}
+
+      <div className="p-6 pb-20 max-w-6xl mx-auto">
+        <Link href={`/teacher/courses`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Volver a la lista de cursos
+        </Link>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-y-2">
+            <h1 className="text-2xl font-bold">Configuración del curso</h1>
+            <span className="text-sm text-slate-700">
+              Completa todos los campos {completionText}
+            </span>
+          </div>
+          <Actions 
+            disabled={!isComplete} 
+            courseId={course.id} 
+            isPublished={course.is_published} 
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+          {/* Columna Izquierda */}
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={LayoutDashboard} />
+              <h2 className="text-xl font-semibold">Personaliza tu curso</h2>
+            </div>
+
+            <TitleForm initialData={course} courseId={course.id} />
+            <DescriptionForm initialData={course} courseId={course.id} />
+            <CategoryForm initialData={course} courseId={course.id} options={mappedCategories} />
+            <ImageForm initialData={course} courseId={course.id} />
+          </div>
+
+          {/* Columna Derecha */}
+          <div className="space-y-6">
+            <div>
+              <div className="flex items-center gap-x-2 mb-6">
+                <IconBadge icon={ListChecks} />
+                <h2 className="text-xl font-semibold">Capítulos del curso</h2>
+              </div>
+              <ChaptersForm initialData={course} courseId={course.id} />
+            </div>
+
+            <div>
+              <div className="flex items-center gap-x-2 mb-6">
+                <IconBadge icon={CircleDollarSign} />
+                <h2 className="text-xl font-semibold">Precio del curso</h2>
+              </div>
+              <PriceForm initialData={course} courseId={course.id} />
+            </div>
+
+            <div>
+              <div className="flex items-center gap-x-2 mb-6">
+                <IconBadge icon={File} />
+                <h2 className="text-xl font-semibold">Adjuntar archivos al curso</h2>
+              </div>
+              <AttachmentForm initialData={course} courseId={course.id} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </MainLayout>
+  );
+}

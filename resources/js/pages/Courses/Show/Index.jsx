@@ -1,0 +1,101 @@
+import { Head } from "@inertiajs/react";
+import { File } from "lucide-react";
+import { CourseLayout } from "./Components/CourseLayout";
+import { VideoPlayer } from "./Components/VideoPlayer";
+import { CourseEnrollButton, CourseProgressButton } from "./Components/CourseButtons";
+import { Separator } from "@/Components/ui/separator";
+
+// Mock simple de validación WYSIWYG
+const Preview = ({ value }) => (
+  <div className="prose max-w-none text-slate-700 mt-4" dangerouslySetInnerHTML={{ __html: value }} />
+);
+
+const Banner = ({ label, variant }) => {
+    const bgClass = variant === "success" ? "bg-emerald-700" : "bg-yellow-500";
+    return (
+        <div className={`w-full p-4 text-center text-sm text-white ${bgClass}`}>
+            {label}
+        </div>
+    )
+}
+
+export default function CourseShow({
+  course,
+  chapter,
+  attachments,
+  nextChapter,
+  userProgress,
+  purchase,
+  isLocked,
+  progressCount,
+}) {
+  const isCompleted = !!userProgress?.is_completed;
+  const completeOnEnd = !isCompleted;
+
+  return (
+    <CourseLayout course={course} progressCount={progressCount} currentChapterId={chapter.id} purchase={purchase}>
+      <Head title={chapter.title} />
+
+      {isCompleted && (
+        <Banner variant="success" label="Ya completaste este capítulo." />
+      )}
+      {isLocked && (
+        <Banner variant="warning" label="Necesitas comprar este curso para ver este capítulo." />
+      )}
+
+      <div className="flex flex-col max-w-4xl mx-auto pb-20">
+        <div className="p-4">
+          <VideoPlayer
+            chapterId={chapter.id}
+            title={chapter.title}
+            courseId={course.id}
+            nextChapterId={nextChapter?.id}
+            isLocked={isLocked}
+            completeOnEnd={completeOnEnd}
+            videoUrl={chapter.video_url}
+          />
+        </div>
+        <div>
+          <div className="p-4 flex flex-col md:flex-row items-center justify-between">
+            <h2 className="text-2xl font-semibold mb-2">
+              {chapter.title}
+            </h2>
+            {purchase ? (
+              <CourseProgressButton
+                chapterId={chapter.id}
+                courseId={course.id}
+                nextChapterId={nextChapter?.id}
+                isCompleted={isCompleted}
+              />
+            ) : (
+              <CourseEnrollButton courseId={course.id} price={course.price} />
+            )}
+          </div>
+          <Separator />
+          <div className="p-4">
+            <Preview value={chapter.description || "Sin descripción"} />
+          </div>
+          {attachments?.length > 0 && (
+            <>
+              <Separator />
+              <div className="p-4 space-y-2">
+                {attachments.map((attachment) => (
+                  <a
+                    href={attachment.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={attachment.id}
+                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                  >
+                    <File className="h-4 w-4 mr-2" />
+                    <p className="line-clamp-1">{attachment.name}</p>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </CourseLayout>
+  );
+}
