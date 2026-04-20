@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Head, router, usePage } from '@inertiajs/react';
 import HomeLayout from '@/Layouts/HomeLayout';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/Components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/Components/ui/carousel";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
 import { Button } from "@/Components/ui/button";
 import { Badge } from "@/Components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Card, CardContent, CardTitle } from "@/Components/ui/card";
 
 const fadeUp = {
   initial: { opacity: 0, y: 80 },
@@ -27,6 +27,38 @@ const getSearchParamsFromUrl = (url) => {
     const query = url.includes("?") ? url.split("?")[1] : "";
     return new URLSearchParams(query);
 };
+
+const splitGiroValues = (value) => {
+    if (!value) {
+        return [];
+    }
+
+    if (Array.isArray(value)) {
+        return value
+            .flatMap((entry) => splitGiroValues(entry))
+            .filter(Boolean);
+    }
+
+    if (typeof value === "object") {
+        return splitGiroValues(value.name || value.giro || value.title);
+    }
+
+    return String(value)
+        .split(/[,/|;]/)
+        .map((entry) => entry.trim())
+        .filter(Boolean);
+};
+
+const getItemGiros = (item) => {
+    const giroValues = [
+        ...splitGiroValues(item?.giros),
+        ...splitGiroValues(item?.giro),
+    ];
+
+    return Array.from(new Set(giroValues));
+};
+
+const getItemImage = (item, index) => item?.image_url || item?.imageUrl || `https://picsum.photos/1200/900?random=${index + 1}`;
 
 const RegistroSection = () => {
     return ( 
@@ -84,31 +116,65 @@ const ResultadoSection = () => {
                         <p className="text-white text-center font-medium">No se encontraron resultados con esos filtros.</p>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {items.map((item) => (
-                                <Card key={item.id || item.email} className="flex flex-col overflow-hidden rounded-3xl shadow-md border-0 bg-white hover:shadow-xl transition-shadow duration-300">
-                                    <CardHeader className="p-4 pb-0">
-                                        <Badge variant="outline" className="mb-3 w-fit">{item.giro}</Badge>
-                                        <CardTitle className="text-xl font-semibold mb-1 text-black leading-tight">
-                                            {item.comercial_name || item.name}
-                                        </CardTitle>
-                                    </CardHeader>
+                            {items.map((item, index) => {
+                                const giros = getItemGiros(item);
+                                const imageUrl = getItemImage(item, index);
 
-                                    <CardContent className="p-4 pt-3 grow space-y-2">
-                                        <p className="text-black text-sm line-clamp-3">
-                                            {item.descripcion || "Sin descripción"}
-                                        </p>
-                                        <p className="text-black text-sm">
-                                            <span className="font-semibold">Dirección:</span> {item.address || "No disponible"}
-                                        </p>
-                                        <p className="text-black text-sm">
-                                            <span className="font-semibold">Teléfono:</span> {item.phone || "No disponible"}
-                                        </p>
-                                        <p className="text-black text-sm break-all">
-                                            <span className="font-semibold">Email:</span> {item.email}
-                                        </p>
-                                    </CardContent>
-                                </Card>
-                            ))}
+                                return (
+                                    <Card key={item.id || item.email || index} className="group relative min-h-[500px] overflow-hidden rounded-[28px] border-0 bg-black shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
+                                        <img
+                                            src={imageUrl}
+                                            alt={item.comercial_name || item.name || "Directorio local"}
+                                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/75 to-black/10" />
+
+                                        <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
+                                            <div className="mb-4 flex flex-wrap gap-2">
+                                                {giros.length > 0 ? (
+                                                    giros.map((giro) => (
+                                                        <Badge
+                                                            key={`${item.id || item.email || index}-${giro}`}
+                                                            variant="outline"
+                                                            className="w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                                                        >
+                                                            {giro}
+                                                        </Badge>
+                                                    ))
+                                                ) : (
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                                                    >
+                                                        Sin giro
+                                                    </Badge>
+                                                )}
+                                            </div>
+
+                                            <CardTitle className="mb-3 text-2xl font-bold leading-tight text-white line-clamp-3">
+                                                {item.comercial_name || item.name}
+                                            </CardTitle>
+
+                                            <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
+                                                {item.descripcion || "Sin descripción"}
+                                            </p>
+
+                                            <CardContent className="grid gap-2 p-0 text-sm text-white/90">
+                                                <p className="line-clamp-1">
+                                                    <span className="font-semibold text-white">Dirección:</span> {item.address || "No disponible"}
+                                                </p>
+                                                <p className="line-clamp-1">
+                                                    <span className="font-semibold text-white">Teléfono:</span> {item.phone || "No disponible"}
+                                                </p>
+                                                <p className="break-all line-clamp-2">
+                                                    <span className="font-semibold text-white">Email:</span> {item.email || "No disponible"}
+                                                </p>
+                                            </CardContent>
+                                        </div>
+                                    </Card>
+                                );
+                            })}
                         </div>
                     )}
                 </div>
@@ -182,11 +248,15 @@ const BuscadorSection = () => {
                                             <SelectGroup>
                                             <SelectLabel>Categoria</SelectLabel>
                                             <SelectItem value="all">Todas</SelectItem>
-                                            <SelectItem value="Hospedaje">Hospedaje</SelectItem>
-                                            <SelectItem value="Restaurantes">Restaurantes</SelectItem>
-                                            <SelectItem value="Transporte">Transporte</SelectItem>
-                                            <SelectItem value="Artesanías">Artesanías</SelectItem>
-                                            <SelectItem value="Tours">Tours</SelectItem>
+                                            <SelectItem value="Transporte Comunitario">Transporte Comunitario</SelectItem>
+                                            <SelectItem value="Talleres comunitarios">Talleres comunitarios</SelectItem>
+                                            <SelectItem value="Medicina tradicional y bienestar">Medicina tradicional y bienestar</SelectItem>
+                                            <SelectItem value="Parques temáticos comunitarios">Parques temáticos comunitarios</SelectItem>
+                                            <SelectItem value="Actividades acuáticas comunitarias">Actividades acuáticas comunitarias</SelectItem>
+                                            <SelectItem value="Actividades de Aventura o Naturaleza">Actividades de Aventura o Naturaleza</SelectItem>
+                                            <SelectItem value="Hospedaje comunitario">Hospedaje comunitario</SelectItem>
+                                            <SelectItem value="Balneario y Parque Acuático">Balneario y Parque Acuático</SelectItem>
+                                            <SelectItem value="Gastronomía tradicional">Gastronomía tradicional</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -200,10 +270,16 @@ const BuscadorSection = () => {
                                         <SelectContent>
                                             <SelectGroup>
                                             <SelectLabel>Región</SelectLabel>
-                                            <SelectItem value="all">Todas</SelectItem>
-                                            <SelectItem value="Norte">Norte</SelectItem>
-                                            <SelectItem value="Centro">Centro</SelectItem>
-                                            <SelectItem value="Sur">Sur</SelectItem>
+                                                <SelectItem value="all">Todas</SelectItem>
+                                                <SelectItem value="REGIÓN SEPTENTRIONAL">Región Septentrional</SelectItem>
+                                                <SelectItem value="REGIÓN DEL VALLE ZAPOTITLÁN-TEHUACÁN">Región del Valle Zapotitlán-Tehuacán</SelectItem>
+                                                <SelectItem value="REGIÓN SIERRA NEGRA">Región Sierra Negra</SelectItem>
+                                                <SelectItem value="REGIÓN CHAZUMBA">Región Chazumba</SelectItem>
+                                                <SelectItem value="DISTRITO 3">Distrito 3</SelectItem>
+                                                <SelectItem value="DISTRITO 4">Distrito 4</SelectItem>
+                                                <SelectItem value="DISTRITO 5">Distrito 5</SelectItem>
+                                                <SelectItem value="DISTRITO 10">Distrito 10</SelectItem>
+                                                <SelectItem value="DISTRITO 11">Distrito 11</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>

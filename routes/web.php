@@ -33,13 +33,21 @@ Route::get('/cursos', function () {
 
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---
 Route::get('/api/directorio', function (\Illuminate\Http\Request $request) {
-    $query = \App\Models\Directorio::query();
-    if ($request->giro) {
-        $query->where('giro', $request->giro);
+    $query = \App\Models\Directorio::query()->with('giros');
+
+    if ($request->filled('giro')) {
+        $query->where(function ($giroQuery) use ($request) {
+            $giroQuery->where('giro', $request->giro)
+                ->orWhereHas('giros', function ($relatedQuery) use ($request) {
+                    $relatedQuery->where('name', $request->giro);
+                });
+        });
     }
-    if ($request->region) {
+
+    if ($request->filled('region')) {
         $query->where('region', $request->region);
     }
+
     return response()->json($query->take(50)->get());
 });
 

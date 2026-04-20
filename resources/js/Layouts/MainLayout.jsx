@@ -11,13 +11,12 @@ const Logo = () => (
 );
 
 const guestRoutes = [
-    { icon: Layout, label: "Mi espacio", href: "/dashboard" },
-    { icon: Store, label: "Trade", href: "/trade" },
-    { icon: Compass, label: "Explorar", href: "/search" },
+    { icon: Layout, label: "Mi cursos", href: "/dashboard" },
+    { icon: Store, label: "Mi negocio", href: "/trade" },
+    { icon: Compass, label: "Explorar mas cursos", href: "/search" },
 ];
 
 const teacherRoutes = [
-    { icon: Store, label: "Trade", href: "/trade" },
     { icon: List, label: "Cursos", href: "/teacher/courses" },
     { icon: BarChart, label: "Estadísticas", href: "/teacher/analytics" }
 ];
