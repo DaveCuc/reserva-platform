@@ -2,7 +2,7 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -17,12 +17,12 @@ export default function ForgotPassword({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Forgot Password" />
+            <Head title="Olvidé mi contraseña" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.
+            <div className="mb-4 text-sm text-brand-ink">
+                ¿Olvidaste tu contraseña? No te preocupes. Déjanos tu correo
+                electrónico y te enviaremos un enlace para restablecer tu
+                contraseña y elegir una nueva.
             </div>
 
             {status && (
@@ -44,9 +44,16 @@ export default function ForgotPassword({ status }) {
 
                 <InputError message={errors.email} className="mt-2" />
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-4 flex items-center justify-between">
+                    <Link
+                        href={route('login')}
+                        className="rounded-md text-sm text-brand-ink underline hover:text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-ring focus:ring-offset-2"
+                    >
+                        Volver a iniciar sesión
+                    </Link>
+
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
+                        Enviar enlace de restablecimiento
                     </PrimaryButton>
                 </div>
             </form>

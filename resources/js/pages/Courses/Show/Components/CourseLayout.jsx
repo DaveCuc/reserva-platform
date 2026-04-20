@@ -3,7 +3,7 @@ import { CourseNavbar } from "./CourseNavbar";
 
 export function CourseLayout({ children, course, progressCount, currentChapterId, purchase }) {
   return (
-    <div className="h-screen bg-slate-50 relative">
+    <div className="h-screen bg-brand-pale relative">
       <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
         <CourseNavbar course={course} progressCount={progressCount} currentChapterId={currentChapterId} purchase={purchase} />
       </div>

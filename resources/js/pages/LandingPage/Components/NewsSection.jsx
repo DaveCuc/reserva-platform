@@ -35,7 +35,7 @@ export default function NewsSection() {
 
     return ( 
         <section className="p-4 md:p-6">
-            <div className="bg-[#739419] p-3 md:p-4 rounded-3xl py-8 md:py-10 shadow-xl">
+            <div className="bg-brand p-3 md:p-4 rounded-3xl py-8 md:py-10 shadow-xl">
                 <div className="container mx-auto px-2 md:px-4">
                     <div className="text-center mb-12 ">
                         <h2 className="text-4xl font-bold text-white">Eventos Recientes</h2>

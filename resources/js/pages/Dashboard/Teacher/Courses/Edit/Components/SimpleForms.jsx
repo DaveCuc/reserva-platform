@@ -28,10 +28,10 @@ export const TitleForm = ({ initialData, courseId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Título del curso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2 " /> Editar título</>}
         </Button>
       </div>
@@ -74,15 +74,15 @@ export const DescriptionForm = ({ initialData, courseId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Descripción del curso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar descripción</>}
         </Button>
       </div>
       {!isEditing && (
-        <div className={`text-sm mt-2 ${!initialData.description ? "text-slate-500 italic" : ""}`}>
+        <div className={`text-sm mt-2 ${!initialData.description ? "text-brand-ink italic" : ""}`}>
           {!initialData.description ? "Sin descripción" : (
             <Preview value={initialData.description} />
           )}
@@ -124,15 +124,15 @@ export const PriceForm = ({ initialData, courseId }) => {
   const formatPrice = (p) => new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(p);
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Precio del curso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar precio</>}
         </Button>
       </div>
       {!isEditing && (
-        <p className={`text-sm mt-2 ${!initialData.price && "text-slate-500 italic"}`}>
+        <p className={`text-sm mt-2 ${!initialData.price && "text-brand-ink italic"}`}>
           {initialData.price ? formatPrice(initialData.price) : "Sin precio"}
         </p>
       )}

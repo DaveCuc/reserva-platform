@@ -3,7 +3,7 @@ import React from 'react';
 export default function ConocenosSection() {
     return ( 
         <section className="p-10 max-w-7xl mx-auto">
-            <div className="bg-[#739419] p-5 rounded-3xl py-15 shadow-xl">
+            <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>

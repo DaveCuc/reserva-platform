@@ -28,10 +28,10 @@ export const ChapterTitleForm = ({ initialData, courseId, chapterId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Título del capítulo
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar título</>}
         </Button>
       </div>
@@ -74,15 +74,15 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }) => 
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Descripción del capítulo
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar descripción</>}
         </Button>
       </div>
       {!isEditing && (
-        <div className={`text-sm mt-2 ${!initialData.description ? "text-slate-500 italic" : ""}`}>
+        <div className={`text-sm mt-2 ${!initialData.description ? "text-brand-ink italic" : ""}`}>
           {!initialData.description ? "Sin descripción" : (
             <Preview value={initialData.description} />
           )}
@@ -122,15 +122,15 @@ export const ChapterAccessForm = ({ initialData, courseId, chapterId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Configuración de acceso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar acceso</>}
         </Button>
       </div>
       {!isEditing && (
-        <p className={`text-sm mt-2 ${!initialData.is_free ? "text-slate-500 italic" : ""}`}>
+        <p className={`text-sm mt-2 ${!initialData.is_free ? "text-brand-ink italic" : ""}`}>
           {initialData.is_free 
             ? "Este capítulo es gratuito para una vista previa." 
             : "Este capítulo no es gratuito."}
@@ -144,13 +144,13 @@ export const ChapterAccessForm = ({ initialData, courseId, chapterId }) => {
               id="is_free_checkbox"
               checked={isFree}
               onChange={(e) => setIsFree(e.target.checked)}
-              className="mt-1 h-4 w-4 text-[#889b76] rounded border-gray-300 focus:ring-[#889b76]"
+              className="mt-1 h-4 w-4 text-brand-soft rounded border-brand-soft focus:ring-brand-soft"
             />
             <div className="space-y-1 leading-none">
-              <label htmlFor="is_free_checkbox" className="text-sm font-medium text-slate-800 cursor-pointer">
+              <label htmlFor="is_free_checkbox" className="text-sm font-medium text-brand-text cursor-pointer">
                 Ver este capítulo gratis
               </label>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-brand-ink">
                 Selecciona esta casilla si quieres que el video esté disponible como demostración.
               </p>
             </div>

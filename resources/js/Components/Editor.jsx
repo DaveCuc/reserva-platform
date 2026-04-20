@@ -27,80 +27,80 @@ const Toolbar = ({ editor }) => {
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleHeading({ level: 1 }).run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("heading", { level: 1 }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("heading", { level: 1 }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <Heading1 className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleHeading({ level: 2 }).run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("heading", { level: 2 }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("heading", { level: 2 }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <Heading2 className="h-4 w-4" />
       </button>
-      <div className="w-[1px] h-8 bg-slate-200 mx-1"></div>
+      <div className="w-[1px] h-8 bg-brand-soft/40 mx-1"></div>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleBold().run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("bold") ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("bold") ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <Bold className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleItalic().run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("italic") ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("italic") ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <Italic className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleStrike().run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("strike") ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("strike") ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <Strikethrough className="h-4 w-4" />
       </button>
-      <div className="w-[1px] h-8 bg-slate-200 mx-1"></div>
+      <div className="w-[1px] h-8 bg-brand-soft/40 mx-1"></div>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().setTextAlign('left').run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'left' }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'left' }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <AlignLeft className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().setTextAlign('center').run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'center' }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'center' }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <AlignCenter className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().setTextAlign('right').run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'right' }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'right' }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <AlignRight className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().setTextAlign('justify').run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'justify' }) ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive({ textAlign: 'justify' }) ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <AlignJustify className="h-4 w-4" />
       </button>
-      <div className="w-[1px] h-8 bg-slate-200 mx-1"></div>
+      <div className="w-[1px] h-8 bg-brand-soft/40 mx-1"></div>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleBulletList().run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("bulletList") ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("bulletList") ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <List className="h-4 w-4" />
       </button>
       <button 
         type="button" 
         onClick={(e) => { e.preventDefault(); editor.chain().focus().toggleOrderedList().run(); }} 
-        className={`p-2 rounded transition-colors ${editor.isActive("orderedList") ? "bg-[#889b76] text-white" : "text-slate-600 hover:bg-slate-100"}`}
+        className={`p-2 rounded transition-colors ${editor.isActive("orderedList") ? "bg-brand-soft text-white" : "text-brand-text hover:bg-brand-pale"}`}
       >
         <ListOrdered className="h-4 w-4" />
       </button>

@@ -63,6 +63,18 @@ export default {
                     border: "var(--sidebar-border)",
                     ring: "var(--sidebar-ring)",
                 },
+                brand: {
+                    DEFAULT: "var(--brand)",
+                    dark: "var(--brand-dark)",
+                    text: "var(--brand-text)",
+                    soft: "var(--brand-soft)",
+                    pale: "var(--brand-pale)",
+                    ink: "var(--brand-ink)",
+                    mint: "var(--brand-mint)",
+                    panel: "var(--brand-panel)",
+                    earth: "var(--brand-earth)",
+                    ring: "var(--brand-ring)",
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",

@@ -21,18 +21,18 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         success: "bg-green-600 text-white hover:bg-green-700",
         category:
-          "py-2 px-5 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 hover:border-[#4b9009] transition",
+          "py-2 px-5 text-sm border border-brand-soft rounded-full flex items-center gap-x-1 hover:border-brand transition hover:bg-brand-pale",
 
           // Custom variant for landing page
         landing_page_secondary:
-          "bg-[#739419] text-white hover:bg-[#4E6411] focus-visible:ring-green-300 rounded-2xl ",
+          "bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand-ring rounded-2xl ",
 
         landing_page_primary:
-                  "bg-[#739419] text-white hover:bg-[#4E6411] border-transparent focus:ring-4  shadow-xs font-medium focus:outline-none",
+                  "bg-brand text-white hover:bg-brand-dark border-transparent focus:ring-4 shadow-xs font-medium focus:outline-none",
         submit_directory:
-        "bg-[#739419] text-white hover:bg-[#4E6411] border-transparent focus:ring-4  shadow-xs  text-white font-bold py-3 px-6 rounded-md transition duration-300",
+        "bg-brand text-white hover:bg-brand-dark border-transparent focus:ring-4 shadow-xs font-bold py-3 px-6 rounded-md transition duration-300",
         submit_event:
-        "bg-[#739419] text-white hover:bg-[#4E6411] border-transparent focus:ring-4  shadow-xs  text-white font-bold py-3 px-6 rounded-md transition duration-300"
+        "bg-brand text-white hover:bg-brand-dark border-transparent focus:ring-4 shadow-xs font-bold py-3 px-6 rounded-md transition duration-300"
 
               
       },

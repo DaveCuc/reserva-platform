@@ -7,13 +7,13 @@ export const Chart = ({ data }) => {
         <BarChart data={data}>
           <XAxis
             dataKey="name"
-            stroke="#888888"
+            stroke="var(--muted-foreground)"
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="#888888"
+            stroke="var(--muted-foreground)"
             fontSize={12}
             tickLine={false}
             axisLine={false}
@@ -22,7 +22,7 @@ export const Chart = ({ data }) => {
           <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} formatter={(value) => `$${value}`} />
           <Bar
             dataKey="total"
-            fill="#43570e"
+            fill="var(--brand-text)"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>

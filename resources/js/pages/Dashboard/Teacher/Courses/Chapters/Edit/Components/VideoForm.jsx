@@ -31,10 +31,10 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Video del capítulo
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing && <>Cancelar</>}
           {!isEditing && !initialData.video_url && (
             <><PlusCircle className="h-4 w-4 mr-2" /> Agregar video</>
@@ -47,8 +47,8 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterId }) => {
 
       {!isEditing && (
         !initialData.video_url ? (
-          <div className="flex items-center justify-center h-60 bg-slate-200 mt-2 rounded-md">
-            <Video className="h-10 w-10 text-slate-500" />
+          <div className="flex items-center justify-center h-60 bg-brand-pale mt-2 rounded-md">
+            <Video className="h-10 w-10 text-brand-ink" />
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
@@ -70,7 +70,7 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterId }) => {
               type="file"
               accept="video/mp4,video/x-m4v,video/*"
               onChange={e => setData('video', e.target.files[0])}
-              className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#889b76] file:text-white hover:file:bg-[#6e7d60] cursor-pointer"
+                 className="w-full text-sm text-brand-ink file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-brand-soft file:text-white hover:file:bg-brand-dark cursor-pointer"
            />
            <Button disabled={!data.video || processing} type="submit">Guardar Video</Button>
            <div className="text-xs text-muted-foreground mt-4">

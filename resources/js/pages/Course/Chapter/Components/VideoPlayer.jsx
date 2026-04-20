@@ -26,10 +26,10 @@ export const VideoPlayer = ({ chapterId, title, courseId, nextChapterId, isLocke
   return (
     <div className="relative aspect-video rounded-md overflow-hidden bg-black">
       {isLocked && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-800 flex-col gap-y-2">
+        <div className="absolute inset-0 flex items-center justify-center bg-brand-text flex-col gap-y-2">
           <Lock className="h-8 w-8 text-white" />
           <p className="text-sm text-white font-medium">Este capítulo está bloqueado.</p>
-          <p className="text-xs text-slate-300">Inscríbete para acceder al contenido.</p>
+          <p className="text-xs text-white/70">Inscríbete para acceder al contenido.</p>
         </div>
       )}
       {!isLocked && (

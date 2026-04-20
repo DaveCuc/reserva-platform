@@ -10,11 +10,11 @@ import {
     SheetTrigger,
 } from "@/Components/ui/sheet";
 
-const Logo = ({ isScrolled }) => (
+export const Logo = ({ isScrolled = false, className = "" }) => (
     <img 
         src={isScrolled ? "/logo.svg" : "/LOGO2.svg"} 
         alt="Logo" 
-        className="h-[50px] w-auto transition-all"
+        className={cn("h-[50px] w-auto transition-all", className)}
     />
 );
 
@@ -22,7 +22,7 @@ const HomeNavbarRoutes = ({ isScrolled }) => {
     const linkClass = cn(
         "transition-all duration-200 font-medium",
         isScrolled 
-            ? "text-slate-700 hover:text-white hover:bg-[#739419]" // Scroll oscuro
+            ? "text-brand-dark hover:text-white hover:bg-brand" // Scroll oscuro
             : "text-white hover:bg-white/20 hover:text-white"      // Top transparente
     );
 
@@ -30,18 +30,18 @@ const HomeNavbarRoutes = ({ isScrolled }) => {
         <div className="flex items-center justify-between w-full gap-x-6 px-4 max-w-7xl mx-auto"> 
             <Sheet>
                 <SheetTrigger className="md:hidden p-2 rounded-md hover:bg-black/10 transition">
-                    <Menu className={cn("h-5 w-5", isScrolled ? "text-slate-700" : "text-white")} />
+                    <Menu className={cn("h-5 w-5", isScrolled ? "text-brand-dark" : "text-white")} />
                 </SheetTrigger>
                 <SheetContent side="left" className="p-6 bg-white w-72">
                     <SheetTitle className="sr-only">Menu principal</SheetTitle>
                     <div className="flex flex-col gap-2 mt-6">
-                        <Link href="/" className="px-3 py-2 rounded-md text-slate-700 hover:bg-[#739419] hover:text-white transition">Inicio</Link>
-                        <Link href="/mapa" className="px-3 py-2 rounded-md text-slate-700 hover:bg-[#739419] hover:text-white transition">Mapa</Link>
-                        <Link href="/directorio" className="px-3 py-2 rounded-md text-slate-700 hover:bg-[#739419] hover:text-white transition">Directorio</Link>
-                        <Link href="/cursos" className="px-3 py-2 rounded-md text-slate-700 hover:bg-[#739419] hover:text-white transition">Cursos</Link>
+                        <Link href="/" className="px-3 py-2 rounded-md text-brand-dark hover:bg-brand hover:text-white transition">Inicio</Link>
+                        <Link href="/mapa" className="px-3 py-2 rounded-md text-brand-dark hover:bg-brand hover:text-white transition">Mapa</Link>
+                        <Link href="/directorio" className="px-3 py-2 rounded-md text-brand-dark hover:bg-brand hover:text-white transition">Directorio</Link>
+                        <Link href="/cursos" className="px-3 py-2 rounded-md text-brand-dark hover:bg-brand hover:text-white transition">Cursos</Link>
                     </div>
                     <div className="mt-6">
-                        <Button asChild className="w-full bg-[#739419] text-white hover:bg-[#4E6411]">
+                        <Button asChild className="w-full bg-brand text-white hover:bg-brand-dark">
                             <Link href="/login">Acceder</Link>
                         </Button>
                     </div>
@@ -67,8 +67,8 @@ const HomeNavbarRoutes = ({ isScrolled }) => {
                     className={cn(
                         "shadow-md hover:shadow-lg transition-all duration-100 font-semibold px-6",
                         isScrolled
-                            ? "bg-[#739419] text-white hover:bg-[#4E6411]" 
-                            : "bg-white text-[#739419] hover:bg-slate-100" 
+                            ? "bg-brand text-white hover:bg-brand-dark" 
+                            : "bg-white text-brand hover:bg-brand-pale" 
                     )}
                 >
                     <Link href="/login">Acceder</Link>
@@ -120,7 +120,7 @@ export const HomeNavbar = () => {
 
 export const Footer = () => {
     return ( 
-        <footer className="bg-[#4f3b24] text-white p-8 mt-auto z-10 relative">
+        <footer className="bg-brand-earth text-white p-8 mt-auto z-10 relative">
             <div className="container mx-auto max-w-7xl pt-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-1">
@@ -160,7 +160,7 @@ export const Footer = () => {
 
 export default function HomeLayout({ children }) {
     return (
-        <div className="min-h-screen flex flex-col font-sans bg-slate-50">
+        <div className="min-h-screen flex flex-col font-sans bg-brand-pale">
             <HomeNavbar />
             
             <main className="flex-grow">

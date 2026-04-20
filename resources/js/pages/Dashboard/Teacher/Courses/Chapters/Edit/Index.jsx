@@ -6,18 +6,8 @@ import MainLayout from "@/Layouts/MainLayout";
 import { ChapterTitleForm, ChapterDescriptionForm, ChapterAccessForm } from "./Components/SimpleForms";
 import { ChapterVideoForm } from "./Components/VideoForm";
 import { ChapterActions } from "./Components/Actions";
-
-const IconBadge = ({ icon: Icon }) => (
-  <div className="p-2 bg-[#eafee0] rounded-full mr-2">
-    <Icon className="h-6 w-6 text-[#43570e]" />
-  </div>
-);
-
-const Banner = ({ label, variant = "warning" }) => (
-  <div className={`w-full p-4 text-center text-sm font-medium ${variant === 'warning' ? 'bg-yellow-400 text-yellow-900' : 'bg-green-500 text-white'}`}>
-    {label}
-  </div>
-);
+import { Banner } from "@/Components/banner";
+import { IconBadge } from "@/Components/icon-badge";
 
 export default function ChapterEditor({ courseId, chapter }) {
   const requiredFields = [
@@ -36,7 +26,7 @@ export default function ChapterEditor({ courseId, chapter }) {
       <Head title={`Editar Capítulo: ${chapter.title}`} />
       
       {!chapter.is_published && (
-        <Banner label="Este capítulo no está publicado aún, no será visible para los estudiantes." variant="warning" />
+        <Banner label="Este capítulo no está publicado aún, no será visible para los estudiantes." variant="warningSolid" />
       )}
 
       <div className="p-6 pb-20 max-w-6xl mx-auto">
@@ -53,7 +43,7 @@ export default function ChapterEditor({ courseId, chapter }) {
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-bold">Creación del capítulo</h1>
-                <span className="text-sm text-slate-700">
+                <span className="text-sm text-brand-text">
                   Completa todos los campos {completionText}
                 </span>
               </div>
@@ -72,7 +62,7 @@ export default function ChapterEditor({ courseId, chapter }) {
           <div className="space-y-4">
             <div>
               <div className="flex items-center gap-x-2">
-                <IconBadge icon={LayoutDashboard} />
+                <IconBadge variant="teacher" size="md" icon={LayoutDashboard} />
                 <h2 className="text-xl font-semibold">Personaliza tu capítulo</h2>
               </div>
               <ChapterTitleForm initialData={chapter} courseId={courseId} chapterId={chapter.id} />
@@ -81,7 +71,7 @@ export default function ChapterEditor({ courseId, chapter }) {
             
             <div>
               <div className="flex items-center gap-x-2 mt-8">
-                <IconBadge icon={Eye} />
+                <IconBadge variant="teacher" size="md" icon={Eye} />
                 <h2 className="text-xl font-semibold">Configuración de acceso</h2>
               </div>
               <ChapterAccessForm initialData={chapter} courseId={courseId} chapterId={chapter.id} />
@@ -91,7 +81,7 @@ export default function ChapterEditor({ courseId, chapter }) {
           {/* Columna Derecha */}
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={Video} />
+              <IconBadge variant="teacher" size="md" icon={Video} />
               <h2 className="text-xl font-semibold">Agregar video</h2>
             </div>
             <ChapterVideoForm initialData={chapter} courseId={courseId} chapterId={chapter.id} /> 

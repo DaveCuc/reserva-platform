@@ -64,8 +64,8 @@ export const columns = [
         const isPublished = row.getValue("is_published") || false;
         return (
             <Badge className={cn(
-                "bg-slate-500",
-                isPublished && "bg-green-500",
+                "bg-brand-ink",
+                isPublished && "bg-emerald-600",
         )}>
                 {isPublished ? "Publicado" : "Borrador"}
             </Badge>

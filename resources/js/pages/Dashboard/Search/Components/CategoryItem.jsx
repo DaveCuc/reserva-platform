@@ -28,8 +28,8 @@ export const CategoryItem = ({ label, value, icon: Icon }) => {
             onClick={onClick}
             variant="outline"
             className={cn(
-                "py-2 px-5 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 transition hover:bg-slate-100",
-                isSelected && "bg-[#43570e] text-white hover:bg-[#43570e]/80 border-[#43570e]"
+                "py-2 px-5 text-sm border border-brand-soft rounded-full flex items-center gap-x-1 transition hover:bg-brand-pale",
+                isSelected && "bg-brand-text text-white hover:bg-brand-text/80 border-brand-text"
             )}
             type="button"
         >

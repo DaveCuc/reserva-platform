@@ -11,8 +11,8 @@ const CourseSidebarItem = ({ label, id, isCompleted, courseId, isLocked, isActiv
       href={`/courses/${courseId}/chapters/${id}`}
       preserveState
       className={cn(
-        "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-        isActive && "text-slate-700 bg-slate-200/20 hover:bg-slate-200/20 hover:text-slate-700",
+        "flex items-center gap-x-2 text-brand-ink text-sm font-[500] pl-6 transition-all hover:text-brand-text hover:bg-brand-soft/20",
+        isActive && "text-brand-text bg-brand-soft/20 hover:bg-brand-soft/20 hover:text-brand-text",
         isCompleted && "text-emerald-700 hover:text-emerald-700",
         isCompleted && isActive && "bg-emerald-200/20",
       )}
@@ -21,8 +21,8 @@ const CourseSidebarItem = ({ label, id, isCompleted, courseId, isLocked, isActiv
         <Icon
           size={22}
           className={cn(
-            "text-slate-500",
-            isActive && "text-slate-700",
+            "text-brand-ink",
+            isActive && "text-brand-text",
             isCompleted && "text-emerald-700"
           )}
         />
@@ -30,7 +30,7 @@ const CourseSidebarItem = ({ label, id, isCompleted, courseId, isLocked, isActiv
       </div>
       <div
         className={cn(
-          "ml-auto opacity-0 border-2 border-slate-700 h-full transition-all",
+          "ml-auto opacity-0 border-2 border-brand-text h-full transition-all",
           isActive && "opacity-100",
           isCompleted && "border-emerald-700"
         )}

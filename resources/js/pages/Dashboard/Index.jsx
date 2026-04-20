@@ -26,7 +26,7 @@ export default function Dashboard({ completedCourses, coursesInProgress }) {
               </div>
 
               <div className="pt-2">
-                <h2 className="text-xl font-bold tracking-tight text-slate-800 mb-4">Continuar Aprendiendo</h2>
+                <h2 className="text-xl font-bold tracking-tight text-brand-text mb-4">Continuar Aprendiendo</h2>
                 <CoursesList items={[...coursesInProgress, ...completedCourses]} />
               </div>
             </div>

@@ -34,7 +34,7 @@ const RegistroSection = () => {
             <div className="container mx-auto text-center px-4">
                 <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Quieres aparecer?</h1>
                 <motion.div {...fadeUp}>
-                    <Button variant="default" size="lg" className="bg-slate-900 text-white rounded-md">Regístrate Aquí</Button>
+                    <Button variant="default" size="lg" className="bg-brand-text text-white rounded-md">Regístrate Aquí</Button>
                 </motion.div>
             </div>
         </section>
@@ -73,7 +73,7 @@ const ResultadoSection = () => {
 
     return ( 
         <section className="p-10">
-            <div className="bg-[#739419] p-5 rounded-3xl py-15 shadow-xl">
+            <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12 ">
                         <h2 className="text-4xl font-bold text-white">Resultados de búsqueda</h2>
@@ -175,7 +175,7 @@ const BuscadorSection = () => {
                                 <div className="grow mb-4 md:mb-0 text-left">
                                     <h5 className="font-bold text-white mb-2">Categoría</h5>
                                     <Select value={selectedGiro} onValueChange={setSelectedGiro}>
-                                        <SelectTrigger className="w-full p-4 h-12 rounded-2xl border-0 text-gray-800 bg-white focus:ring-4 focus:ring-[#8fb81f]">
+                                        <SelectTrigger className="w-full p-4 h-12 rounded-2xl border-0 text-brand-text bg-white focus:ring-4 focus:ring-brand-ring">
                                             <SelectValue placeholder="Selecciona una categoría" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -194,7 +194,7 @@ const BuscadorSection = () => {
                                 <div className="grow mb-4 md:mb-0 text-left">
                                     <h5 className="font-bold text-white mb-2">Región</h5>
                                     <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-                                        <SelectTrigger className="w-full p-4 h-12 rounded-2xl border-0 text-gray-800 bg-white focus:ring-4 focus:ring-[#8fb81f]">
+                                        <SelectTrigger className="w-full p-4 h-12 rounded-2xl border-0 text-brand-text bg-white focus:ring-4 focus:ring-brand-ring">
                                             <SelectValue placeholder="Selecciona una región" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -208,7 +208,7 @@ const BuscadorSection = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <Button type="submit" className="h-12 w-full md:w-auto px-8 bg-[#8fb81f] hover:bg-[#739419] text-white rounded-2xl font-bold">
+                                <Button type="submit" className="h-12 w-full md:w-auto px-8 bg-brand-ring hover:bg-brand text-white rounded-2xl font-bold">
                                     Buscar ahora
                                 </Button>
                             </form>

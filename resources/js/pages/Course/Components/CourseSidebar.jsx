@@ -12,28 +12,28 @@ export const CourseSidebarItem = ({ label, id, isCompleted, courseId, isLocked }
     <Link
       href={`/courses/${courseId}/chapters/${id}`}
       className={cn(
-        "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-        isActive && "text-slate-700 bg-slate-200/20 hover:bg-slate-200/20 hover:text-slate-700",
-        isCompleted && "text-[#43570e] hover:text-[#43570e]",
-        isCompleted && isActive && "bg-[#eafee0]/50"
+        "flex items-center gap-x-2 text-brand-ink text-sm font-[500] pl-6 transition-all hover:text-brand-text hover:bg-brand-soft/20",
+        isActive && "text-brand-text bg-brand-soft/20 hover:bg-brand-soft/20 hover:text-brand-text",
+        isCompleted && "text-brand-text hover:text-brand-text",
+        isCompleted && isActive && "bg-brand-mint/50"
       )}
     >
       <div className="flex items-center gap-x-2 py-4">
         <Icon 
           size={22} 
           className={cn(
-            "text-slate-500", 
-            isActive && "text-slate-700", 
-            isCompleted && "text-[#43570e]"
+            "text-brand-ink", 
+            isActive && "text-brand-text", 
+            isCompleted && "text-brand-text"
           )} 
         />
         {label}
       </div>
       <div 
         className={cn(
-          "ml-auto opacity-0 border-2 border-slate-700 h-full transition-all", 
+          "ml-auto opacity-0 border-2 border-brand-text h-full transition-all", 
           isActive && "opacity-100", 
-          isCompleted && "border-[#43570e]"
+          isCompleted && "border-brand-text"
         )} 
       />
     </Link>
@@ -48,12 +48,12 @@ export const CourseSidebar = ({ course, progressCount, purchase }) => {
         {purchase && (
           <div className="mt-10">
             <div className="w-full">
-               <p className="text-sm font-medium mb-2 text-[#43570e]">
+               <p className="text-sm font-medium mb-2 text-brand-text">
                  {progressCount}% Completado
                </p>
-               <div className="w-full bg-slate-200 rounded-full h-2">
+               <div className="w-full bg-brand-soft rounded-full h-2">
                  <div 
-                   className="bg-[#43570e] h-2 rounded-full transition-all" 
+                   className="bg-brand-text h-2 rounded-full transition-all" 
                    style={{ width: `${progressCount}%` }}
                  ></div>
                </div>

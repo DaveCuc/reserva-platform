@@ -17,7 +17,7 @@ const RegistroSection = () => {
             <div className="container mx-auto text-center px-4">
                 <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Quieres aparecer?</h1>
                 <motion.div {...fadeUp}>
-                    <Button variant="default" size="lg" className="bg-slate-900 text-white rounded-md">Regístrate Aquí</Button>
+                    <Button variant="default" size="lg" className="bg-brand-text text-white rounded-md">Regístrate Aquí</Button>
                 </motion.div>
             </div>
         </section>
@@ -27,7 +27,7 @@ const RegistroSection = () => {
 const CursoSection = () => {
     return ( 
         <section className="pt-[100px] p-10 max-w-7xl mx-auto">
-            <div className="bg-[#739419] p-5 rounded-3xl py-15 shadow-xl">
+            <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="order-2 md:order-1">
@@ -64,19 +64,19 @@ const TeacherSection = () => {
                         <img 
                             src="https://i.pravatar.cc/150?img=68" 
                             alt="Foto del Profesor 1" 
-                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-gray-200"
+                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-brand-soft"
                         />
                         <h3 className="text-2xl font-bold mb-2">Profesor 1</h3>
-                        <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna ali</p>
+                        <p className="text-brand-ink">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna ali</p>
                     </div>
                     <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
                         <img 
                             src="https://i.pravatar.cc/150?img=60" 
                             alt="Foto del Profesor 2" 
-                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-gray-200"
+                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-brand-soft"
                         />
                         <h3 className="text-2xl font-bold mb-2">Profesor 2</h3>
-                        <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna ali</p>
+                        <p className="text-brand-ink">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna ali</p>
                     </div>
                 </div>
             </div>

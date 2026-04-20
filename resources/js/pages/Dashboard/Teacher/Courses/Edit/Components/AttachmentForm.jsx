@@ -39,10 +39,10 @@ export const AttachmentForm = ({ initialData, courseId }) => {
   };
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Archivos del curso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? <>Cancelar</> : <><PlusCircle className="h-4 w-4 mr-2" /> Agregar archivo</>}
         </Button>
       </div>
@@ -50,12 +50,12 @@ export const AttachmentForm = ({ initialData, courseId }) => {
       {!isEditing && (
         <>
           {(!initialData.attachments || initialData.attachments.length === 0) && (
-            <p className="text-sm mt-2 text-gray-500 italic">No hay recursos adjuntos aún.</p>
+            <p className="text-sm mt-2 text-brand-ink italic">No hay recursos adjuntos aún.</p>
           )}
           {initialData.attachments?.length > 0 && (
             <div className="space-y-2 mt-2">
               {initialData.attachments.map((attachment) => (
-                <div key={attachment.id} className="flex items-center p-3 w-full bg-[#ffffff] border-[#8e9e8f] border text-[#6b7280] rounded-md">
+                <div key={attachment.id} className="flex items-center p-3 w-full bg-white border-brand-soft border text-brand-ink rounded-md">
                   <File className="h-4 w-4 mr-2 shrink-0" />
                   <p className="text-xs line-clamp-1">{attachment.name}</p>
                   {deletingId === attachment.id ? (
@@ -79,7 +79,7 @@ export const AttachmentForm = ({ initialData, courseId }) => {
            <input 
               type="file"
               onChange={e => setFile(e.target.files[0])}
-              className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#889b76] file:text-white hover:file:bg-[#6e7d60] cursor-pointer"
+                 className="w-full text-sm text-brand-ink file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-brand-soft file:text-white hover:file:bg-brand-dark cursor-pointer"
            />
            <Button disabled={!file || isLoading} type="submit">Subir archivo</Button>
            <div className="text-xs text-muted-foreground mt-4">

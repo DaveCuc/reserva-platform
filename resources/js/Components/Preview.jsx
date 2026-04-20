@@ -18,7 +18,7 @@ export const Preview = ({ value }) => {
     immediatelyRender: false,
     editorProps: {
         attributes: {
-            class: "prose prose-sm max-w-none text-slate-700 bg-transparent"
+        class: "prose prose-sm max-w-none text-brand-text bg-transparent"
         }
     }
   });

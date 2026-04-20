@@ -50,16 +50,16 @@ export const ChaptersList = ({ items, onReorder, onEdit }) => {
                 {(provided) => (
                   <div
                     className={cn(
-                      "flex items-center gap-x-2 bg-[#ffffff] border-[#8e9e8f] border text-[#6b7280] rounded-md mb-4 text-sm",
-                      chapter.is_published && "bg-[#eafee0] border-[#bafdc5] text-[#23c702]"
+                      "flex items-center gap-x-2 bg-white border-brand-soft border text-brand-ink rounded-md mb-4 text-sm",
+                      chapter.is_published && "bg-brand-mint border-emerald-200 text-emerald-600"
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
                     <div
                       className={cn(
-                        "px-2 py-3 border-r border-r-[#8e9e8f] hover:bg-[#d9dfd3] rounded-l-md transition",
-                        chapter.is_published && "border-r-[#bafdc5] hover:bg-[#eafee0]"
+                        "px-2 py-3 border-r border-r-brand-soft hover:bg-brand-pale rounded-l-md transition",
+                        chapter.is_published && "border-r-emerald-200 hover:bg-brand-mint"
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -68,12 +68,12 @@ export const ChaptersList = ({ items, onReorder, onEdit }) => {
                     {chapter.title}
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                       {chapter.is_free && <Badge>Gratis</Badge>}
-                      <Badge className={cn("bg-[#8e9e8f]", chapter.is_published && "bg-[#ffffff]")}>
+                      <Badge className={cn("bg-brand-soft", chapter.is_published && "bg-white")}>
                         {chapter.is_published ? "Publicado" : "Borrador"}
                       </Badge>
                       <Pencil
                         onClick={() => onEdit(chapter.id)}
-                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition text-slate-500"
+                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition text-brand-ink"
                       />
                     </div>
                   </div>

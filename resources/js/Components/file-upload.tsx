@@ -70,11 +70,11 @@ export const FileUpload = ({
   return (
     <div 
       {...getRootProps()} 
-      className="bg-[#ffffff] border-dashed border-2 border-[#a2bea1] rounded-md p-10 cursor-pointer hover:bg-[#6a6a51bd] transition flex flex-col items-center justify-center gap-4 h-60"
+      className="bg-white border-dashed border-2 border-brand-soft rounded-md p-10 cursor-pointer hover:bg-brand-pale/70 transition flex flex-col items-center justify-center gap-4 h-60"
     >
       <input {...getInputProps()} />
-      <UploadCloud className="h-10 w-10 text-[#9CCD3E]" />
-      <p className="text-sm text-[#9CCD3E] text-center">
+      <UploadCloud className="h-10 w-10 text-brand-ring" />
+      <p className="text-sm text-brand-ring text-center">
         {isDragActive 
           ? "Suelta el archivo aquí..." 
 : endpoint === "courseImage" ? "Sube una imagen (jpg, png)" : "Arrastra un archivo"}</p>

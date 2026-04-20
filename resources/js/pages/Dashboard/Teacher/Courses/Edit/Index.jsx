@@ -9,18 +9,8 @@ import { ImageForm } from "./Components/ImageForm";
 import { AttachmentForm } from "./Components/AttachmentForm";
 import { ChaptersForm } from "./Components/ChaptersForm";
 import { Actions } from "./Components/Actions";
-
-const IconBadge = ({ icon: Icon }) => (
-  <div className="p-2 bg-[#eafee0] rounded-full mr-2">
-    <Icon className="h-6 w-6 text-[#43570e]" />
-  </div>
-);
-
-const Banner = ({ label }) => (
-  <div className="w-full bg-yellow-400 p-4 text-center text-sm text-yellow-900 font-medium">
-    {label}
-  </div>
-);
+import { Banner } from "@/Components/banner";
+import { IconBadge } from "@/Components/icon-badge";
 
 export default function CourseEditor({ course, categories }) {
   const mappedCategories = categories.map((cat) => ({
@@ -47,7 +37,7 @@ export default function CourseEditor({ course, categories }) {
       <Head title={`Editar Curso: ${course.title}`} />
       
       {!course.is_published && (
-        <Banner label="Este curso no es visible para los estudiantes hasta que lo publiques." />
+        <Banner variant="warningSolid" label="Este curso no es visible para los estudiantes hasta que lo publiques." />
       )}
 
       <div className="p-6 pb-20 max-w-6xl mx-auto">
@@ -58,7 +48,7 @@ export default function CourseEditor({ course, categories }) {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-bold">Configuración del curso</h1>
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-brand-text">
               Completa todos los campos {completionText}
             </span>
           </div>
@@ -73,7 +63,7 @@ export default function CourseEditor({ course, categories }) {
           {/* Columna Izquierda */}
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
+              <IconBadge variant="teacher" size="md" icon={LayoutDashboard} />
               <h2 className="text-xl font-semibold">Personaliza tu curso</h2>
             </div>
 
@@ -87,7 +77,7 @@ export default function CourseEditor({ course, categories }) {
           <div className="space-y-6">
             <div>
               <div className="flex items-center gap-x-2 mb-6">
-                <IconBadge icon={ListChecks} />
+                <IconBadge variant="teacher" size="md" icon={ListChecks} />
                 <h2 className="text-xl font-semibold">Capítulos del curso</h2>
               </div>
               <ChaptersForm initialData={course} courseId={course.id} />
@@ -95,7 +85,7 @@ export default function CourseEditor({ course, categories }) {
 
             <div>
               <div className="flex items-center gap-x-2 mb-6">
-                <IconBadge icon={CircleDollarSign} />
+                <IconBadge variant="teacher" size="md" icon={CircleDollarSign} />
                 <h2 className="text-xl font-semibold">Precio del curso</h2>
               </div>
               <PriceForm initialData={course} courseId={course.id} />
@@ -103,7 +93,7 @@ export default function CourseEditor({ course, categories }) {
 
             <div>
               <div className="flex items-center gap-x-2 mb-6">
-                <IconBadge icon={File} />
+                <IconBadge variant="teacher" size="md" icon={File} />
                 <h2 className="text-xl font-semibold">Adjuntar archivos al curso</h2>
               </div>
               <AttachmentForm initialData={course} courseId={course.id} />

@@ -17,9 +17,9 @@ export default function CreateCourse() {
     <MainLayout>
       <Head title="Crear Curso" />
       <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 mt-10">
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-brand-soft">
           <h1 className="text-2xl font-bold">Nombra tu curso</h1>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-brand-ink mt-2">
             ¿Cómo te gustaría llamar a tu curso? No te preocupes, puedes cambiarlo más tarde.
           </p>
           
@@ -31,9 +31,9 @@ export default function CreateCourse() {
                     placeholder="Ej. 'Turismo Sostenible'"
                     value={data.title}
                     onChange={(e) => setData("title", e.target.value)}
-                    className="focus-visible:ring-sky-500"
+                  className="focus-visible:ring-brand-ring"
                 />
-                <p className="text-[0.8rem] text-slate-500">¿Qué enseñarás en este curso?</p>
+                <p className="text-[0.8rem] text-brand-ink">¿Qué enseñarás en este curso?</p>
                 {errors.title && <p className="text-sm text-red-500 mt-1">{errors.title}</p>}
             </div>
               

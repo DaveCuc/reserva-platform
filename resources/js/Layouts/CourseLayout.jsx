@@ -24,7 +24,7 @@ const NavbarRoutes = () => {
                         <span className="inline-flex rounded-md">
                             <button
                                 type="button"
-                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-brand-ink hover:text-brand-text focus:outline-none"
                             >
                                 {auth?.user?.name || "Usuario"}
                                 <svg className="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -71,7 +71,7 @@ const CourseNavbar = ({ course, progressCount, purchase }) => {
 
 export default function CourseLayout({ children, course, progressCount, purchase }) {
     return (
-        <div className="h-full min-h-screen relative bg-slate-50 font-sans">
+        <div className="h-full min-h-screen relative bg-brand-pale font-sans">
             <ConfettiProvider />
             <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
                 <CourseNavbar course={course} progressCount={progressCount} purchase={purchase} />

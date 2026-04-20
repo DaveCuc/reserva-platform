@@ -45,7 +45,7 @@ export const Actions = ({ disabled, courseId, isPublished }) => {
         disabled={disabled || isLoading}
         variant="outline"
         size="sm"
-        className="bg-white border-slate-300 shadow-sm"
+        className="bg-white border-brand-soft shadow-sm"
       >
         {isPublished ? "Despublicar" : "Publicar Curso"}
       </Button>

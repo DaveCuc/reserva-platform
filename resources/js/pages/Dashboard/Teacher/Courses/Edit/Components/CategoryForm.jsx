@@ -26,15 +26,15 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
   const selectedOption = options.find((o) => String(o.value) === String(initialData.category_id));
 
   return (
-    <div className="mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Categoría del curso
-        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isEditing ? "Cancelar" : <><Pencil className="h-4 w-4 mr-2" /> Editar categoría</>}
         </Button>
       </div>
       {!isEditing && (
-        <p className={`text-sm mt-2 ${!initialData.category_id ? "text-slate-500 italic" : ""}`}>
+        <p className={`text-sm mt-2 ${!initialData.category_id ? "text-brand-ink italic" : ""}`}>
           {selectedOption ? selectedOption.label : "Sin categoría"}
         </p>
       )}
@@ -44,7 +44,7 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
             disabled={isLoading} 
             value={categoryId} 
             onChange={e => setCategoryId(e.target.value)} 
-            className="w-full rounded-md border border-slate-300 bg-white p-2 text-sm"
+            className="w-full rounded-md border border-brand-soft bg-white p-2 text-sm"
             required 
           >
              <option value="" disabled>Selecciona una categoría...</option>

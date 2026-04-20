@@ -28,15 +28,15 @@ const SidebarItem = ({ icon: Icon, label, href }) => {
         <Link
             href={href}
             className={cn(
-                "flex items-center gap-x-2 text-[#43570e] text-sm font-[500] pl-6 transition-all hover:text-[#ffffff] hover:bg-[#43570e] w-full",
-                isActive && "text-[#43570e] bg-white hover:bg-[#f8f8e8] hover:text-[#43570e]"
+                "flex items-center gap-x-2 text-brand-text text-sm font-[500] pl-6 transition-all hover:text-white hover:bg-brand-text w-full",
+                isActive && "text-brand-text bg-white hover:bg-brand-pale hover:text-brand-text"
             )}
         >
             <div className="flex items-center gap-x-2 py-4">
-                <Icon size={22} className={cn("text-[#43570e]", isActive && "text-[#43570e]")} />
+                <Icon size={22} className={cn("text-brand-text", isActive && "text-brand-text")} />
                 {label}
             </div>
-            <div className={cn("ml-auto opacity-0 border-2 border-[#43570e] h-full transition-all", isActive && "opacity-100")} />
+            <div className={cn("ml-auto opacity-0 border-2 border-brand-text h-full transition-all", isActive && "opacity-100")} />
         </Link>
     );
 };
@@ -57,7 +57,7 @@ const SidebarRoutes = () => {
 };
 
 const Sidebar = () => (
-    <div className="h-full border-r flex flex-col overflow-auto bg-[#e4e4e4] shadow-sm">
+    <div className="h-full border-r flex flex-col overflow-auto bg-brand-panel shadow-sm">
         <div className="p-4 flex justify-center">
             <Link href="/dashboard">
                 <Logo />
@@ -112,7 +112,7 @@ const NavbarRoutes = () => {
                         <span className="inline-flex rounded-md">
                             <button
                                 type="button"
-                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-brand-ink hover:text-brand-text focus:outline-none"
                             >
                                 {auth?.user?.name || "Usuario"}
                                 <svg className="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -138,10 +138,10 @@ import { ConfettiProvider } from "@/Components/providers/confetti-provider";
 
 export default function MainLayout({ children }) {
     return (
-        <div className="h-full min-h-screen relative bg-slate-50 font-sans">
+        <div className="h-full min-h-screen relative bg-brand-pale font-sans">
             <ConfettiProvider />
             <div className="h-[80px] md:pl-56 fixed inset-y-0 w-full z-50">
-                <div className="p-4 border-b h-full flex items-center bg-[#FFFFFF] shadow-sm">
+                <div className="p-4 border-b h-full flex items-center bg-white shadow-sm">
                     <MobileSidebar />
                     <NavbarRoutes />
                 </div>

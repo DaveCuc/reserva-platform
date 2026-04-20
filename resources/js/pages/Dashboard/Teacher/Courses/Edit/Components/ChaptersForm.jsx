@@ -43,15 +43,15 @@ export const ChaptersForm = ({ initialData, courseId }) => {
   }
 
   return (
-    <div className="relative mt-6 border bg-[#d9dfd3] rounded-md p-4">
+    <div className="relative mt-6 border bg-brand-pale rounded-md p-4">
       {isUpdating && (
-        <div className="absolute h-full w-full bg-[#d9dfd36e] top-0 right-0 rounded-md flex items-center justify-center z-10">
-          <Loader2 className="animate-spin h-6 w-6 text-[#5b886a]" />
+        <div className="absolute h-full w-full bg-brand-pale/40 top-0 right-0 rounded-md flex items-center justify-center z-10">
+          <Loader2 className="animate-spin h-6 w-6 text-brand-soft" />
         </div>
       )}
       <div className="font-medium flex items-center justify-between pb-3">
         Capítulos del curso
-        <Button onClick={toggleCreating} variant="ghost" className="bg-white hover:bg-[#889b76] hover:text-white">
+        <Button onClick={toggleCreating} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
           {isCreating ? "Cancelar" : <><PlusCircle className="h-4 w-4 mr-2" /> Agregar Capitulo</>}
         </Button>
       </div>
@@ -71,7 +71,7 @@ export const ChaptersForm = ({ initialData, courseId }) => {
       )}
 
       {!isCreating && (
-        <div className={cn("text-sm mt-2", (!initialData.chapters || initialData.chapters.length === 0) && "text-[#6b806f] italic")}>
+        <div className={cn("text-sm mt-2", (!initialData.chapters || initialData.chapters.length === 0) && "text-brand-ink italic")}>
           {(!initialData.chapters || initialData.chapters.length === 0) && "No hay capitulos creados aún."}
           <ChaptersList
             onEdit={onEdit}

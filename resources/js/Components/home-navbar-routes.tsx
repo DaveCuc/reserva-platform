@@ -16,7 +16,7 @@ export const HomeNavbarRoutes = ({ isScrolled }: HomeNavbarRoutesProps) => {
     const linkClass = cn(
         "transition-all duration-200 font-medium",
         isScrolled 
-            ? "text-slate-700 hover:text-white hover:bg-[#739419]" // Scroll: Texto oscuro -> Hover verde
+            ? "text-brand-text hover:text-white hover:bg-brand" // Scroll: Texto oscuro -> Hover verde
             : "text-white hover:bg-white/20 hover:text-white"      // Top: Texto blanco
     );
 
@@ -45,8 +45,8 @@ export const HomeNavbarRoutes = ({ isScrolled }: HomeNavbarRoutesProps) => {
                         className={cn(
                             "shadow-md hover:shadow-lg transition-all duration-100 font-semibold px-6",
                             isScrolled
-                                ? "bg-[#739419] text-white hover:bg-[#4E6411]" // Scroll: Verde
-                                : "bg-white text-[#739419] hover:bg-slate-100" // Top: Blanco
+                                ? "bg-brand text-white hover:bg-brand-dark" // Scroll: Verde
+                                : "bg-white text-brand hover:bg-brand-pale" // Top: Blanco
                         )}
                     >
                         Iniciar Sesión

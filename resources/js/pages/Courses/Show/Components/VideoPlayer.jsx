@@ -42,7 +42,7 @@ export const VideoPlayer = ({
   return (
     <div className="relative aspect-video">
       {isLocked && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-800 flex-col gap-y-2 text-secondary text-white">
+        <div className="absolute inset-0 flex items-center justify-center bg-brand-text flex-col gap-y-2 text-secondary text-white">
           <Lock className="h-8 w-8" />
           <p className="text-sm">
             Este capítulo está bloqueado
