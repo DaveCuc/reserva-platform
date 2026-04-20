@@ -28,17 +28,18 @@ export default function UpdateProfileInformation({
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-brand-text">
-                    Profile Information
+                    Información personal
                 </h2>
 
                 <p className="mt-1 text-sm text-brand-ink">
-                    Update your account's profile information and email address.
+                    Actualiza tu nombre y correo para mantener tu cuenta
+                    correcta.
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nombre" />
 
                     <TextInput
                         id="name"
@@ -54,7 +55,7 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Correo electrónico" />
 
                     <TextInput
                         id="email"
@@ -72,28 +73,29 @@ export default function UpdateProfileInformation({
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="mt-2 text-sm text-brand-text">
-                            Your email address is unverified.
+                            Tu correo electrónico no está verificado.
                             <Link
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"
                                 className="rounded-md text-sm text-brand-ink underline hover:text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-ring focus:ring-offset-2"
                             >
-                                Click here to re-send the verification email.
+                                Haz clic aquí para reenviar el correo de
+                                verificación.
                             </Link>
                         </p>
 
                         {status === 'verification-link-sent' && (
                             <div className="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-                                A new verification link has been sent to your
-                                email address.
+                                Se envió un nuevo enlace de verificación a tu
+                                correo.
                             </div>
                         )}
                     </div>
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>Guardar cambios</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -103,7 +105,7 @@ export default function UpdateProfileInformation({
                         leaveTo="opacity-0"
                     >
                         <p className="text-sm text-brand-ink">
-                            Saved.
+                            Guardado.
                         </p>
                     </Transition>
                 </div>
