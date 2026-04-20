@@ -13,24 +13,24 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-brand-pale">
-            <nav className="border-b border-brand-soft bg-white">
+        <div className="min-h-screen bg-brand-pale font-sans">
+            <nav className="sticky top-0 z-40 border-b border-brand-soft bg-white shadow-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
-                        <div className="flex">
+                    <div className="flex h-[80px] items-center justify-between">
+                        <div className="flex items-center">
                             <div className="flex shrink-0 items-center">
                                 <Link href={route('dashboard')}
                                     active={route().current('dashboard')}>
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-brand-text" />
+                                    <ApplicationLogo className="block h-[56px] w-auto" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 sm:ms-10 sm:flex sm:items-center">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Regresar
+                                    Mi espacio
                                 </NavLink>
                             </div>
                         </div>
@@ -66,14 +66,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <Dropdown.Link
                                             href={route('profile.edit')}
                                         >
-                                            Profile
+                                            Perfil
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Cerrar sesión
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -126,7 +126,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 <div
                     className={
                         (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden'
+                        ' border-t border-brand-soft bg-white shadow-sm sm:hidden'
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
@@ -134,7 +134,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            Mi espacio
                         </ResponsiveNavLink>
                     </div>
 
@@ -150,14 +150,14 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
                             >
-                                Log Out
+                                Cerrar sesión
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
             
 
-            <main>{children}</main>
+            <main className="mx-auto w-full max-w-7xl">{children}</main>
         </div>
     );
 }
