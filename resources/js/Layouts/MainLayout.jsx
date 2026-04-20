@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Layout, Compass, List, BarChart, LogOut, Menu } from "lucide-react";
+import { Layout, Compass, List, BarChart, LogOut, Menu, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import Dropdown from '@/Components/Dropdown';
@@ -12,17 +12,20 @@ const Logo = () => (
 
 const guestRoutes = [
     { icon: Layout, label: "Mi espacio", href: "/dashboard" },
+    { icon: Store, label: "Trade", href: "/trade" },
     { icon: Compass, label: "Explorar", href: "/search" },
 ];
 
 const teacherRoutes = [
+    { icon: Store, label: "Trade", href: "/trade" },
     { icon: List, label: "Cursos", href: "/teacher/courses" },
     { icon: BarChart, label: "Estadísticas", href: "/teacher/analytics" }
 ];
 
 const SidebarItem = ({ icon: Icon, label, href }) => {
     const { url } = usePage();
-    const isActive = url === href || url.startsWith(`${href}/`);
+    const isTradeRoute = href === "/trade" && (url === "/trade" || url.startsWith("/directory/trades"));
+    const isActive = isTradeRoute || url === href || url.startsWith(`${href}/`);
 
     return (
         <Link

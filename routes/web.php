@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DirectoryTradeController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -95,6 +97,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/trade', [DirectoryTradeController::class, 'index'])->name('trade');
+
+    Route::get('/directory/trades', [DirectoryTradeController::class, 'index'])->name('directory.trades.index');
+    Route::get('/directory/trades/create', [DirectoryTradeController::class, 'create'])->name('directory.trades.create');
+    Route::post('/directory/trades', [DirectoryTradeController::class, 'store'])->name('directory.trades.store');
+    Route::get('/directory/trades/{trade}/edit', [DirectoryTradeController::class, 'edit'])->name('directory.trades.edit');
+    Route::patch('/directory/trades/{trade}', [DirectoryTradeController::class, 'update'])->name('directory.trades.update');
+    Route::patch('/directory/trades/{trade}/publish', [DirectoryTradeController::class, 'publish'])->name('directory.trades.publish');
+    Route::patch('/directory/trades/{trade}/unpublish', [DirectoryTradeController::class, 'unpublish'])->name('directory.trades.unpublish');
+    Route::post('/directory/trades/{trade}/image', [DirectoryTradeController::class, 'uploadImage'])->name('directory.trades.image');
+
     Route::get('/search', function (\Illuminate\Http\Request $request) {
         $categories = \App\Models\Category::orderBy('name')->get();
         
