@@ -10,15 +10,15 @@ import { Badge } from "@/Components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/Components/ui/card";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 80 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 1 }
+    initial: { opacity: 0, y: 80 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 }
 };
 
 const imageModules = import.meta.glob('/public/Directorios/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
-        eager: true,
-        import: 'default',
+    eager: true,
+    import: 'default',
 });
 
 const carouselImages = Object.values(imageModules).sort((a, b) => String(a).localeCompare(String(b)));
@@ -61,35 +61,49 @@ const getItemGiros = (item) => {
 const getItemImage = (item, index) => item?.image_url || item?.imageUrl || `https://picsum.photos/1200/900?random=${index + 1}`;
 
 const RegistroSection = () => {
-    return ( 
+    return (
         <section className="py-20">
             <div className="container mx-auto text-center px-4">
                 <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Quieres aparecer?</h1>
                 <motion.div {...fadeUp}>
-                    <Button variant="default" size="lg" className="bg-brand-text text-white rounded-md">Regístrate Aquí</Button>
+                    <Button
+                        variant="default"
+                        size="lg"
+                        className="bg-brand-text text-white rounded-md"
+                        onClick={() => router.visit("/trade")}
+                    >
+                        Regístrate Aquí
+                    </Button>
                 </motion.div>
             </div>
         </section>
-     );
+    );
 }
 
 const ResultadoSection = () => {
     const { url } = usePage();
     // Next uses useSearchParams, in Inertia we use props or URL directly, but for now we maintain API calls
     const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const params = useMemo(() => getSearchParamsFromUrl(url), [url]);
+    const hasSearch = params.get("search") === "1" || params.has("giro") || params.has("region");
 
     useEffect(() => {
+        if (!hasSearch) {
+            setItems([]);
+            setIsLoading(false);
+            return;
+        }
+
         const fetchDirectorio = async () => {
             try {
                 setIsLoading(true);
                 const queryString = params.toString();
-                
+
                 // Mantiene el llamado a API que migraremos a un Laravel Controller en la siguiente fase
                 const response = await fetch(queryString ? `/api/directorio?${queryString}` : "/api/directorio");
                 if (!response.ok) throw new Error("No se pudo cargar el directorio");
-                
+
                 const data = await response.json();
                 setItems(data);
             } catch (error) {
@@ -101,16 +115,18 @@ const ResultadoSection = () => {
         };
 
         fetchDirectorio();
-    }, [params]);
+    }, [hasSearch, params]);
 
-    return ( 
+    return (
         <section className="p-10">
             <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12 ">
                         <h2 className="text-4xl font-bold text-white">Resultados de búsqueda</h2>
                     </div>
-                    {isLoading ? (
+                    {!hasSearch ? (
+                        <p className="text-white text-center font-medium">Selecciona una opción y presiona "Buscar ahora" para ver resultados.</p>
+                    ) : isLoading ? (
                         <p className="text-white text-center font-medium">Buscando resultados...</p>
                     ) : items.length === 0 ? (
                         <p className="text-white text-center font-medium">No se encontraron resultados con esos filtros.</p>
@@ -180,31 +196,47 @@ const ResultadoSection = () => {
                 </div>
             </div>
         </section>
-     );
+    );
 }
 
 const BuscadorSection = () => {
     const { url } = usePage();
     const params = useMemo(() => getSearchParamsFromUrl(url), [url]);
-    const [selectedGiro, setSelectedGiro] = useState(params.get("giro") || "all");
-    const [selectedRegion, setSelectedRegion] = useState(params.get("region") || "all");
+    const hasSearch = params.get("search") === "1";
+    const [selectedGiro, setSelectedGiro] = useState(params.get("giro") || (hasSearch ? "all" : "default"));
+    const [selectedRegion, setSelectedRegion] = useState(params.get("region") || (hasSearch ? "all" : "default"));
 
     useEffect(() => {
-        setSelectedGiro(params.get("giro") || "all");
-        setSelectedRegion(params.get("region") || "all");
+        const isSearchTriggered = params.get("search") === "1";
+        setSelectedGiro(params.get("giro") || (isSearchTriggered ? "all" : "default"));
+        setSelectedRegion(params.get("region") || (isSearchTriggered ? "all" : "default"));
     }, [params]);
 
     const onSubmit = (event) => {
         event.preventDefault();
         const searchParams = new URLSearchParams();
-        if (selectedGiro && selectedGiro !== "all") searchParams.set("giro", selectedGiro);
-        if (selectedRegion && selectedRegion !== "all") searchParams.set("region", selectedRegion);
-        
+        searchParams.set("search", "1");
+        if (selectedGiro && selectedGiro !== "all" && selectedGiro !== "default") searchParams.set("giro", selectedGiro);
+        if (selectedRegion && selectedRegion !== "all" && selectedRegion !== "default") searchParams.set("region", selectedRegion);
+
         const queryString = searchParams.toString();
         // Recarga via Inertia
         router.visit(queryString ? `/directorio?${queryString}` : "/directorio", {
             preserveScroll: true
         });
+    };
+
+    const scrollToResults = () => {
+        const resultsSection =
+            document.getElementById("resultados-busqueda") ||
+            document.querySelector("[data-resultados-busqueda]");
+
+        if (resultsSection) {
+            resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+        }
+
+        window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     };
 
     return (
@@ -218,7 +250,7 @@ const BuscadorSection = () => {
                                     src={imageSrc}
                                     alt={`Foto de galería ${index + 1}`}
                                     className="object-cover w-full h-full absolute inset-0"
-                                    onError={(e) => { e.target.src = 'https://picsum.photos/1920/1080?random='+index; }}
+                                    onError={(e) => { e.target.src = 'https://picsum.photos/1920/1080?random=' + index; }}
                                 />
                             </div>
                         </CarouselItem>
@@ -229,14 +261,14 @@ const BuscadorSection = () => {
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/60" />
 
-            <motion.div {...fadeUp} className="relative z-10 w-full"> 
+            <motion.div {...fadeUp} className="relative z-10 w-full">
                 <div className="h-full flex items-center justify-center">
                     <div className="container mx-auto px-4 text-center">
                         <div className="max-w-4xl mx-auto">
                             <h2 className="text-3xl font-extrabold mb-2">Busca en nuestro Directorio</h2>
                             <h1 className="text-5xl md:text-7xl font-extrabold mb-4">Reserva de la Biosfera</h1>
                             <h2 className="text-xl md:text-3xl font-extrabold mb-8">Todo en un solo lugar</h2>
-                            
+
                             <form onSubmit={onSubmit} className="bg-white/20 backdrop-blur-md p-6 rounded-3xl shadow-lg md:flex md:items-end md:gap-4 border border-white/20">
                                 <div className="grow mb-4 md:mb-0 text-left">
                                     <h5 className="font-bold text-white mb-2">Categoría</h5>
@@ -246,17 +278,18 @@ const BuscadorSection = () => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                            <SelectLabel>Categoria</SelectLabel>
-                                            <SelectItem value="all">Todas</SelectItem>
-                                            <SelectItem value="Transporte Comunitario">Transporte Comunitario</SelectItem>
-                                            <SelectItem value="Talleres comunitarios">Talleres comunitarios</SelectItem>
-                                            <SelectItem value="Medicina tradicional y bienestar">Medicina tradicional y bienestar</SelectItem>
-                                            <SelectItem value="Parques temáticos comunitarios">Parques temáticos comunitarios</SelectItem>
-                                            <SelectItem value="Actividades acuáticas comunitarias">Actividades acuáticas comunitarias</SelectItem>
-                                            <SelectItem value="Actividades de Aventura o Naturaleza">Actividades de Aventura o Naturaleza</SelectItem>
-                                            <SelectItem value="Hospedaje comunitario">Hospedaje comunitario</SelectItem>
-                                            <SelectItem value="Balneario y Parque Acuático">Balneario y Parque Acuático</SelectItem>
-                                            <SelectItem value="Gastronomía tradicional">Gastronomía tradicional</SelectItem>
+                                                <SelectLabel>Categoria</SelectLabel>
+                                                <SelectItem value="default">Despliega la lista completa</SelectItem>
+                                                <SelectItem value="all">Todas</SelectItem>
+                                                <SelectItem value="Transporte Comunitario">Transporte Comunitario</SelectItem>
+                                                <SelectItem value="Talleres comunitarios">Talleres comunitarios</SelectItem>
+                                                <SelectItem value="Medicina tradicional y bienestar">Medicina tradicional y bienestar</SelectItem>
+                                                <SelectItem value="Parques temáticos comunitarios">Parques temáticos comunitarios</SelectItem>
+                                                <SelectItem value="Actividades acuáticas comunitarias">Actividades acuáticas comunitarias</SelectItem>
+                                                <SelectItem value="Actividades de Aventura o Naturaleza">Actividades de Aventura o Naturaleza</SelectItem>
+                                                <SelectItem value="Hospedaje comunitario">Hospedaje comunitario</SelectItem>
+                                                <SelectItem value="Balneario y Parque Acuático">Balneario y Parque Acuático</SelectItem>
+                                                <SelectItem value="Gastronomía tradicional">Gastronomía tradicional</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -269,7 +302,8 @@ const BuscadorSection = () => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                            <SelectLabel>Región</SelectLabel>
+                                                <SelectLabel>Región</SelectLabel>
+                                                <SelectItem value="default">Despliega la lista completa</SelectItem>
                                                 <SelectItem value="all">Todas</SelectItem>
                                                 <SelectItem value="REGIÓN SEPTENTRIONAL">Región Septentrional</SelectItem>
                                                 <SelectItem value="REGIÓN DEL VALLE ZAPOTITLÁN-TEHUACÁN">Región del Valle Zapotitlán-Tehuacán</SelectItem>
@@ -284,7 +318,11 @@ const BuscadorSection = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <Button type="submit" className="h-12 w-full md:w-auto px-8 bg-brand-ring hover:bg-brand text-white rounded-2xl font-bold">
+                                <Button
+                                    type="submit"
+                                    onClick={scrollToResults}
+                                    className="h-12 w-full md:w-auto px-8 bg-brand-ring hover:bg-brand text-white rounded-2xl font-bold"
+                                >
                                     Buscar ahora
                                 </Button>
                             </form>

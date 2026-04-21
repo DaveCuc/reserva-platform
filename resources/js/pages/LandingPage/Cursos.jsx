@@ -15,9 +15,16 @@ const RegistroSection = () => {
     return ( 
         <section className="py-20">
             <div className="container mx-auto text-center px-4">
-                <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Quieres aparecer?</h1>
+                <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Te gustaria formar parte?</h1>
                 <motion.div {...fadeUp}>
-                    <Button variant="default" size="lg" className="bg-brand-text text-white rounded-md">Regístrate Aquí</Button>
+                    <Button
+                        variant="default"
+                        size="lg"
+                        className="bg-brand-text text-white rounded-md"
+                        onClick={() => window.location.assign("/search")}
+                    >
+                        Buscar cursos
+                    </Button>
                 </motion.div>
             </div>
         </section>

@@ -14,6 +14,11 @@ use Inertia\Inertia;
 
 class DirectoryTradeController extends Controller
 {
+    private const STATUS_DRAFT = 'draft';
+    private const STATUS_PENDING = 'pending';
+    private const STATUS_APPROVED = 'approved';
+    private const STATUS_REJECTED = 'rejected';
+
     public function index()
     {
         $trades = Directorio::query()
@@ -41,6 +46,8 @@ class DirectoryTradeController extends Controller
         $trade = Directorio::create([
             'user_id' => Auth::id(),
             'comercial_name' => $validated['comercial_name'],
+            'status' => self::STATUS_DRAFT,
+            'is_published' => false,
         ]);
 
         return redirect()->route('directory.trades.edit', $trade->id);
@@ -142,6 +149,31 @@ class DirectoryTradeController extends Controller
     {
         $this->ensureOwner($trade);
 
+        // Legacy endpoint compatibility: map to approved state.
+        $trade->update([
+            'is_published' => true,
+            'status' => self::STATUS_APPROVED,
+        ]);
+
+        return back();
+    }
+
+    public function unpublish(Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
+        $trade->update([
+            'is_published' => false,
+            'status' => self::STATUS_DRAFT,
+        ]);
+
+        return back();
+    }
+
+    public function submitForReview(Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
         $requiredFields = [
             $trade->comercial_name,
             $trade->descripcion,
@@ -158,22 +190,94 @@ class DirectoryTradeController extends Controller
 
         if (!$isComplete) {
             return back()->withErrors([
-                'error' => 'Faltan campos obligatorios para publicar el registro.',
+                'error' => 'Faltan campos obligatorios para enviar la solicitud.',
+            ]);
+        }
+
+        if (!in_array($trade->status, [self::STATUS_DRAFT, self::STATUS_REJECTED], true)) {
+            return back()->withErrors([
+                'error' => 'Este registro no puede enviarse a revision en su estado actual.',
             ]);
         }
 
         $trade->update([
+            'status' => self::STATUS_PENDING,
+            'is_published' => false,
+        ]);
+
+        return back();
+    }
+
+    public function destroy(Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
+        if ($trade->image_url) {
+            $this->deleteFromPublicDisk($trade->image_url);
+        }
+
+        $trade->delete();
+
+        return redirect()->route('directory.trades.index');
+    }
+
+    public function requestsIndex()
+    {
+        $this->ensureReviewer();
+
+        $trades = Directorio::query()
+            ->with(['user', 'giros', 'region', 'municipio'])
+            ->whereIn('status', [self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_REJECTED])
+            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
+            ->orderByDesc('updated_at')
+            ->get();
+
+        return Inertia::render('Dashboard/Teacher/Solicitudes/Index', [
+            'trades' => $trades,
+        ]);
+    }
+
+    public function requestShow(Directorio $trade)
+    {
+        $this->ensureReviewer();
+
+        $trade->load(['user', 'giros', 'region', 'municipio']);
+
+        return Inertia::render('Dashboard/Teacher/Solicitudes/Show/Index', [
+            'trade' => $trade,
+        ]);
+    }
+
+    public function approve(Directorio $trade)
+    {
+        $this->ensureReviewer();
+
+        if ($trade->status !== self::STATUS_PENDING) {
+            return back()->withErrors([
+                'error' => 'Solo puedes aprobar solicitudes pendientes.',
+            ]);
+        }
+
+        $trade->update([
+            'status' => self::STATUS_APPROVED,
             'is_published' => true,
         ]);
 
         return back();
     }
 
-    public function unpublish(Directorio $trade)
+    public function reject(Directorio $trade)
     {
-        $this->ensureOwner($trade);
+        $this->ensureReviewer();
+
+        if ($trade->status !== self::STATUS_PENDING) {
+            return back()->withErrors([
+                'error' => 'Solo puedes rechazar solicitudes pendientes.',
+            ]);
+        }
 
         $trade->update([
+            'status' => self::STATUS_REJECTED,
             'is_published' => false,
         ]);
 
@@ -183,6 +287,22 @@ class DirectoryTradeController extends Controller
     private function ensureOwner(Directorio $trade): void
     {
         if ((int) $trade->user_id !== (int) Auth::id()) {
+            abort(403);
+        }
+    }
+
+    private function ensureReviewer(): void
+    {
+        $user = Auth::user();
+
+        if (!$user instanceof \App\Models\User) {
+            abort(403);
+        }
+
+        $isTeacher = (bool) $user->is_teacher;
+        $isAdmin = (bool) ($user->is_admin ?? false);
+
+        if (!$isTeacher && !$isAdmin) {
             abort(403);
         }
     }

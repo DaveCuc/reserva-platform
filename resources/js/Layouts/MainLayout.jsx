@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Layout, Compass, List, BarChart, LogOut, Menu, Store } from "lucide-react";
+import { Layout, Compass, List, BarChart, LogOut, Menu, Store, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import Dropdown from '@/Components/Dropdown';
@@ -18,7 +18,8 @@ const guestRoutes = [
 
 const teacherRoutes = [
     { icon: List, label: "Cursos", href: "/teacher/courses" },
-    { icon: BarChart, label: "Estadísticas", href: "/teacher/analytics" }
+    { icon: BarChart, label: "Estadísticas", href: "/teacher/analytics" },
+    { icon: FileText, label: "Solicitudes", href: "/teacher/solicitudes" }
 ];
 
 const SidebarItem = ({ icon: Icon, label, href }) => {

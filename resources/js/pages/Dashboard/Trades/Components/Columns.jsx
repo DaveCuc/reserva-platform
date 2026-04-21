@@ -1,5 +1,5 @@
 import { router } from "@inertiajs/react";
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/Components/ui/button";
 import {
@@ -62,7 +62,7 @@ export const columns = [
         },
     },
     {
-        accessorKey: "is_published",
+        accessorKey: "status",
         header: ({ column }) => (
             <Button
                 variant="ghost"
@@ -73,11 +73,22 @@ export const columns = [
             </Button>
         ),
         cell: ({ row }) => {
-            const isPublished = row.getValue("is_published") || false;
+            const status = row.getValue("status") || "draft";
+
+            if (status === "approved") {
+                return <Badge className={cn("bg-emerald-600")}>Aprobado</Badge>;
+            }
+
+            if (status === "pending") {
+                return <Badge className={cn("bg-amber-500")}>En solicitud</Badge>;
+            }
+
+            if (status === "rejected") {
+                return <Badge className={cn("bg-rose-600")}>Rechazado</Badge>;
+            }
+
             return (
-                <Badge className={cn("bg-brand-ink", isPublished && "bg-emerald-600")}>
-                    {isPublished ? "Publicado" : "Borrador"}
-                </Badge>
+                <Badge className={cn("bg-brand-ink")}>Borrador</Badge>
             );
         },
     },
@@ -102,6 +113,18 @@ export const columns = [
                         >
                             <Pencil className="mr-2 h-4 w-4" />
                             Editar
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                            className="cursor-pointer text-rose-700 focus:text-rose-800"
+                            onClick={() => {
+                                if (window.confirm("¿Deseas eliminar este registro? Esta acción no se puede deshacer.")) {
+                                    router.delete(`/directory/trades/${id}`);
+                                }
+                            }}
+                        >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Eliminar
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

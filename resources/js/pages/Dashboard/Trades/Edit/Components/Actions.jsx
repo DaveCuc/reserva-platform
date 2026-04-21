@@ -4,29 +4,15 @@ import { router } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
-export const Actions = ({ canPublish, tradeId, isPublished }) => {
+export const Actions = ({ canSubmit, tradeId, status }) => {
     const [isLoading, setIsLoading] = useState(false);
     const confetti = useConfettiStore();
 
     const onClick = () => {
         setIsLoading(true);
 
-        if (isPublished) {
-            router.patch(
-                `/directory/trades/${tradeId}/unpublish`,
-                {},
-                {
-                    preserveScroll: true,
-                    onSuccess: () => setIsLoading(false),
-                    onError: () => setIsLoading(false),
-                },
-            );
-
-            return;
-        }
-
         router.patch(
-            `/directory/trades/${tradeId}/publish`,
+            `/directory/trades/${tradeId}/submit`,
             {},
             {
                 preserveScroll: true,
@@ -43,12 +29,12 @@ export const Actions = ({ canPublish, tradeId, isPublished }) => {
         <div className="flex items-center gap-x-2">
             <Button
                 onClick={onClick}
-                disabled={isLoading || (!isPublished && !canPublish)}
+                disabled={isLoading || !canSubmit}
                 variant="outline"
                 size="sm"
                 className="border-brand-soft bg-white shadow-sm"
             >
-                {isPublished ? "Despublicar" : "Publicar registro"}
+                {status === "pending" ? "Solicitud enviada" : "Enviar solicitud"}
             </Button>
         </div>
     );

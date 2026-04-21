@@ -30,15 +30,37 @@ export default function TradeEditor({ trade, giros, regions }) {
     const totalFields = requiredFields.length;
     const completedFields = requiredFields.filter(Boolean).length;
     const isComplete = requiredFields.every(Boolean) && (trade.giros?.length || 0) > 0;
+    const canSubmit = isComplete && (trade.status === "draft" || trade.status === "rejected");
 
     return (
         <MainLayout>
             <Head title={`Editar Registro: ${trade.comercial_name || "Trade"}`} />
 
-            {!trade.is_published && (
+            {trade.status === "draft" && (
                 <Banner
                     variant="warningSolid"
-                    label="Este registro no es visible para el público hasta que lo publiques."
+                    label="Completa los datos y envía tu solicitud para revisión."
+                />
+            )}
+
+            {trade.status === "pending" && (
+                <Banner
+                    variant="warning"
+                    label="Tu solicitud está en revisión por el equipo docente."
+                />
+            )}
+
+            {trade.status === "approved" && (
+                <Banner
+                    variant="success"
+                    label="Tu negocio fue aprobado y ya es visible para el público."
+                />
+            )}
+
+            {trade.status === "rejected" && (
+                <Banner
+                    variant="warning"
+                    label="Tu solicitud fue rechazada. Ajusta la información y vuelve a enviarla."
                 />
             )}
 
@@ -56,9 +78,9 @@ export default function TradeEditor({ trade, giros, regions }) {
                         </span>
                     </div>
                     <Actions
-                        canPublish={isComplete}
+                        canSubmit={canSubmit}
                         tradeId={trade.id}
-                        isPublished={trade.is_published}
+                        status={trade.status}
                     />
                 </div>
 

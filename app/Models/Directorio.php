@@ -24,6 +24,7 @@ class Directorio extends Model
         'digital',
         'image_url',
         'is_published',
+        'status',
         'address',
         'map_location',
         'phone',
@@ -32,6 +33,7 @@ class Directorio extends Model
 
     protected $casts = [
         'is_published' => 'boolean',
+        'status' => 'string',
     ];
 
     public function user(): BelongsTo

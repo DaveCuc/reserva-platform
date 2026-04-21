@@ -33,7 +33,9 @@ Route::get('/cursos', function () {
 
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---
 Route::get('/api/directorio', function (\Illuminate\Http\Request $request) {
-    $query = \App\Models\Directorio::query()->with('giros');
+    $query = \App\Models\Directorio::query()
+        ->with('giros')
+        ->where('status', 'approved');
 
     if ($request->filled('giro')) {
         $query->where(function ($giroQuery) use ($request) {
@@ -112,9 +114,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/directory/trades', [DirectoryTradeController::class, 'store'])->name('directory.trades.store');
     Route::get('/directory/trades/{trade}/edit', [DirectoryTradeController::class, 'edit'])->name('directory.trades.edit');
     Route::patch('/directory/trades/{trade}', [DirectoryTradeController::class, 'update'])->name('directory.trades.update');
+    Route::patch('/directory/trades/{trade}/submit', [DirectoryTradeController::class, 'submitForReview'])->name('directory.trades.submit');
+    Route::delete('/directory/trades/{trade}', [DirectoryTradeController::class, 'destroy'])->name('directory.trades.destroy');
     Route::patch('/directory/trades/{trade}/publish', [DirectoryTradeController::class, 'publish'])->name('directory.trades.publish');
     Route::patch('/directory/trades/{trade}/unpublish', [DirectoryTradeController::class, 'unpublish'])->name('directory.trades.unpublish');
     Route::post('/directory/trades/{trade}/image', [DirectoryTradeController::class, 'uploadImage'])->name('directory.trades.image');
+
+    Route::get('/teacher/solicitudes', [DirectoryTradeController::class, 'requestsIndex'])->name('teacher.requests.index');
+    Route::get('/teacher/solicitudes/{trade}', [DirectoryTradeController::class, 'requestShow'])->name('teacher.requests.show');
+    Route::patch('/teacher/solicitudes/{trade}/approve', [DirectoryTradeController::class, 'approve'])->name('teacher.requests.approve');
+    Route::patch('/teacher/solicitudes/{trade}/reject', [DirectoryTradeController::class, 'reject'])->name('teacher.requests.reject');
 
     Route::get('/search', function (\Illuminate\Http\Request $request) {
         $categories = \App\Models\Category::orderBy('name')->get();
