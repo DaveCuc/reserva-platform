@@ -173,7 +173,7 @@ const ResultadoSection = () => {
                                             </CardTitle>
 
                                             <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
-                                                {item.descripcion || "Sin descripción"}
+                                                {item.descripcion_corta || item.descripcion || "Sin descripción"}
                                             </p>
 
                                             <CardContent className="grid gap-2 p-0 text-sm text-white/90">

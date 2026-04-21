@@ -18,6 +18,7 @@ class DirectoryTradeController extends Controller
     private const STATUS_PENDING = 'pending';
     private const STATUS_APPROVED = 'approved';
     private const STATUS_REJECTED = 'rejected';
+    private const GALLERY_LIMIT = 10;
 
     public function index()
     {
@@ -77,12 +78,19 @@ class DirectoryTradeController extends Controller
         $validated = $request->validate([
             'comercial_name' => ['nullable', 'string', 'max:80'],
             'descripcion' => ['nullable', 'string'],
+            'descripcion_corta' => ['nullable', 'string', 'max:800'],
+            'descripcion_larga' => ['nullable', 'string'],
+            'activities' => ['nullable', 'array'],
+            'activities.*' => ['nullable', 'string', 'max:255'],
             'giro_ids' => ['nullable', 'array'],
             'giro_ids.*' => ['uuid', Rule::exists('giros', 'id')],
-            'digital' => ['nullable', 'url', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
             'name' => ['nullable', 'string', 'max:120'],
             'phone' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:191', 'unique:directorios,email,' . $trade->id],
+            'personal_name' => ['nullable', 'string', 'max:120'],
+            'personal_phone' => ['nullable', 'string', 'max:30'],
+            'personal_email' => ['nullable', 'email', 'max:191'],
             'region_id' => ['nullable', 'uuid', Rule::exists('regions', 'id')],
             'municipio_id' => ['nullable', 'uuid'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -119,6 +127,18 @@ class DirectoryTradeController extends Controller
             $validated['region'] = Region::find($validated['region_id'])?->name;
         }
 
+        if (array_key_exists('activities', $validated)) {
+            $validated['activities'] = collect($validated['activities'] ?? [])
+                ->filter(fn ($value) => filled($value))
+                ->values()
+                ->all();
+        }
+
+        if ($trade->status === self::STATUS_APPROVED) {
+            $validated['status'] = self::STATUS_DRAFT;
+            $validated['is_published'] = false;
+        }
+
         $trade->update($validated);
 
         return back();
@@ -140,6 +160,74 @@ class DirectoryTradeController extends Controller
 
         $trade->update([
             'image_url' => '/storage/' . $path,
+        ]);
+
+        return back();
+    }
+
+    public function uploadGalleryImage(Request $request, Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
+        $request->validate([
+            'image' => ['required', 'image', 'max:4096'],
+        ]);
+
+        $gallery = $trade->gallery_images ?? [];
+
+        if (count($gallery) >= self::GALLERY_LIMIT) {
+            return back()->withErrors([
+                'gallery' => 'Solo puedes cargar hasta 10 fotografias en el contenido.',
+            ]);
+        }
+
+        $path = $request->file('image')->store('directorios/gallery', 'public');
+        $gallery[] = '/storage/' . $path;
+
+        $trade->update([
+            'gallery_images' => $gallery,
+        ]);
+
+        return back();
+    }
+
+    public function deleteGalleryImage(Request $request, Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
+        $validated = $request->validate([
+            'image_url' => ['required', 'string'],
+        ]);
+
+        $gallery = collect($trade->gallery_images ?? []);
+
+        if (!$gallery->contains($validated['image_url'])) {
+            return back();
+        }
+
+        $this->deleteFromPublicDisk($validated['image_url']);
+
+        $trade->update([
+            'gallery_images' => $gallery
+                ->reject(fn ($url) => $url === $validated['image_url'])
+                ->values()
+                ->all(),
+        ]);
+
+        return back();
+    }
+
+    public function revertToDraft(Directorio $trade)
+    {
+        $this->ensureOwner($trade);
+
+        if ($trade->status !== self::STATUS_APPROVED) {
+            return back();
+        }
+
+        $trade->update([
+            'status' => self::STATUS_DRAFT,
+            'is_published' => false,
         ]);
 
         return back();
@@ -176,17 +264,21 @@ class DirectoryTradeController extends Controller
 
         $requiredFields = [
             $trade->comercial_name,
-            $trade->descripcion,
-            $trade->giro,
-            $trade->name,
+            $trade->descripcion_corta,
+            $trade->descripcion_larga,
             $trade->phone,
             $trade->address,
             $trade->image_url,
             $trade->region_id,
             $trade->municipio_id,
+            $trade->personal_name,
+            $trade->personal_phone,
         ];
 
-        $isComplete = collect($requiredFields)->every(fn ($value) => !empty($value)) && $trade->giros()->exists();
+        $hasActivities = collect($trade->activities ?? [])->filter(fn ($value) => filled($value))->isNotEmpty();
+        $isComplete = collect($requiredFields)->every(fn ($value) => !empty($value))
+            && $trade->giros()->exists()
+            && $hasActivities;
 
         if (!$isComplete) {
             return back()->withErrors([
@@ -215,6 +307,10 @@ class DirectoryTradeController extends Controller
         if ($trade->image_url) {
             $this->deleteFromPublicDisk($trade->image_url);
         }
+
+        collect($trade->gallery_images ?? [])->each(function ($url) {
+            $this->deleteFromPublicDisk($url);
+        });
 
         $trade->delete();
 

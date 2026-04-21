@@ -12,7 +12,6 @@ export function GirosDigitalForm({ initialData, tradeId, giros = [] }) {
     const [selectedGiroIds, setSelectedGiroIds] = useState(
         initialData.giros?.map((giro) => giro.id) || [],
     );
-    const [digital, setDigital] = useState(initialData.digital || "");
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
@@ -44,7 +43,6 @@ export function GirosDigitalForm({ initialData, tradeId, giros = [] }) {
             `/directory/trades/${tradeId}`,
             {
                 giro_ids: selectedGiroIds,
-                digital,
             },
             {
                 preserveScroll: true,
@@ -60,7 +58,7 @@ export function GirosDigitalForm({ initialData, tradeId, giros = [] }) {
     return (
         <div className="mt-6 rounded-md border bg-brand-pale p-4">
             <div className="flex items-center justify-between font-medium">
-                Giro y digital
+                Giro
                 <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
                     {isEditing ? (
                         "Cancelar"
@@ -86,9 +84,6 @@ export function GirosDigitalForm({ initialData, tradeId, giros = [] }) {
                             <span className="italic text-brand-ink">Sin giros seleccionados</span>
                         )}
                     </div>
-                    <p className={digital ? "text-brand-text" : "italic text-brand-ink"}>
-                        Digital: {digital || "Sin sitio digital"}
-                    </p>
                 </div>
             ) : (
                 <form onSubmit={onSubmit} className="mt-4 space-y-4">
@@ -157,14 +152,6 @@ export function GirosDigitalForm({ initialData, tradeId, giros = [] }) {
                             </Badge>
                         ))}
                     </div>
-
-                    <Input
-                        disabled={isLoading}
-                        value={digital}
-                        onChange={(e) => setDigital(e.target.value)}
-                        placeholder="Sitio digital (opcional)"
-                        className="bg-white"
-                    />
 
                     <Button type="submit" disabled={isLoading}>
                         Guardar

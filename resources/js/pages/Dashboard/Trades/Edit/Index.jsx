@@ -1,30 +1,38 @@
 import React from "react";
 import { Head, Link } from "@inertiajs/react";
-import { ArrowLeft, Building2, Contact, MapPin } from "lucide-react";
+import { ArrowLeft, Building2, Contact, FileImage, MapPin, UserSquare2 } from "lucide-react";
 
 import MainLayout from "@/Layouts/MainLayout";
 import { Banner } from "@/Components/banner";
 import { IconBadge } from "@/Components/icon-badge";
 import {
     ComercialNameForm,
-    DescriptionForm,
-    KeyActorForm,
+    ShortDescriptionForm,
+    LongDescriptionForm,
+    ActivitiesForm,
+    BusinessAddressForm,
+    BusinessContactForm,
+    PersonalContactForm,
 } from "./Components/SimpleForms";
 import { ImageForm } from "./Components/ImageForm";
 import { Actions } from "./Components/Actions";
 import { GirosDigitalForm } from "./Components/GirosDigitalForm";
 import { RegionMunicipioForm } from "./Components/RegionMunicipioForm";
+import { ContentGalleryForm } from "./Components/ContentGalleryForm";
 
 export default function TradeEditor({ trade, giros, regions }) {
     const requiredFields = [
         trade.comercial_name,
-        trade.descripcion,
-        trade.name,
+        trade.descripcion_corta,
+        trade.descripcion_larga,
+        (trade.activities || []).length ? "ok" : "",
         trade.phone,
         trade.address,
         trade.image_url,
         trade.region_id,
         trade.municipio_id,
+        trade.personal_name,
+        trade.personal_phone,
     ];
 
     const totalFields = requiredFields.length;
@@ -85,15 +93,18 @@ export default function TradeEditor({ trade, giros, regions }) {
                 </div>
 
                 <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <div>
+                    <div className="space-y-6">
                         <div className="flex items-center gap-x-2">
                             <IconBadge variant="teacher" size="md" icon={Building2} />
                             <h2 className="text-xl font-semibold">Personaliza tu negocio</h2>
                         </div>
 
                         <ComercialNameForm initialData={trade} tradeId={trade.id} />
-                        <DescriptionForm initialData={trade} tradeId={trade.id} />
                         <GirosDigitalForm initialData={trade} tradeId={trade.id} giros={giros} />
+                        <ShortDescriptionForm initialData={trade} tradeId={trade.id} />
+                        <LongDescriptionForm initialData={trade} tradeId={trade.id} />
+                        <ActivitiesForm initialData={trade} tradeId={trade.id} />
+                        <BusinessAddressForm initialData={trade} tradeId={trade.id} />
                         <ImageForm initialData={trade} tradeId={trade.id} />
                     </div>
 
@@ -101,9 +112,9 @@ export default function TradeEditor({ trade, giros, regions }) {
                         <div>
                             <div className="mb-6 flex items-center gap-x-2">
                                 <IconBadge variant="teacher" size="md" icon={Contact} />
-                                <h2 className="text-xl font-semibold">Actor clave</h2>
+                                <h2 className="text-xl font-semibold">Contacto</h2>
                             </div>
-                            <KeyActorForm initialData={trade} tradeId={trade.id} />
+                            <BusinessContactForm initialData={trade} tradeId={trade.id} />
                         </div>
 
                         <div>
@@ -112,6 +123,22 @@ export default function TradeEditor({ trade, giros, regions }) {
                                 <h2 className="text-xl font-semibold">Ubicación geográfica</h2>
                             </div>
                             <RegionMunicipioForm initialData={trade} tradeId={trade.id} regions={regions} />
+                        </div>
+
+                        <div>
+                            <div className="mb-6 flex items-center gap-x-2">
+                                <IconBadge variant="teacher" size="md" icon={FileImage} />
+                                <h2 className="text-xl font-semibold">Contenido</h2>
+                            </div>
+                            <ContentGalleryForm initialData={trade} tradeId={trade.id} />
+                        </div>
+
+                        <div>
+                            <div className="mb-6 flex items-center gap-x-2">
+                                <IconBadge variant="teacher" size="md" icon={UserSquare2} />
+                                <h2 className="text-xl font-semibold">Contacto personal</h2>
+                            </div>
+                            <PersonalContactForm initialData={trade} tradeId={trade.id} />
                         </div>
                     </div>
                 </div>

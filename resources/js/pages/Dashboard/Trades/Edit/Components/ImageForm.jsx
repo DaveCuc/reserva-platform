@@ -35,7 +35,7 @@ export const ImageForm = ({ initialData, tradeId }) => {
     return (
         <div className="mt-6 rounded-md border bg-brand-pale p-4">
             <div className="flex items-center justify-between font-medium">
-                Imagen del negocio
+                Foto del negocio
                 <Button onClick={toggleEdit} variant="ghost" className="bg-white hover:bg-brand-soft hover:text-white">
                     {isEditing && <>Cancelar</>}
                     {!isEditing && !initialData.image_url && (

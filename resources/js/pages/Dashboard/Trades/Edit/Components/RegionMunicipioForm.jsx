@@ -3,15 +3,12 @@ import { router } from "@inertiajs/react";
 import { Pencil } from "lucide-react";
 
 import { Button } from "@/Components/ui/button";
-import { Input } from "@/Components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 
 export function RegionMunicipioForm({ initialData, tradeId, regions = [] }) {
     const [isEditing, setIsEditing] = useState(false);
     const [regionId, setRegionId] = useState(initialData.region_id || "");
     const [municipioId, setMunicipioId] = useState(initialData.municipio_id || "");
-    const [address, setAddress] = useState(initialData.address || "");
-    const [mapLocation, setMapLocation] = useState(initialData.map_location || "");
     const [isLoading, setIsLoading] = useState(false);
 
     const currentRegion = useMemo(
@@ -37,8 +34,6 @@ export function RegionMunicipioForm({ initialData, tradeId, regions = [] }) {
             {
                 region_id: regionId,
                 municipio_id: municipioId,
-                address,
-                map_location: mapLocation,
             },
             {
                 preserveScroll: true,
@@ -75,12 +70,7 @@ export function RegionMunicipioForm({ initialData, tradeId, regions = [] }) {
                     <p className={initialData.municipio ? "text-brand-text" : "italic text-brand-ink"}>
                         Municipio: {initialData.municipio?.name || "Sin definir"}
                     </p>
-                    <p className={address ? "text-brand-text" : "italic text-brand-ink"}>
-                        Dirección: {address || "Sin definir"}
-                    </p>
-                    <p className={mapLocation ? "text-brand-text" : "italic text-brand-ink"}>
-                        Ubicación en mapa: {mapLocation || "Sin definir"}
-                    </p>
+                    <p className="italic text-brand-ink">Maps: aún sin implementar</p>
                 </div>
             ) : (
                 <form onSubmit={onSubmit} className="mt-4 space-y-4">
@@ -109,21 +99,7 @@ export function RegionMunicipioForm({ initialData, tradeId, regions = [] }) {
                             ))}
                         </SelectContent>
                     </Select>
-
-                    <Input
-                        disabled={isLoading}
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        placeholder="Dirección"
-                        className="bg-white"
-                    />
-                    <Input
-                        disabled={isLoading}
-                        value={mapLocation}
-                        onChange={(e) => setMapLocation(e.target.value)}
-                        placeholder="Ubicación en mapa (texto temporal)"
-                        className="bg-white"
-                    />
+                    <p className="text-xs italic text-brand-ink">Maps: aún sin implementar.</p>
                     <Button type="submit" disabled={isLoading}>
                         Guardar
                     </Button>

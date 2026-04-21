@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { router } from "@inertiajs/react";
-import { Pencil } from "lucide-react";
+import { Pencil, PlusCircle, Trash2 } from "lucide-react";
 
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Textarea } from "@/Components/ui/textarea";
+import { Editor } from "@/Components/Editor";
+import { Preview } from "@/Components/Preview";
 
 function BaseCard({ title, isEditing, onToggle, children, preview }) {
     return (
@@ -82,9 +84,9 @@ export function ComercialNameForm({ initialData, tradeId }) {
     );
 }
 
-export function DescriptionForm({ initialData, tradeId }) {
+export function ShortDescriptionForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState(initialData.descripcion || "");
+    const [value, setValue] = useState(initialData.descripcion_corta || "");
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (e) => {
@@ -93,7 +95,7 @@ export function DescriptionForm({ initialData, tradeId }) {
 
         router.patch(
             `/directory/trades/${tradeId}`,
-            { descripcion: value },
+            { descripcion_corta: value },
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -107,12 +109,12 @@ export function DescriptionForm({ initialData, tradeId }) {
 
     return (
         <BaseCard
-            title="Descripción"
+            title="Descripción corta"
             isEditing={isEditing}
             onToggle={() => setIsEditing((current) => !current)}
             preview={
-                <p className={`mt-2 text-sm ${initialData.descripcion ? "text-brand-text" : "italic text-brand-ink"}`}>
-                    {initialData.descripcion || "Sin descripción"}
+                <p className={`mt-2 text-sm ${initialData.descripcion_corta ? "text-brand-text" : "italic text-brand-ink"}`}>
+                    {initialData.descripcion_corta || "Sin descripción corta"}
                 </p>
             }
         >
@@ -121,8 +123,8 @@ export function DescriptionForm({ initialData, tradeId }) {
                     disabled={isLoading}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    placeholder="Describe tu negocio y lo que ofreces"
-                    className="min-h-32 bg-white"
+                    placeholder="Describe brevemente tu negocio"
+                    className="min-h-24 bg-white"
                 />
                 <Button type="submit" disabled={!value || isLoading}>
                     Guardar
@@ -132,10 +134,9 @@ export function DescriptionForm({ initialData, tradeId }) {
     );
 }
 
-export function GiroWebsiteForm({ initialData, tradeId }) {
+export function LongDescriptionForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [giro, setGiro] = useState(initialData.giro || "");
-    const [website, setWebsite] = useState(initialData.website || "");
+    const [value, setValue] = useState(initialData.descripcion_larga || "");
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (e) => {
@@ -144,7 +145,7 @@ export function GiroWebsiteForm({ initialData, tradeId }) {
 
         router.patch(
             `/directory/trades/${tradeId}`,
-            { giro, website },
+            { descripcion_larga: value },
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -158,35 +159,27 @@ export function GiroWebsiteForm({ initialData, tradeId }) {
 
     return (
         <BaseCard
-            title="Giro o categoría"
+            title="Descripción larga"
             isEditing={isEditing}
             onToggle={() => setIsEditing((current) => !current)}
             preview={
-                <div className="mt-2 space-y-1 text-sm">
-                    <p className={initialData.giro ? "text-brand-text" : "italic text-brand-ink"}>
-                        Giro: {initialData.giro || "Sin definir"}
-                    </p>
-                    <p className={initialData.website ? "text-brand-text" : "italic text-brand-ink"}>
-                        Sitio web: {initialData.website || "Sin sitio web"}
-                    </p>
+                <div className="mt-2 text-sm">
+                    {initialData.descripcion_larga ? (
+                        <Preview value={initialData.descripcion_larga} />
+                    ) : (
+                        <p className="italic text-brand-ink">Sin descripción larga</p>
+                    )}
                 </div>
             }
         >
             <form onSubmit={onSubmit} className="mt-4 space-y-4">
-                <Input
-                    disabled={isLoading}
-                    value={giro}
-                    onChange={(e) => setGiro(e.target.value)}
-                    placeholder="Ej. Artesanías, hospedaje, alimentos..."
-                    className="bg-white"
+                <Editor
+                    value={value}
+                    onChange={(val) => setValue(val)}
                 />
-                <Input
-                    disabled={isLoading}
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="https://misitio.com"
-                    className="bg-white"
-                />
+                <p className="text-xs text-brand-ink">
+                    Puedes agregar títulos, subtítulos, negritas y viñetas.
+                </p>
                 <Button type="submit" disabled={isLoading}>
                     Guardar
                 </Button>
@@ -195,10 +188,186 @@ export function GiroWebsiteForm({ initialData, tradeId }) {
     );
 }
 
-export function KeyActorForm({ initialData, tradeId }) {
+export function ActivitiesForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(initialData.name || "");
+    const [isCreating, setIsCreating] = useState(false);
+    const [newActivity, setNewActivity] = useState("");
+    const [activities, setActivities] = useState(initialData.activities || []);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const saveActivities = (nextActivities) => {
+        setIsLoading(true);
+
+        router.patch(
+            `/directory/trades/${tradeId}`,
+            { activities: nextActivities },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setIsLoading(false);
+                    setActivities(nextActivities);
+                },
+                onError: () => setIsLoading(false),
+            },
+        );
+    };
+
+    const addActivity = (e) => {
+        e.preventDefault();
+        if (!newActivity.trim()) {
+            return;
+        }
+
+        const next = [...activities, newActivity.trim()];
+        setNewActivity("");
+        setIsCreating(false);
+        saveActivities(next);
+    };
+
+    const updateActivity = (index, value) => {
+        setActivities((current) => current.map((item, itemIndex) => (itemIndex === index ? value : item)));
+    };
+
+    const removeActivity = (index) => {
+        const next = activities.filter((_, itemIndex) => itemIndex !== index);
+        saveActivities(next);
+    };
+
+    const onSubmitInline = (e) => {
+        e.preventDefault();
+        saveActivities(activities.filter((item) => item?.trim()));
+        setIsEditing(false);
+    };
+
+    return (
+        <div className="relative mt-6 rounded-md border bg-brand-pale p-4">
+            <div className="flex items-center justify-between font-medium">
+                Lista de actividades
+                <Button
+                    onClick={() => setIsCreating((current) => !current)}
+                    variant="ghost"
+                    className="bg-white hover:bg-brand-soft hover:text-white"
+                >
+                    {isCreating ? "Cancelar" : <><PlusCircle className="mr-2 h-4 w-4" />Agregar actividad</>}
+                </Button>
+            </div>
+
+            {isCreating && (
+                <form onSubmit={addActivity} className="mt-4 space-y-4">
+                    <Input
+                        disabled={isLoading}
+                        value={newActivity}
+                        onChange={(e) => setNewActivity(e.target.value)}
+                        placeholder="Ej. Recorrido guiado, taller artesanal"
+                        className="bg-white"
+                    />
+                    <Button type="submit" disabled={!newActivity || isLoading}>Guardar</Button>
+                </form>
+            )}
+
+            {!isCreating && !isEditing && (
+                <div className="mt-3 space-y-2 text-sm">
+                    {activities.length ? (
+                        activities.map((activity, index) => (
+                            <div key={`${activity}-${index}`} className="rounded-md bg-white px-3 py-2 text-brand-text">
+                                {activity}
+                            </div>
+                        ))
+                    ) : (
+                        <p className="italic text-brand-ink">Sin actividades registradas</p>
+                    )}
+                    <Button
+                        onClick={() => setIsEditing(true)}
+                        variant="ghost"
+                        className="mt-2 bg-white hover:bg-brand-soft hover:text-white"
+                    >
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Editar lista
+                    </Button>
+                </div>
+            )}
+
+            {isEditing && (
+                <form onSubmit={onSubmitInline} className="mt-4 space-y-3">
+                    {activities.length ? (
+                        activities.map((activity, index) => (
+                            <div key={`${index}-${activity}`} className="flex items-center gap-2">
+                                <Input
+                                    value={activity}
+                                    onChange={(e) => updateActivity(index, e.target.value)}
+                                    className="bg-white"
+                                />
+                                <Button
+                                    type="button"
+                                    variant="destructive"
+                                    size="sm"
+                                    onClick={() => removeActivity(index)}
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="italic text-brand-ink">Sin actividades registradas</p>
+                    )}
+                    <div className="flex items-center gap-2">
+                        <Button type="submit" disabled={isLoading}>Guardar cambios</Button>
+                        <Button type="button" variant="ghost" onClick={() => setIsEditing(false)}>Cancelar</Button>
+                    </div>
+                </form>
+            )}
+        </div>
+    );
+}
+
+export function BusinessAddressForm({ initialData, tradeId }) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [address, setAddress] = useState(initialData.address || "");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        router.patch(
+            `/directory/trades/${tradeId}`,
+            { address },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setIsLoading(false);
+                    setIsEditing(false);
+                },
+                onError: () => setIsLoading(false),
+            },
+        );
+    };
+
+    return (
+        <BaseCard
+            title="Dirección del negocio"
+            isEditing={isEditing}
+            onToggle={() => setIsEditing((current) => !current)}
+            preview={<p className={`mt-2 text-sm ${initialData.address ? "text-brand-text" : "italic text-brand-ink"}`}>{initialData.address || "Sin dirección"}</p>}
+        >
+            <form onSubmit={onSubmit} className="mt-4 space-y-4">
+                <Input
+                    disabled={isLoading}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Dirección del negocio"
+                    className="bg-white"
+                />
+                <Button type="submit" disabled={isLoading}>Guardar</Button>
+            </form>
+        </BaseCard>
+    );
+}
+
+export function BusinessContactForm({ initialData, tradeId }) {
+    const [isEditing, setIsEditing] = useState(false);
     const [phone, setPhone] = useState(initialData.phone || "");
+    const [website, setWebsite] = useState(initialData.website || "");
     const [email, setEmail] = useState(initialData.email || "");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -208,7 +377,7 @@ export function KeyActorForm({ initialData, tradeId }) {
 
         router.patch(
             `/directory/trades/${tradeId}`,
-            { name, phone, email },
+            { phone, website, email },
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -222,36 +391,30 @@ export function KeyActorForm({ initialData, tradeId }) {
 
     return (
         <BaseCard
-            title="Actor clave"
+            title="Contacto"
             isEditing={isEditing}
             onToggle={() => setIsEditing((current) => !current)}
             preview={
                 <div className="mt-2 space-y-1 text-sm">
-                    <p className={initialData.name ? "text-brand-text" : "italic text-brand-ink"}>
-                        Nombre y apellidos: {initialData.name || "Sin definir"}
-                    </p>
-                    <p className={initialData.phone ? "text-brand-text" : "italic text-brand-ink"}>
-                        Teléfono: {initialData.phone || "Sin definir"}
-                    </p>
-                    <p className={initialData.email ? "text-brand-text" : "italic text-brand-ink"}>
-                        Correo: {initialData.email || "Sin definir"}
-                    </p>
+                    <p className={initialData.phone ? "text-brand-text" : "italic text-brand-ink"}>Teléfono: {initialData.phone || "Sin definir"}</p>
+                    <p className={initialData.website ? "text-brand-text" : "italic text-brand-ink"}>Página web: {initialData.website || "Sin definir"}</p>
+                    <p className={initialData.email ? "text-brand-text" : "italic text-brand-ink"}>Correo: {initialData.email || "Sin definir"}</p>
                 </div>
             }
         >
             <form onSubmit={onSubmit} className="mt-4 space-y-4">
                 <Input
                     disabled={isLoading}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Nombre y apellidos"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Número de teléfono del negocio"
                     className="bg-white"
                 />
                 <Input
                     disabled={isLoading}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Número de teléfono"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    placeholder="https://sitio-negocio.com (opcional)"
                     className="bg-white"
                 />
                 <Input
@@ -259,7 +422,7 @@ export function KeyActorForm({ initialData, tradeId }) {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Correo"
+                    placeholder="Correo del negocio (opcional)"
                     className="bg-white"
                 />
                 <Button type="submit" disabled={isLoading}>
@@ -270,10 +433,11 @@ export function KeyActorForm({ initialData, tradeId }) {
     );
 }
 
-export function LocationForm({ initialData, tradeId }) {
+export function PersonalContactForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [address, setAddress] = useState(initialData.address || "");
-    const [mapLocation, setMapLocation] = useState(initialData.map_location || "");
+    const [name, setName] = useState(initialData.personal_name || "");
+    const [phone, setPhone] = useState(initialData.personal_phone || "");
+    const [email, setEmail] = useState(initialData.personal_email || "");
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (e) => {
@@ -282,7 +446,11 @@ export function LocationForm({ initialData, tradeId }) {
 
         router.patch(
             `/directory/trades/${tradeId}`,
-            { address, map_location: mapLocation },
+            {
+                personal_name: name,
+                personal_phone: phone,
+                personal_email: email,
+            },
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -296,16 +464,19 @@ export function LocationForm({ initialData, tradeId }) {
 
     return (
         <BaseCard
-            title="Ubicación geográfica"
+            title="Contacto personal"
             isEditing={isEditing}
             onToggle={() => setIsEditing((current) => !current)}
             preview={
                 <div className="mt-2 space-y-1 text-sm">
-                    <p className={initialData.address ? "text-brand-text" : "italic text-brand-ink"}>
-                        Dirección: {initialData.address || "Sin definir"}
+                    <p className={initialData.personal_name ? "text-brand-text" : "italic text-brand-ink"}>
+                        Nombre completo: {initialData.personal_name || "Sin definir"}
                     </p>
-                    <p className={initialData.map_location ? "text-brand-text" : "italic text-brand-ink"}>
-                        Ubicación en mapa: {initialData.map_location || "Sin definir"}
+                    <p className={initialData.personal_phone ? "text-brand-text" : "italic text-brand-ink"}>
+                        Teléfono personal: {initialData.personal_phone || "Sin definir"}
+                    </p>
+                    <p className={initialData.personal_email ? "text-brand-text" : "italic text-brand-ink"}>
+                        Correo personal: {initialData.personal_email || "Sin definir"}
                     </p>
                 </div>
             }
@@ -313,16 +484,24 @@ export function LocationForm({ initialData, tradeId }) {
             <form onSubmit={onSubmit} className="mt-4 space-y-4">
                 <Input
                     disabled={isLoading}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Dirección"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Nombre completo"
                     className="bg-white"
                 />
                 <Input
                     disabled={isLoading}
-                    value={mapLocation}
-                    onChange={(e) => setMapLocation(e.target.value)}
-                    placeholder="Ubicación en mapa (texto temporal)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Número de teléfono personal"
+                    className="bg-white"
+                />
+                <Input
+                    disabled={isLoading}
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Correo personal (opcional)"
                     className="bg-white"
                 />
                 <Button type="submit" disabled={isLoading}>

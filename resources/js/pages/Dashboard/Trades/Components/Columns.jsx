@@ -1,5 +1,5 @@
 import { router } from "@inertiajs/react";
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
 
 import { Button } from "@/Components/ui/button";
 import {
@@ -46,19 +46,32 @@ export const columns = [
         },
     },
     {
-        accessorKey: "email",
+        accessorKey: "descripcion_corta",
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Correo
+                Descripción corta
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
         cell: ({ row }) => {
-            const value = row.getValue("email");
-            return value ? value : "Sin definir";
+            const value = row.getValue("descripcion_corta");
+            if (!value) {
+                return "Sin definir";
+            }
+
+            return String(value).length > 70 ? `${String(value).slice(0, 70)}...` : value;
+        },
+    },
+    {
+        accessorKey: "phone",
+        header: "Contacto negocio",
+        cell: ({ row }) => {
+            const phone = row.original.phone || "Sin teléfono";
+            const email = row.original.email || "Sin correo";
+            return `${phone} | ${email}`;
         },
     },
     {
@@ -113,18 +126,6 @@ export const columns = [
                         >
                             <Pencil className="mr-2 h-4 w-4" />
                             Editar
-                        </DropdownMenuItem>
-
-                        <DropdownMenuItem
-                            className="cursor-pointer text-rose-700 focus:text-rose-800"
-                            onClick={() => {
-                                if (window.confirm("¿Deseas eliminar este registro? Esta acción no se puede deshacer.")) {
-                                    router.delete(`/directory/trades/${id}`);
-                                }
-                            }}
-                        >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Eliminar
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

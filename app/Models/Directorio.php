@@ -20,6 +20,9 @@ class Directorio extends Model
         'municipio_id',
         'name',
         'descripcion',
+        'descripcion_corta',
+        'descripcion_larga',
+        'activities',
         'website',
         'digital',
         'image_url',
@@ -29,11 +32,17 @@ class Directorio extends Model
         'map_location',
         'phone',
         'email',
+        'personal_name',
+        'personal_phone',
+        'personal_email',
+        'gallery_images',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
         'status' => 'string',
+        'activities' => 'array',
+        'gallery_images' => 'array',
     ];
 
     public function user(): BelongsTo

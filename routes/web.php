@@ -115,10 +115,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/directory/trades/{trade}/edit', [DirectoryTradeController::class, 'edit'])->name('directory.trades.edit');
     Route::patch('/directory/trades/{trade}', [DirectoryTradeController::class, 'update'])->name('directory.trades.update');
     Route::patch('/directory/trades/{trade}/submit', [DirectoryTradeController::class, 'submitForReview'])->name('directory.trades.submit');
+    Route::patch('/directory/trades/{trade}/revert-draft', [DirectoryTradeController::class, 'revertToDraft'])->name('directory.trades.revert-draft');
     Route::delete('/directory/trades/{trade}', [DirectoryTradeController::class, 'destroy'])->name('directory.trades.destroy');
     Route::patch('/directory/trades/{trade}/publish', [DirectoryTradeController::class, 'publish'])->name('directory.trades.publish');
     Route::patch('/directory/trades/{trade}/unpublish', [DirectoryTradeController::class, 'unpublish'])->name('directory.trades.unpublish');
     Route::post('/directory/trades/{trade}/image', [DirectoryTradeController::class, 'uploadImage'])->name('directory.trades.image');
+    Route::post('/directory/trades/{trade}/gallery-image', [DirectoryTradeController::class, 'uploadGalleryImage'])->name('directory.trades.gallery.image');
+    Route::delete('/directory/trades/{trade}/gallery-image', [DirectoryTradeController::class, 'deleteGalleryImage'])->name('directory.trades.gallery.image.delete');
 
     Route::get('/teacher/solicitudes', [DirectoryTradeController::class, 'requestsIndex'])->name('teacher.requests.index');
     Route::get('/teacher/solicitudes/{trade}', [DirectoryTradeController::class, 'requestShow'])->name('teacher.requests.show');
