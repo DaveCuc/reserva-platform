@@ -40,12 +40,14 @@
     --brand-dark: #4E6411;
     --brand-text: #43570e;
     --brand-soft: #889b76;
-    --brand-pale: #ffffff;
+    --brand-pale: #7eac00;
     --brand-ink: #405352;
     --brand-mint: #eafee0;
     --brand-panel: #e4e4e4;
-    --brand-earth: #4f3b24;
+    --brand-earth: #425e00;
     --brand-ring: #8fb81f;
+    --brand-light: #f4f6f1;
+    --light: #ffffff;
   }
 
   .dark {
@@ -88,7 +90,7 @@
     --brand-ink: #405352;
     --brand-mint: #eafee0;
     --brand-panel: #e4e4e4;
-    --brand-earth: #4f3b24;
+    --brand-earth: #425e00;
     --brand-ring: #8fb81f;
   }
 }
@@ -97,6 +99,7 @@
   * {
     @apply border-border;
   }
+
   html,
   body,
   #app {

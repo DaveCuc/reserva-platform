@@ -33,13 +33,13 @@ export default function NewsSection() {
         },
     ];
 
-    return ( 
+    return (
         <section className="p-4 md:p-6">
-            <div className="bg-brand p-3 md:p-4 rounded-3xl py-8 md:py-10 shadow-xl">
+            <div className=" p-3 md:p-4 rounded-3xl py-8 md:py-10 ">
                 <div className="container mx-auto px-2 md:px-4">
                     <div className="text-center mb-12 ">
-                        <h2 className="text-4xl font-bold text-white">Eventos Recientes</h2>
-                        <p className="text-white mt-2">Mantente al día con las últimas novedades de la reserva.</p>
+                        <h2 className="text-6xl font-bold text-white">Eventos Recientes</h2>
+                        <p className="text-brand-light text-2xl mt-2 text-white">Mantente al día con las últimas novedades de la reserva.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {newsData.map((news) => (
@@ -78,5 +78,5 @@ export default function NewsSection() {
                 </div>
             </div>
         </section>
-     );
+    );
 }

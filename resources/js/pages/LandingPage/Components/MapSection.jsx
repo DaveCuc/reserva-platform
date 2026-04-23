@@ -12,10 +12,10 @@ import { LuMapPin } from "react-icons/lu";
 import { motion } from "framer-motion";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 100 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 1 }
+    initial: { opacity: 0, y: 100 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 }
 };
 
 export default function MapSection() {
@@ -40,16 +40,16 @@ export default function MapSection() {
         },
     ];
 
-  
 
-    return ( 
-        <section className="py-20" >
-            <div className="container mx-auto px-4 max-w-7xl">
+
+    return (
+        <section className="p-10  mx-auto bg-white " >
+            <div className="container mx-auto px-4 max-w-7xl px-5">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div className="text-black">
-                        <h2 className="text-4xl font-bold mb-4">Explora Nuestras Rutas</h2>
-                        <p className="text-black mb-6">
-                            Sumérgete en la vasta riqueza biocultural de la Reserva a través de itinerarios cuidadosamente diseñados. Cada recorrido es una oportunidad única para vivir de cerca el patrimonio natural, aprender de las tradiciones ancestrales y apoyar directamente la economía de las comunidades locales a través de un turismo responsable. 
+                        <h2 className="text-6xl font-bold mb-4 py-5">Explora Nuestras Rutas</h2>
+                        <p className="text-black mb-6 text-lg">
+                            Sumérgete en la vasta riqueza biocultural de la Reserva a través de itinerarios cuidadosamente diseñados. Cada recorrido es una oportunidad única para vivir de cerca el patrimonio natural, aprender de las tradiciones ancestrales y apoyar directamente la economía de las comunidades locales a través de un turismo responsable.
                         </p>
                         <ul className="space-y-4 mb-8">
                             {rutas.map((ruta) => (
@@ -57,7 +57,7 @@ export default function MapSection() {
                                     <LuMapPin className="h-5 w-5 text-green-600 mr-3 mt-1" />
                                     <div>
                                         <span className="font-medium block">{ruta.titulo}</span>
-                                        <p className="text-sm text-black/80 mt-1">{ruta.descripcion}</p>
+                                        <p className="text-md text-black/80 mt-1">{ruta.descripcion}</p>
                                     </div>
                                 </li>
                             ))}
@@ -91,5 +91,5 @@ export default function MapSection() {
                 </div>
             </div>
         </section>
-     );
+    );
 }
