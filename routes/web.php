@@ -31,6 +31,10 @@ Route::get('/cursos', function () {
     return Inertia::render('LandingPage/Cursos');
 })->name('cursos.index');
 
+Route::get('/negocio', function () {
+    return Inertia::render('LandingPage/Negocio/index');
+})->name('negocio');
+
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---
 Route::get('/api/directorio', function (\Illuminate\Http\Request $request) {
     $query = \App\Models\Directorio::query()
@@ -376,6 +380,8 @@ Route::post('/webhook', function(\Illuminate\Http\Request $request) {
     
     return response('Webhook Handled By Laravel', 200);
 });
+
+// borrar al finalizar migración
 
 
 Route::get('/migrar-tablas', function () {

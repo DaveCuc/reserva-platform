@@ -99,7 +99,7 @@ export function RegionMunicipioForm({ initialData, tradeId, regions = [] }) {
                             ))}
                         </SelectContent>
                     </Select>
-                    <p className="text-xs italic text-brand-ink">Maps: aún sin implementar.</p>
+                    
                     <Button type="submit" disabled={isLoading}>
                         Guardar
                     </Button>

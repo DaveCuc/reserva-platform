@@ -10,11 +10,11 @@ import {
     ShortDescriptionForm,
     LongDescriptionForm,
     ActivitiesForm,
-    BusinessAddressForm,
     BusinessContactForm,
     PersonalContactForm,
 } from "./Components/SimpleForms";
 import { ImageForm } from "./Components/ImageForm";
+import {BusinessAddressForm} from "./Components/BusinessAddressForm";
 import { Actions } from "./Components/Actions";
 import { GirosDigitalForm } from "./Components/GirosDigitalForm";
 import { RegionMunicipioForm } from "./Components/RegionMunicipioForm";

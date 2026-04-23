@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { router } from "@inertiajs/react";
 import { Pencil, PlusCircle, Trash2 } from "lucide-react";
+import { MapContainer } from 'react-leaflet'
+
+
+
 
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
@@ -8,7 +12,7 @@ import { Textarea } from "@/Components/ui/textarea";
 import { Editor } from "@/Components/Editor";
 import { Preview } from "@/Components/Preview";
 
-function BaseCard({ title, isEditing, onToggle, children, preview }) {
+export function BaseCard({ title, isEditing, onToggle, children, preview }) {
     return (
         <div className="mt-6 rounded-md border bg-brand-pale p-4">
             <div className="flex items-center justify-between font-medium">
@@ -320,49 +324,7 @@ export function ActivitiesForm({ initialData, tradeId }) {
     );
 }
 
-export function BusinessAddressForm({ initialData, tradeId }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [address, setAddress] = useState(initialData.address || "");
-    const [isLoading, setIsLoading] = useState(false);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        router.patch(
-            `/directory/trades/${tradeId}`,
-            { address },
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsLoading(false);
-                    setIsEditing(false);
-                },
-                onError: () => setIsLoading(false),
-            },
-        );
-    };
-
-    return (
-        <BaseCard
-            title="Dirección del negocio"
-            isEditing={isEditing}
-            onToggle={() => setIsEditing((current) => !current)}
-            preview={<p className={`mt-2 text-sm ${initialData.address ? "text-brand-text" : "italic text-brand-ink"}`}>{initialData.address || "Sin dirección"}</p>}
-        >
-            <form onSubmit={onSubmit} className="mt-4 space-y-4">
-                <Input
-                    disabled={isLoading}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Dirección del negocio"
-                    className="bg-white"
-                />
-                <Button type="submit" disabled={isLoading}>Guardar</Button>
-            </form>
-        </BaseCard>
-    );
-}
 
 export function BusinessContactForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
