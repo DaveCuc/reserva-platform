@@ -31,8 +31,11 @@ Route::get('/cursos', function () {
     return Inertia::render('LandingPage/Cursos');
 })->name('cursos.index');
 
-Route::get('/negocio', function () {
-    return Inertia::render('LandingPage/Negocio/index');
+Route::get('/negocio/{trade}', function (\App\Models\Directorio $trade) {
+    $trade->load(['giros', 'region', 'municipio']);
+    return Inertia::render('LandingPage/Negocio/index', [
+        'trade' => $trade
+    ]);
 })->name('negocio');
 
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---

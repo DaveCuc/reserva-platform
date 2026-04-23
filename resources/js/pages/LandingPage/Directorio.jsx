@@ -187,6 +187,14 @@ const ResultadoSection = () => {
                                                     <span className="font-semibold text-white">Email:</span> {item.email || "No disponible"}
                                                 </p>
                                             </CardContent>
+                                            <div className="mt-6">
+                                                <Button 
+                                                    onClick={() => router.visit(`/negocio/${item.id}`)}
+                                                    className="w-full bg-brand-ring hover:bg-brand text-white font-semibold rounded-xl"
+                                                >
+                                                    Ver Negocio
+                                                </Button>
+                                            </div>
                                         </div>
                                     </Card>
                                 );
