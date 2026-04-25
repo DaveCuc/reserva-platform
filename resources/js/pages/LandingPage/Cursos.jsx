@@ -13,9 +13,9 @@ const fadeUp = {
 
 const RegistroSection = () => {
     return ( 
-        <section className="py-20">
+        <section className="bg-brand-ring py-20">
             <div className="container mx-auto text-center px-4">
-                <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Te gustaria formar parte?</h1>
+                <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">¿Te gustaria formar parte?</h1>
                 <motion.div {...fadeUp}>
                     <Button
                         variant="default"
@@ -33,13 +33,13 @@ const RegistroSection = () => {
 
 const CursoSection = () => {
     return ( 
-        <section className="pt-[100px] p-10 max-w-7xl mx-auto">
-            <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
+        <section className="bg-brand-earth pt-[100px] p-10 max-w-7xl mx-auto">
+            <div className=" p-5  py-15 ">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="order-2 md:order-1">
-                            <h2 className="text-3xl font-bold text-white mb-4">Cursos</h2>
-                            <p className="text-white font-semibold mb-6">Capacitación Certificada</p>
+                            <h2 className="text-6xl font-bold text-white mb-4">Cursos</h2>
+                            <p className="text-white font-semibold mb-6 text-4xl">Capacitación Certificada</p>
                             <p className="text-white mb-4">
                                Nuestro programa de formación está diseñado para empoderar a los prestadores de servicios turísticos locales. A través de módulos especializados en gestión, prácticas de sostenibilidad y atención al visitante, brindamos las herramientas necesarias para elevar la calidad de las experiencias dentro de la Reserva.
                             </p>
@@ -63,9 +63,9 @@ const CursoSection = () => {
 
 const TeacherSection = () => {
     return ( 
-        <section className="py-12 ">
+        <section className="bg-brand-soft py-12 ">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-12">Conoce a Nuestros Profesores</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white">Conoce a Nuestros Profesores</h2>
                 <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
                     <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
                         <img 

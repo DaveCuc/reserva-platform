@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/react";
 
 export default function CursosSection() {
     return (
-        <section className="p-10  mx-auto bg-white">
+        <section className="p-20  mx-auto bg-brand-panel">
 
             <div className="text-brand-ink container mx-auto px-4 text-center max-w-7xl">
                 <h1 className="text-6xl font-bold text-brand-text text-brand-ink py-5">Únete a nuestra comunidad</h1>

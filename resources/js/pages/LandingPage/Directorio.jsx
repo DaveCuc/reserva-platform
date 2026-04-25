@@ -62,9 +62,9 @@ const getItemImage = (item, index) => item?.image_url || item?.imageUrl || `http
 
 const RegistroSection = () => {
     return (
-        <section className="py-20">
-            <div className="container mx-auto text-center px-4">
-                <h1 className="text-3xl md:text-4xl font-bold mb-6">¿Quieres aparecer?</h1>
+        <section className="bg-brand-ring py-20">
+            <div className=" container mx-auto text-center px-4">
+                <h1 className="text-white text-3xl md:text-6xl font-bold mb-6">¿Quieres aparecer?</h1>
                 <motion.div {...fadeUp}>
                     <Button
                         variant="default"
@@ -118,14 +118,14 @@ const ResultadoSection = () => {
     }, [hasSearch, params]);
 
     return (
-        <section className="p-10">
-            <div className="bg-brand p-5 rounded-3xl py-15 shadow-xl">
+        <section className="bg-brand-soft p-10">
+            <div className=" p-5  py-15 ">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12 ">
-                        <h2 className="text-4xl font-bold text-white">Resultados de búsqueda</h2>
+                        <h2 className="text-6xl font-bold text-white">Resultados de búsqueda</h2>
                     </div>
                     {!hasSearch ? (
-                        <p className="text-white text-center font-medium">Selecciona una opción y presiona "Buscar ahora" para ver resultados.</p>
+                        <p className="text-white text-center font-medium text-2xl">Selecciona una opción y presiona "Buscar ahora" para ver resultados.</p>
                     ) : isLoading ? (
                         <p className="text-white text-center font-medium">Buscando resultados...</p>
                     ) : items.length === 0 ? (
@@ -273,9 +273,9 @@ const BuscadorSection = () => {
                 <div className="h-full flex items-center justify-center">
                     <div className="container mx-auto px-4 text-center">
                         <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-extrabold mb-2">Busca en nuestro Directorio</h2>
-                            <h1 className="text-5xl md:text-7xl font-extrabold mb-4">Reserva de la Biosfera</h1>
-                            <h2 className="text-xl md:text-3xl font-extrabold mb-8">Todo en un solo lugar</h2>
+                            <h2 className="text-4xl font-sans mb-2">Busca en nuestro Directorio</h2>
+                            <h1 className="text-5xl md:text-8xl font-extrabold mb-4">Reserva de la Biosfera</h1>
+                            <h2 className="text-xl md:text-3xl font-sans mb-8">Todo en un solo lugar</h2>
 
                             <form onSubmit={onSubmit} className="bg-white/20 backdrop-blur-md p-6 rounded-3xl shadow-lg md:flex md:items-end md:gap-4 border border-white/20">
                                 <div className="grow mb-4 md:mb-0 text-left">

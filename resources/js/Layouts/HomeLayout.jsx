@@ -12,7 +12,7 @@ import {
 
 export const Logo = ({ isScrolled = false, className = "" }) => (
     <img
-        src={isScrolled ? "/logo.svg" : "/LOGO2.svg"}
+        src={isScrolled ? "/logo.svg" : "/logo2.svg"}
         alt="Logo"
         className={cn("h-[50px] w-auto transition-all", className)}
     />
@@ -120,7 +120,7 @@ export const HomeNavbar = () => {
 
 export const Footer = () => {
     return (
-        <footer className="bg-brand-earth text-white py-2 p-5 pb-8 px-8 mt-auto z-10 relative">
+        <footer className="bg-brand-dark text-white py-2 p-5 pb-8 px-8 mt-auto z-10 relative">
             <div className="container mx-auto max-w-7xl pt-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-1">

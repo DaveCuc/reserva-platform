@@ -34,7 +34,7 @@ export default function NewsSection() {
     ];
 
     return (
-        <section className="p-4 md:p-6">
+        <section className="bg-brand p-4 md:p-6">
             <div className=" p-3 md:p-4 rounded-3xl py-8 md:py-10 ">
                 <div className="container mx-auto px-2 md:px-4">
                     <div className="text-center mb-12 ">

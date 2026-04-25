@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function ConocenosSection() {
     return (
-        <section className="p-10 max-w-7xl mx-auto">
-            <div className=" p-5 rounded-3xl py-15">
+        <section className="bg-brand-earth p-20 ">
+            <div className=" p-5 rounded-3xl py-15 max-w-7xl mx-auto">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>

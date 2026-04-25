@@ -29,8 +29,8 @@ const MapSection = () => {
 
 const InfoSection = () => {
     return ( 
-        <section className="p-10 max-w-7xl mx-auto">
-            <div className="bg-brand p-5 rounded-3xl py-15 text-white">
+        <section className="p-10 max-w-7xl mx-auto bg-brand-soft">
+            <div className=" p-5  py-15 text-white">
                 <div className="container mx-auto px-4">
                     <h2 className="text-2xl font-bold mb-4">Reserva de la Biosfera</h2>
                     <p className="mb-4">
