@@ -4,9 +4,9 @@ import "react-image-gallery/styles/image-gallery.css";
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { 
+import {
     Bus, Wrench, Leaf, Trees, Waves, Mountain, BedDouble, Droplets, Utensils, Info,
-    MapPin, Phone, Mail, Globe 
+    MapPin, Phone, Mail, Globe
 } from "lucide-react";
 
 // Fix Leaflet marker icon
@@ -39,7 +39,7 @@ const SummarySection = ({ trade }) => {
     if (!trade) return null;
 
     const mapLocation = trade.map_location ? trade.map_location.split(',').map(Number) : null;
-    
+
     // Transform gallery images
     const galleryItems = (trade.gallery_images || []).map(imgUrl => ({
         original: imgUrl,
@@ -55,88 +55,116 @@ const SummarySection = ({ trade }) => {
     }
 
     return (
-        <div className="space-y-10">
-            {/* Cabecera */}
-            <div className="space-y-4 text-center md:text-left">
-                <h1 className="text-4xl font-bold text-brand-text">{trade.comercial_name}</h1>
-                {trade.descripcion_corta && (
-                    <p className="text-lg text-brand-ink max-w-3xl">{trade.descripcion_corta}</p>
-                )}
-            </div>
+        <section className="bg-brand-soft mx-auto px-20 md:px-25 py-15 md:py-20 pb-20">
+            <div className=" container max-w-7xl mx-auto px-5 ">
+                <div className="space-y-10">
+                    {/* Cabecera */}
+                    <div className="space-y-4 text-center md:text-left">
+                        <h1 className="text-9xl text-white font-bold text-brand-text">{trade.comercial_name}</h1>
+                        {trade.descripcion_corta && (
+                            <p className="text-3xl text-brand-ink max-w-3xl  text-white">{trade.descripcion_corta}</p>
+                        )}
+                    </div>
 
-            {/* Giros */}
-            {trade.giros && trade.giros.length > 0 && (
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                    {trade.giros.map((giro, idx) => (
-                        <div key={idx} className="flex items-center px-4 py-2 border rounded-full bg-brand-pale text-brand-text font-medium text-sm shadow-sm">
-                            {getGiroIcon(giro.name)}
-                            {giro.name}
+
+                    {/* Giros */}
+                    <div className="text-right">
+                        <h2 className="text-5xl text-white font-bold">Giros</h2>
+                    </div>
+                    {trade.giros && trade.giros.length > 0 && (
+                        <div className="flex flex-wrap gap-3 justify-center md:justify-end mt-4">
+                            {trade.giros.map((giro, idx) => (
+                                <div key={idx} className="flex items-center px-4 py-2 border rounded-full bg-brand-earth font-medium text-2xl shadow-sm text-white">
+                                    {getGiroIcon(giro.name)}
+                                    {giro.name}
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
+
+                    {/* Contacto */}
+                    <div>
+                        <h2 className="text-5xl text-white font-bold">Contacto</h2>
+                    </div>
+
+                    <div className="flex flex-wrap gap-6 justify-center md:justify-start bg-white p-4 rounded-xl border shadow-sm">
+                        {trade.address && (
+                            <div className="flex items-center text-lg text-brand-ink">
+                                <MapPin className="w-5 h-5 mr-2 text-brand-text" />
+                                {trade.address}
+                            </div>
+                        )}
+                        {trade.phone && (
+                            <div className="flex items-center text-lg text-brand-ink">
+                                <Phone className="w-5 h-5 mr-2 text-brand-text" />
+                                {trade.phone}
+                            </div>
+                        )}
+                        {trade.email && (
+                            <div className="flex items-center text-lg text-brand-ink">
+                                <Mail className="w-5 h-5 mr-2 text-brand-text" />
+                                {trade.email}
+                            </div>
+                        )}
+                        {trade.website && (
+                            <div className="flex items-center text-lg text-brand-ink">
+                                <Globe className="w-5 h-5 mr-2 text-brand-text" />
+                                <a href={trade.website} target="_blank" rel="noreferrer" className="hover:underline">{trade.website}</a>
+                            </div>
+                        )}
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    {/* Contenido Visual (Galería y Mapa) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-5 lg:grid-rows-5 gap-6 lg:gap-8 lg:min-h-[600px]">
+
+                        {/* div1: Galería */}
+                        {galleryItems.length > 0 && (
+                            <div className="lg:col-span-3 lg:row-span-5 rounded-xl overflow-hidden shadow-sm border bg-white p-2">
+                                <ImageGallery
+                                    items={galleryItems}
+                                    showPlayButton={false}
+                                    showFullscreenButton={true}
+                                    showThumbnails={galleryItems.length > 1}
+                                />
+                            </div>
+                        )}
+
+                        {/* div3: Calificaciones (Próximamente) */}
+                        <div className="lg:col-span-2 lg:col-start-4 lg:row-start-1 rounded-xl overflow-hidden shadow-sm border border-white/20 bg-white/10 p-6 flex flex-col items-center justify-center backdrop-blur-md">
+                            <h3 className="text-white font-bold text-2xl mb-1">Calificaciones</h3>
+                            <span className="text-white/70 text-sm font-medium uppercase tracking-wider">Próximamente</span>
+                        </div>
+
+                        {/* div2: Mapa */}
+                        {mapLocation && mapLocation.length === 2 && !isNaN(mapLocation[0]) && (
+                            <div className="lg:col-span-2 lg:row-span-4 lg:col-start-4 lg:row-start-2 rounded-xl overflow-hidden shadow-sm border h-[400px] lg:h-full z-0 relative">
+                                <MapContainer
+                                    center={mapLocation}
+                                    zoom={15}
+                                    scrollWheelZoom={false}
+                                    style={{ height: "100%", width: "100%", zIndex: 0 }}
+                                >
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    />
+                                    <Marker position={mapLocation} />
+                                </MapContainer>
+                            </div>
+                        )}
+                    </div>
                 </div>
-            )}
-
-            {/* Contacto */}
-            <div className="flex flex-wrap gap-6 justify-center md:justify-start bg-white p-4 rounded-xl border shadow-sm">
-                {trade.address && (
-                    <div className="flex items-center text-sm text-brand-ink">
-                        <MapPin className="w-5 h-5 mr-2 text-brand-text" />
-                        {trade.address}
-                    </div>
-                )}
-                {trade.phone && (
-                    <div className="flex items-center text-sm text-brand-ink">
-                        <Phone className="w-5 h-5 mr-2 text-brand-text" />
-                        {trade.phone}
-                    </div>
-                )}
-                {trade.email && (
-                    <div className="flex items-center text-sm text-brand-ink">
-                        <Mail className="w-5 h-5 mr-2 text-brand-text" />
-                        {trade.email}
-                    </div>
-                )}
-                {trade.website && (
-                    <div className="flex items-center text-sm text-brand-ink">
-                        <Globe className="w-5 h-5 mr-2 text-brand-text" />
-                        <a href={trade.website} target="_blank" rel="noreferrer" className="hover:underline">{trade.website}</a>
-                    </div>
-                )}
             </div>
-
-            {/* Contenido Visual (Galería y Mapa) */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Galería */}
-                {galleryItems.length > 0 && (
-                    <div className="rounded-xl overflow-hidden shadow-sm border bg-white p-2">
-                        <ImageGallery 
-                            items={galleryItems} 
-                            showPlayButton={false} 
-                            showFullscreenButton={true}
-                            showThumbnails={galleryItems.length > 1}
-                        />
-                    </div>
-                )}
-
-                {/* Mapa */}
-                {mapLocation && mapLocation.length === 2 && !isNaN(mapLocation[0]) && (
-                    <div className="rounded-xl overflow-hidden shadow-sm border h-[400px] lg:h-auto min-h-[400px] z-0 relative">
-                        <MapContainer
-                            center={mapLocation}
-                            zoom={15}
-                            scrollWheelZoom={false}
-                            style={{ height: "100%", width: "100%", minHeight: "400px", zIndex: 0 }}
-                        >
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <Marker position={mapLocation} />
-                        </MapContainer>
-                    </div>
-                )}
-            </div>
-        </div>
+        </section>
     );
 }
 

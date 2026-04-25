@@ -13,11 +13,10 @@ export default function Negocio({ trade }) {
             <Head title={trade.comercial_name || "Negocio"} />
             <div className="pb-20">
                 <HeroSection trade={trade} />
-                <div className="container mx-auto px-4 md:px-8 mt-10 space-y-10">
-                    <SummarySection trade={trade} />
-                    <ActivitysSection activities={trade.activities} />
-                    <DescriptionSection trade={trade} />
-                </div>
+                <SummarySection trade={trade} />
+                <ActivitysSection activities={trade.activities} />
+                <DescriptionSection trade={trade} />
+
             </div>
         </HomeLayout>
     );
