@@ -60,7 +60,7 @@ const SummarySection = ({ trade }) => {
                 <div className="space-y-10">
                     {/* Cabecera */}
                     <div className="space-y-4 text-center md:text-left">
-                        <h1 className="text-9xl text-white font-bold text-brand-text">{trade.comercial_name}</h1>
+                        <h1 className="text-7xl text-white font-bold text-brand-text">{trade.comercial_name}</h1>
                         {trade.descripcion_corta && (
                             <p className="text-3xl text-brand-ink max-w-3xl  text-white">{trade.descripcion_corta}</p>
                         )}
@@ -68,9 +68,7 @@ const SummarySection = ({ trade }) => {
 
 
                     {/* Giros */}
-                    <div className="text-right">
-                        <h2 className="text-5xl text-white font-bold">Giros</h2>
-                    </div>
+
                     {trade.giros && trade.giros.length > 0 && (
                         <div className="flex flex-wrap gap-3 justify-center md:justify-end mt-4">
                             {trade.giros.map((giro, idx) => (
@@ -83,9 +81,7 @@ const SummarySection = ({ trade }) => {
                     )}
 
                     {/* Contacto */}
-                    <div>
-                        <h2 className="text-5xl text-white font-bold">Contacto</h2>
-                    </div>
+
 
                     <div className="flex flex-wrap gap-6 justify-center md:justify-start bg-white p-4 rounded-xl border shadow-sm">
                         {trade.address && (

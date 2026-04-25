@@ -11,12 +11,11 @@ export default function Negocio({ trade }) {
     return (
         <HomeLayout>
             <Head title={trade.comercial_name || "Negocio"} />
-            <div className="pb-20">
+            <div>
                 <HeroSection trade={trade} />
                 <SummarySection trade={trade} />
                 <ActivitysSection activities={trade.activities} />
                 <DescriptionSection trade={trade} />
-
             </div>
         </HomeLayout>
     );
