@@ -32,6 +32,7 @@ export default function TradeEditor({ trade, giros, regions }) {
         trade.region_id,
         trade.municipio_id,
         trade.personal_name,
+        trade.personal_cargo,
         trade.personal_phone,
     ];
 

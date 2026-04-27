@@ -33,6 +33,7 @@ class Directorio extends Model
         'phone',
         'email',
         'personal_name',
+        'personal_cargo',
         'personal_phone',
         'personal_email',
         'gallery_images',

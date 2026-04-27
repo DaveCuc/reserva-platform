@@ -89,6 +89,7 @@ class DirectoryTradeController extends Controller
             'phone' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:191', 'unique:directorios,email,' . $trade->id],
             'personal_name' => ['nullable', 'string', 'max:120'],
+            'personal_cargo' => ['nullable', 'string', 'max:120'],
             'personal_phone' => ['nullable', 'string', 'max:30'],
             'personal_email' => ['nullable', 'email', 'max:191'],
             'region_id' => ['nullable', 'uuid', Rule::exists('regions', 'id')],
@@ -272,6 +273,7 @@ class DirectoryTradeController extends Controller
             $trade->region_id,
             $trade->municipio_id,
             $trade->personal_name,
+            $trade->personal_cargo,
             $trade->personal_phone,
         ];
 

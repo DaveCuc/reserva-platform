@@ -398,6 +398,7 @@ export function BusinessContactForm({ initialData, tradeId }) {
 export function PersonalContactForm({ initialData, tradeId }) {
     const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState(initialData.personal_name || "");
+    const [cargo, setCargo] = useState(initialData.personal_cargo || "");
     const [phone, setPhone] = useState(initialData.personal_phone || "");
     const [email, setEmail] = useState(initialData.personal_email || "");
     const [isLoading, setIsLoading] = useState(false);
@@ -410,6 +411,7 @@ export function PersonalContactForm({ initialData, tradeId }) {
             `/directory/trades/${tradeId}`,
             {
                 personal_name: name,
+                personal_cargo: cargo,
                 personal_phone: phone,
                 personal_email: email,
             },
@@ -434,6 +436,9 @@ export function PersonalContactForm({ initialData, tradeId }) {
                     <p className={initialData.personal_name ? "text-brand-text" : "italic text-brand-ink"}>
                         Nombre completo: {initialData.personal_name || "Sin definir"}
                     </p>
+                    <p className={initialData.personal_cargo ? "text-brand-text" : "italic text-brand-ink"}>
+                        Cargo: {initialData.personal_cargo || "Sin definir"}
+                    </p>
                     <p className={initialData.personal_phone ? "text-brand-text" : "italic text-brand-ink"}>
                         Teléfono personal: {initialData.personal_phone || "Sin definir"}
                     </p>
@@ -451,6 +456,16 @@ export function PersonalContactForm({ initialData, tradeId }) {
                     placeholder="Nombre completo"
                     className="bg-white"
                 />
+                {/* Cargo */}
+                <Input
+                    disabled={isLoading}
+                    value={cargo}
+                    onChange={(e) => setCargo(e.target.value)}
+                    placeholder="Cargo"
+                    className="bg-white"
+                />
+
+
                 <Input
                     disabled={isLoading}
                     value={phone}
