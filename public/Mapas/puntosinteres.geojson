@@ -1,0 +1,9 @@
+{"type":"FeatureCollection", "features":[
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.475198,18.327338,0]},"properties":{"name":"Zapotitlán Salinas"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.457893,18.332109,0]},"properties":{"name":"Jardín Botánico Helia Bravo Hollis"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.445234,18.396473,0]},"properties":{"name":"San Antonio Texcala"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.578889,18.379444,0]},"properties":{"name":"Santa Ana Teloxtoc"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.614864,18.314478,0]},"properties":{"name":"San Juan Raya"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.486485,18.225146,0]},"properties":{"name":"Los Reyes Metzontla"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-97.580922,18.228064,0]},"properties":{"name":"Acatepec"}}
+]}

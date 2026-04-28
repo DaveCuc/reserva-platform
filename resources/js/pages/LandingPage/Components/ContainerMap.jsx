@@ -4,7 +4,7 @@ import ReservaMap from "./ReservaMap";
 import SlideRight from "./SlideRight";
 
 const ContainerMap = () => {
-    const [capasActivas, setCapasActivas] = useState({ general: false, reserva: true });
+    const [capasActivas, setCapasActivas] = useState({ general: false, reserva: true, ruta1: false, ruta2: false, ruta3: false, puntos: false });
 
     return ( 
         <section className="pt-20 relative z-0">

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import GeneralMap from './GeneralMap';
+import RutasMap from './RutasMap';
+import PuntosInteresMap from './PuntosInteresMap';
 
 // Importante: Para que los iconos de los marcadores por defecto se vean bien en Leaflet
 import L from 'leaflet';
@@ -53,6 +55,8 @@ const ReservaMap = ({ capasActivas }) => {
                 />
 
                 {capasActivas?.general && <GeneralMap />}
+                <RutasMap capasActivas={capasActivas} />
+                <PuntosInteresMap capasActivas={capasActivas} />
 
                 {/* Solo renderizamos el GeoJSON si la data ya fue cargada */}
                 {capasActivas?.reserva && geoJsonData && (
