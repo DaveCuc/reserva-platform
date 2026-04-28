@@ -26,9 +26,12 @@ export default function HeroSection() {
 
     const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
     const imageBlur = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(3px)"]);
-    const contentOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [1, 0, 0]);
-    const contentScale = useTransform(scrollYProgress, [0, 0.3, 1], [1, 1.05, 1.05]);
-    const contentY = useTransform(scrollYProgress, [0, 0.3, 1], [0, -200, -200]);
+    const logoOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+    const logoScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.05]);
+    const logoY = useTransform(scrollYProgress, [0, 0.3], [0, -200]);
+
+    const textOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+    const textY = useTransform(scrollYProgress, [0.1, 0.4], [50, 0]);
 
     return (
         <div ref={containerRef} className="relative h-[200vh] bg-black">
@@ -67,28 +70,31 @@ export default function HeroSection() {
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/50 z-[5]" />
 
-                {/* Content Wrapper for Scroll Animations */}
+                {/* Logo Wrapper for Scroll Animations */}
                 <motion.div
-                    style={{ opacity: contentOpacity, scale: contentScale, y: contentY }}
-                    className="absolute inset-0 w-full h-full flex justify-center z-10 origin-bottom"
+                    style={{ opacity: logoOpacity, scale: logoScale, y: logoY }}
+                    className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10 origin-bottom"
                 >
-                    {/* Entrance Animation */}
-                    <motion.div {...fadeUp} className="w-full flex justify-center h-full">
-                        <div className="relative z-10 h-full flex items-center w-full">
-                            <div className="container pl-15 mx-auto px-15">
-                                <div className="w-full md:w-2/3 lg:w-1/2">
-                                    <img
-                                        src="/logo2.svg"
-                                        alt="Logo"
-                                        className="mx-auto mb-4 h-100 w-auto"
-                                    />
-
-                                    <h2 className='text-5xl font-light mb-6'> Un Modelo de Prosperidad Local</h2>
-                                    <p className="text-xl font-light mb-12">Explora el Patrimonio Biocultural de la Humanidad. Esta plataforma conecta a los visitantes con la riqueza natural y cultural de la región, fomentando un turismo responsable que beneficia directamente a las comunidades locales.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <motion.div {...fadeUp} className="w-full flex justify-center items-center">
+                        <img
+                            src="/logo2.svg"
+                            alt="Logo"
+                            className="w-[80%] md:w-[60%] lg:w-[50%] max-w-[800px] h-auto object-contain drop-shadow-2xl"
+                        />
                     </motion.div>
+                </motion.div>
+
+                {/* Text Wrapper for Scroll Animations */}
+                <motion.div
+                    style={{ opacity: textOpacity, y: textY }}
+                    className="absolute center-0 bottom-0 w-full md:w-2/3 lg:w-1/2 p-8 md:p-16 lg:px-24 lg:pb-40 z-10"
+                >
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg text-center">
+                        Un Modelo de Prosperidad Local
+                    </h2>
+                    <p className="text-lg md:text-md font-light drop-shadow-md text-center">
+                        Explora el Patrimonio Biocultural de la Humanidad. Esta plataforma conecta a los visitantes con la riqueza natural y cultural de la región, fomentando un turismo responsable que beneficia directamente a las comunidades locales.
+                    </p>
                 </motion.div>
             </div>
         </div>
