@@ -64,7 +64,9 @@ const RegistroSection = () => {
     return (
         <section className="bg-brand-ring py-20">
             <div className=" container mx-auto text-center px-4">
-                <h1 className="text-white text-3xl md:text-6xl font-bold mb-6">¿Quieres aparecer?</h1>
+                <motion.div {...fadeUp}>
+                    <h1 className="text-white text-3xl md:text-6xl font-bold mb-6">¿Quieres aparecer?</h1>
+                </motion.div>
                 <motion.div {...fadeUp}>
                     <Button
                         variant="default"
@@ -121,86 +123,97 @@ const ResultadoSection = () => {
         <section className="bg-brand-soft p-10">
             <div className=" p-5  py-15 ">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-12 ">
-                        <h2 className="text-6xl font-bold text-white">Resultados de búsqueda</h2>
-                    </div>
+                    <motion.div {...fadeUp}>
+                        <div className="text-center mb-12 ">
+                            <h2 className="text-6xl font-bold text-white">Resultados de búsqueda</h2>
+                        </div>
+                    </motion.div>
                     {!hasSearch ? (
-                        <p className="text-white text-center font-medium text-2xl">Selecciona una opción y presiona "Buscar ahora" para ver resultados.</p>
+                        <motion.div {...fadeUp}>
+                            <p className="text-white text-center font-medium text-2xl">Selecciona una opción y presiona "Buscar ahora" para ver resultados.</p>
+                        </motion.div>
                     ) : isLoading ? (
-                        <p className="text-white text-center font-medium">Buscando resultados...</p>
+                        <motion.div {...fadeUp}>
+                            <p className="text-white text-center font-medium">Buscando resultados...</p>
+                        </motion.div>
                     ) : items.length === 0 ? (
-                        <p className="text-white text-center font-medium">No se encontraron resultados con esos filtros.</p>
+                        <motion.div {...fadeUp}>
+                            <p className="text-white text-center font-medium">No se encontraron resultados con esos filtros.</p>
+                        </motion.div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {items.map((item, index) => {
-                                const giros = getItemGiros(item);
-                                const imageUrl = getItemImage(item, index);
+                        <motion.div {...fadeUp}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {items.map((item, index) => {
+                                    const giros = getItemGiros(item);
+                                    const imageUrl = getItemImage(item, index);
 
-                                return (
-                                    <Card key={item.id || item.email || index} className="group relative min-h-[500px] overflow-hidden rounded-[28px] border-0 bg-black shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-                                        <img
-                                            src={imageUrl}
-                                            alt={item.comercial_name || item.name || "Directorio local"}
-                                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
+                                    return (
+                                        <Card key={item.id || item.email || index} className="group relative min-h-[500px] overflow-hidden rounded-[28px] border-0 bg-black shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
+                                            <img
+                                                src={imageUrl}
+                                                alt={item.comercial_name || item.name || "Directorio local"}
+                                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
 
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/75 to-black/10" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/75 to-black/10" />
 
-                                        <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
-                                            <div className="mb-4 flex flex-wrap gap-2">
-                                                {giros.length > 0 ? (
-                                                    giros.map((giro) => (
+                                            <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
+                                                <div className="mb-4 flex flex-wrap gap-2">
+                                                    {giros.length > 0 ? (
+                                                        giros.map((giro) => (
+                                                            <Badge
+                                                                key={`${item.id || item.email || index}-${giro}`}
+                                                                variant="outline"
+                                                                className="w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                                                            >
+                                                                {giro}
+                                                            </Badge>
+                                                        ))
+                                                    ) : (
                                                         <Badge
-                                                            key={`${item.id || item.email || index}-${giro}`}
                                                             variant="outline"
                                                             className="w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
                                                         >
-                                                            {giro}
+                                                            Sin giro
                                                         </Badge>
-                                                    ))
-                                                ) : (
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                                                    )}
+                                                </div>
+
+                                                <CardTitle className="mb-3 text-2xl font-bold leading-tight text-white line-clamp-3">
+                                                    {item.comercial_name || item.name}
+                                                </CardTitle>
+
+                                                <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
+                                                    {item.descripcion_corta || item.descripcion || "Sin descripción"}
+                                                </p>
+
+                                                <CardContent className="grid gap-2 p-0 text-sm text-white/90">
+                                                    <p className="line-clamp-1">
+                                                        <span className="font-semibold text-white">Dirección:</span> {item.address || "No disponible"}
+                                                    </p>
+                                                    <p className="line-clamp-1">
+                                                        <span className="font-semibold text-white">Teléfono:</span> {item.phone || "No disponible"}
+                                                    </p>
+                                                    <p className="break-all line-clamp-2">
+                                                        <span className="font-semibold text-white">Email:</span> {item.email || "No disponible"}
+                                                    </p>
+                                                </CardContent>
+                                                <div className="mt-6">
+                                                    <Button
+                                                        onClick={() => router.visit(`/negocio/${item.id}`)}
+                                                        className="w-full bg-brand-ring hover:bg-brand text-white font-semibold rounded-xl"
                                                     >
-                                                        Sin giro
-                                                    </Badge>
-                                                )}
+                                                        Ver Negocio
+                                                    </Button>
+                                                </div>
                                             </div>
-
-                                            <CardTitle className="mb-3 text-2xl font-bold leading-tight text-white line-clamp-3">
-                                                {item.comercial_name || item.name}
-                                            </CardTitle>
-
-                                            <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
-                                                {item.descripcion_corta || item.descripcion || "Sin descripción"}
-                                            </p>
-
-                                            <CardContent className="grid gap-2 p-0 text-sm text-white/90">
-                                                <p className="line-clamp-1">
-                                                    <span className="font-semibold text-white">Dirección:</span> {item.address || "No disponible"}
-                                                </p>
-                                                <p className="line-clamp-1">
-                                                    <span className="font-semibold text-white">Teléfono:</span> {item.phone || "No disponible"}
-                                                </p>
-                                                <p className="break-all line-clamp-2">
-                                                    <span className="font-semibold text-white">Email:</span> {item.email || "No disponible"}
-                                                </p>
-                                            </CardContent>
-                                            <div className="mt-6">
-                                                <Button 
-                                                    onClick={() => router.visit(`/negocio/${item.id}`)}
-                                                    className="w-full bg-brand-ring hover:bg-brand text-white font-semibold rounded-xl"
-                                                >
-                                                    Ver Negocio
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                );
-                            })}
-                        </div>
+                                        </Card>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
                     )}
+
                 </div>
             </div>
         </section>
@@ -347,12 +360,11 @@ export default function Directorio() {
         <HomeLayout>
             <Head title="Directorio Local" />
             <BuscadorSection />
-            <motion.div {...fadeUp}>
-                <ResultadoSection />
-            </motion.div>
-            <motion.div {...fadeUp}>
-                <RegistroSection />
-            </motion.div>
+
+            <ResultadoSection />
+
+            <RegistroSection />
+
         </HomeLayout>
     );
 }

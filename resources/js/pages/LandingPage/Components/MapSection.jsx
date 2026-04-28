@@ -17,6 +17,18 @@ const fadeUp = {
     viewport: { once: true },
     transition: { duration: 1 }
 };
+const fadeRight = {
+    initial: { opacity: 0, x: -100 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 }
+};
+const fadeLeft = {
+    initial: { opacity: 0, x: 100 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 }
+};
 
 export default function MapSection() {
     const mapImages = [
@@ -27,16 +39,16 @@ export default function MapSection() {
 
     const rutas = [
         {
-            titulo: "Ruta de la sal",
-            descripcion: "Descubre los métodos prehispánicos de extracción de sal fosilizada y recorre los impresionantes paisajes de las salinas de Zapotitlán.",
+            titulo: "Ruta 1: Onix y Sal",
+            descripcion: "Recorre los paisajes de las salinas de Zapotitlán y descubre los métodos prehispánicos de extracción de sal, ademas de conocer el mundo del onix.",
         },
         {
-            titulo: "Ruta del cafe",
-            descripcion: "Adéntrate en las cañadas y zonas cafetaleras de la región para conocer el proceso artesanal de cultivo y degustar un auténtico café de altura.",
+            titulo: "Ruta 2: Dinosaurios",
+            descripcion: "Descubre los senderos y sitios arqueológicos donde las huellas de dinosaurios cobran vida.",
         },
         {
-            titulo: "Ruta de las cactaceas",
-            descripcion: "Camina entre gigantes milenarios y maravíllate con el bosque de cactáceas columnares más denso y diverso del mundo.",
+            titulo: "Ruta 3: Mezcal y Barro",
+            descripcion: "Descubre el proceso artesanal de producción de mezcal y la tradicional elaboración de barro negro.",
         },
     ];
 
@@ -46,47 +58,51 @@ export default function MapSection() {
         <section className="bg-brand-soft p-20  mx-auto" >
             <div className="container max-w-7xl mx-auto px-5">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="text-white">
-                        <h2 className="text-6xl font-bold mb-4 py-5">Explora Nuestras Rutas</h2>
-                        <p className="text-white mb-6 text-lg">
-                            Sumérgete en la vasta riqueza biocultural de la Reserva a través de itinerarios cuidadosamente diseñados. Cada recorrido es una oportunidad única para vivir de cerca el patrimonio natural, aprender de las tradiciones ancestrales y apoyar directamente la economía de las comunidades locales a través de un turismo responsable.
-                        </p>
-                        <ul className="space-y-4 mb-8">
-                            {rutas.map((ruta) => (
-                                <li key={ruta.titulo} className="flex items-start">
-                                    <LuMapPin className="h-5 w-5 text-green-600 mr-3 mt-1" />
-                                    <div>
-                                        <span className="font-medium block">{ruta.titulo}</span>
-                                        <p className="text-md text-white/80 mt-1">{ruta.descripcion}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                        <motion.div {...fadeUp}>
-                            <Button asChild variant="landing_page_secondary" size="lg" className="text-white rounded-md text-base">
-                                <Link href="/mapa">Ver mapa completo</Link>
-                            </Button>
-                        </motion.div>
-                    </div>
+                    <motion.div {...fadeUp}>
+                        <div className="text-white">
+                            <h2 className="text-6xl font-bold mb-4 py-5">Explora Nuestras Rutas</h2>
+                            <p className="text-white mb-6 text-lg">
+                                Sumérgete en la vasta riqueza biocultural de la Reserva a través de itinerarios cuidadosamente diseñados. Cada recorrido es una oportunidad única para vivir de cerca el patrimonio natural, aprender de las tradiciones ancestrales y apoyar directamente la economía de las comunidades locales a través de un turismo responsable.
+                            </p>
+                            <ul className="space-y-4 mb-8">
+                                {rutas.map((ruta) => (
+                                    <li key={ruta.titulo} className="flex items-start">
+                                        <LuMapPin className="h-5 w-5 text-green-600 mr-3 mt-1" />
+                                        <div>
+                                            <span className="font-medium block">{ruta.titulo}</span>
+                                            <p className="text-md text-white/80 mt-1">{ruta.descripcion}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                            <motion.div {...fadeUp}>
+                                <Button asChild variant="landing_page_secondary" size="lg" className="text-white rounded-md text-base">
+                                    <Link href="/mapa">Ver mapa completo</Link>
+                                </Button>
+                            </motion.div>
+                        </div>
+                    </motion.div>
 
                     <div className="w-full max-w-2xl mx-auto">
-                        <Carousel>
-                            <CarouselContent>
-                                {mapImages.map((image, index) => (
-                                    <CarouselItem key={index}>
-                                        <div className="overflow-hidden rounded-lg shadow-lg">
-                                            <img
-                                                src={image.imageUrl}
-                                                alt={image.alt}
-                                                className="aspect-[4/3] object-cover w-full"
-                                            />
-                                        </div>
-                                    </CarouselItem>
-                                ))}
-                            </CarouselContent>
-                            <CarouselPrevious className="ml-16 hidden md:flex" />
-                            <CarouselNext className="mr-16 hidden md:flex" />
-                        </Carousel>
+                        <motion.div {...fadeLeft}>
+                            <Carousel>
+                                <CarouselContent>
+                                    {mapImages.map((image, index) => (
+                                        <CarouselItem key={index}>
+                                            <div className="overflow-hidden rounded-lg shadow-lg">
+                                                <img
+                                                    src={image.imageUrl}
+                                                    alt={image.alt}
+                                                    className="aspect-[4/3] object-cover w-full"
+                                                />
+                                            </div>
+                                        </CarouselItem>
+                                    ))}
+                                </CarouselContent>
+                                <CarouselPrevious className="ml-16 hidden md:flex" />
+                                <CarouselNext className="mr-16 hidden md:flex" />
+                            </Carousel>
+                        </motion.div>
                     </div>
                 </div>
             </div>
