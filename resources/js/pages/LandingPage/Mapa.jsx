@@ -2,22 +2,27 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import HomeLayout from '@/Layouts/HomeLayout';
 import { motion } from "framer-motion";
+import ReservaMap from './Components/ReservaMap';
+import SlideLeft from './Components/SlideLeft';
+import SlideRight from './Components/SlideRight';
+import ContainerMap from './Components/ContainerMap';
+
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 1 }
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 }
 };
 
 const MapSection = () => {
-    return ( 
+    return (
         <section className="pt-[100px]">
             <div className="p-6 py-12 text-center">
                 <h1 className="text-4xl md:text-5xl font-bold">Rutas Turisticas</h1>
             </div>
-            <div className="mt-8 flex justify-center px-4"> 
-                <img 
+            <div className="mt-8 flex justify-center px-4">
+                <img
                     src="/mapa.svg"
                     alt="Logo"
                     className="w-full h-auto md:w-3/4 lg:w-1/2"
@@ -28,7 +33,7 @@ const MapSection = () => {
 }
 
 const InfoSection = () => {
-    return ( 
+    return (
         <section className="p-10 max-w-7xl mx-auto bg-brand-soft">
             <div className=" p-5  py-15 text-white">
                 <div className="container mx-auto px-4">
@@ -50,7 +55,8 @@ export default function Mapa() {
     return (
         <HomeLayout>
             <Head title="Mapa Interactivo" />
-            <MapSection />
+            {/* <MapSection /> */}
+                <ContainerMap />
             <motion.div {...fadeUp}>
                 <InfoSection />
             </motion.div>

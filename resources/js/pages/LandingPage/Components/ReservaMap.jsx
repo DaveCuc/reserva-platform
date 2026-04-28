@@ -1,0 +1,79 @@
+import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import GeneralMap from './GeneralMap';
+
+// Importante: Para que los iconos de los marcadores por defecto se vean bien en Leaflet
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
+const ReservaMap = ({ capasActivas }) => {
+    const [geoJsonData, setGeoJsonData] = useState(null);
+
+    useEffect(() => {
+        // Al estar en public/Mapas/tehmap.geojson, la ruta es directamente '/Mapas/tehmap.geojson'
+        fetch('/Mapas/tehmap.geojson')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar el archivo geojson');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setGeoJsonData(data);
+            })
+            .catch(error => {
+                console.error("Hubo un problema con la carga del mapa:", error);
+            });
+    }, []);
+
+    // Coordenadas aproximadas de Tehuacán para centrar el mapa inicialmente
+    const centroTehuacan = [18.11111, -97.179541];
+
+    return (
+        <div className="map-wrapper w-full h-full">
+            <MapContainer
+                center={centroTehuacan}
+                zoom={10}
+                style={{ height: "100%", width: "100%" }}
+                scrollWheelZoom={false}
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+
+                {capasActivas?.general && <GeneralMap />}
+
+                {/* Solo renderizamos el GeoJSON si la data ya fue cargada */}
+                {capasActivas?.reserva && geoJsonData && (
+                    <GeoJSON
+                        data={geoJsonData}
+                        style={() => ({
+                            color: '#2c3e50',
+                            weight: 2,
+                            fillColor: '#3498db',
+                            fillOpacity: 0.5
+                        })}
+                        onEachFeature={(feature, layer) => {
+                            if (feature.properties?.nombre || feature.properties?.name) {
+                                layer.bindPopup(`<b>${feature.properties?.nombre || feature.properties?.name}</b>`);
+                            }
+                        }}
+                    />
+                )}
+            </MapContainer>
+        </div>
+    );
+}
+
+export default ReservaMap;
