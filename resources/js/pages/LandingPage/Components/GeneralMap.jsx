@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GeoJSON } from 'react-leaflet';
 
 // 1. Definimos las regiones, sus colores y sus municipios
-const REGIONES = {
+export const REGIONES = {
     "REGIÓN SEPTENTRIONAL": {
         color: "#3498db", // Azul
         municipios: [
@@ -86,7 +86,7 @@ Object.entries(REGIONES).forEach(([nombreRegion, datos]) => {
     });
 });
 
-const GeneralMap = ({ hiddenMunicipios = [] }) => {
+const GeneralMap = ({ hiddenMunicipios = [], hiddenRegions = [] }) => {
     const [mapas, setMapas] = useState({ general: null });
 
     // Cargar los archivos GeoJSON al montar el componente
@@ -111,10 +111,15 @@ const GeneralMap = ({ hiddenMunicipios = [] }) => {
         return mapaMunicipios[nombreNormalizado];
     };
 
-    // Filtro: Solo dibuja el polígono si el municipio está en nuestra lista de REGIONES
+    // Filtro: Solo dibuja el polígono si el municipio y la región no están ocultos
     const filtrarMunicipios = (feature) => {
         const info = getMunicipioInfo(feature);
         if (!info) return false;
+
+        const regionNormalizada = normalizarTexto(info.region);
+        if (hiddenRegions.includes(regionNormalizada)) {
+            return false;
+        }
 
         // Si el municipio está oculto, no lo renderizamos
         const nombreNormalizado = normalizarTexto(info.nombreOriginal);
@@ -151,12 +156,15 @@ const GeneralMap = ({ hiddenMunicipios = [] }) => {
         }
     };
 
-    // Retornamos un Fragmento (<>) con ambos GeoJSON. 
-    // NOTA: Este componente DEBE ir dentro de un <MapContainer> en tu ReservaMap
+    // React-Leaflet's GeoJSON component is immutable y no reevalúa el prop `filter` automáticamente.
+    // Usamos una key dinámica para forzar a React a destruir y recrear el componente cuando cambian los filtros, logrando un cambio en tiempo real.
+    const geoJsonKey = `geojson-general-${hiddenMunicipios.join('-')}-${hiddenRegions.join('-')}`;
+
     return (
         <>
             {mapas.general && (
                 <GeoJSON
+                    key={geoJsonKey}
                     data={mapas.general}
                     filter={filtrarMunicipios}
                     style={estiloRegiones}

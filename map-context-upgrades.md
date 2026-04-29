@@ -210,7 +210,6 @@ The improvement is as follows: the right-hand slide will display the content bas
 
 -The user can move along the right slide and either retract or expand all the items in the list to show or hide the content.
 
--->
 ## Improvements and Updates
 
 - Adjust the right slide so that it displays the button list in the same order as it appears on the left.
@@ -288,3 +287,42 @@ The improvement is as follows: the right-hand slide will display the content bas
     { "nombre": "San Juan Bautista Atatlahuaca", "lat": 17.5167, "lng": -96.8167 }
   ]
 }
+
+
+
+## Improvements and Updates
+
+Los checkboxes de los mapas y bde sus colores, ya estan definidos en el GeneralMap.jsx.
+Agrega un estado de activado y desactivado, para que no aparezcan las regiones no seleccionadas.
+(Recuerda que el contenido del panel derecho depende de lo que este seleccionado en el panel izquierdo)
+
+- Si el checkbox de la region esta desactivado, no debe aparecer en el mapa.
+- Si el checkbox de la region esta activado, debe aparecer en el mapa con el color definido en el GeneralMap.jsx.
+- Si se activa o desactiva un checkbox de la region, se debe actualizar el mapa.
+
+
+## Improvements and Updates
+Create a component called GeneralMap.jsx and include the following information:
+
+---
+
+## Instructions
+
+- The color of the map regions must match the color of the checkboxes.
+
+- If a checkbox is activated or deactivated, the map should update.
+
+- If a checkbox is deactivated, the region should not appear on the map.
+
+- If a checkbox is activated, the region should appear on the map with the color defined in the GeneralMap.jsx. 
+
+-->
+
+## Improvements and Updates
+
+Relizaste promesas que no cumpliste.
+Los botones de los municipios no eredan los colores de sus regiones, a pesar de que se los asignaste en el codigo.
+
+Realiza un estado activo y desactivado para las regiones, estas regiones deben ocultarse del mapa si no estan activadas, si estan activadas deben aparecer en el mapa con el color definido en el GeneralMap.jsx.
+
+agrega este estado en general map, para cada una de las regiones.

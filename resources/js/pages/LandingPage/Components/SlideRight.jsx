@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { REGIONES } from './GeneralMap';
 
 const normalizarTexto = (texto) => {
     if (!texto) return "";
@@ -12,7 +13,7 @@ const LAYER_TITLES = {
 
 const LAYER_ORDER = ['reserva', 'general'];
 
-const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipios, setHiddenMunicipios, activeInfoPanel, setActiveInfoPanel, capasActivas }) => {
+const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipios, setHiddenMunicipios, hiddenRegions, setHiddenRegions, activeInfoPanel, setActiveInfoPanel, capasActivas }) => {
     const [reservaInfo, setReservaInfo] = useState(null);
     const [regiones, setRegiones] = useState([]);
 
@@ -36,17 +37,12 @@ const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipio
     };
 
     const toggleRegionCheckbox = (region, e) => {
-        e.stopPropagation(); 
-        const regionMuns = region.municipios.map(m => normalizarTexto(m.nombre));
-        const allHidden = regionMuns.every(m => hiddenMunicipios.includes(m));
-
-        if (allHidden) {
-            setHiddenMunicipios(prev => prev.filter(m => !regionMuns.includes(m)));
+        e.stopPropagation();
+        const regionName = normalizarTexto(region.nombre);
+        if (hiddenRegions.includes(regionName)) {
+            setHiddenRegions(prev => prev.filter(r => r !== regionName));
         } else {
-            setHiddenMunicipios(prev => {
-                const newHidden = new Set([...prev, ...regionMuns]);
-                return Array.from(newHidden);
-            });
+            setHiddenRegions(prev => [...prev, regionName]);
         }
     };
 
@@ -147,13 +143,15 @@ const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipio
                                                     <div className="flex flex-col gap-2">
                                                         {regiones.map((region, idx) => {
                                                             const regionMuns = region.municipios.map(m => normalizarTexto(m.nombre));
-                                                            const isRegionChecked = !regionMuns.every(m => hiddenMunicipios.includes(m));
+                                                            const isRegionChecked = !hiddenRegions.includes(normalizarTexto(region.nombre));
                                                             const isSelected = selectedRegion?.nombre === region.nombre;
+                                                            const regionColor = REGIONES[region.nombre.toUpperCase()]?.color || '#0B5139'; // #0B5139 is brand color
 
                                                             return (
                                                                 <div 
                                                                     key={idx} 
-                                                                    className={`flex flex-col rounded-lg border transition-all cursor-pointer overflow-hidden ${isSelected ? 'border-brand ring-1 ring-brand bg-brand-light/30 shadow-sm' : 'border-brand-panel bg-white hover:bg-brand-soft/5'}`}
+                                                                    className={`flex flex-col rounded-lg border transition-all cursor-pointer overflow-hidden ${isSelected ? 'ring-1 shadow-sm' : 'border-brand-panel bg-white hover:bg-brand-soft/5'}`}
+                                                                    style={isSelected ? { borderColor: regionColor, ringColor: regionColor, backgroundColor: `${regionColor}15` } : {}}
                                                                     onClick={() => {
                                                                         setSelectedRegion(region);
                                                                         if (region.coordenadas) {
@@ -168,9 +166,15 @@ const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipio
                                                                                 checked={isRegionChecked} 
                                                                                 onChange={(e) => toggleRegionCheckbox(region, e)}
                                                                                 onClick={(e) => e.stopPropagation()}
-                                                                                className="w-4 h-4 text-brand rounded focus:ring-brand accent-brand cursor-pointer shrink-0"
+                                                                                className="w-4 h-4 rounded cursor-pointer shrink-0"
+                                                                                style={{ color: regionColor }}
                                                                             />
-                                                                            <span className={`font-semibold text-[14px] transition-colors ${isSelected ? 'text-brand' : 'text-brand-text'}`}>{region.nombre}</span>
+                                                                            <span 
+                                                                                className="font-semibold text-[14px] transition-colors"
+                                                                                style={{ color: isSelected ? regionColor : 'inherit' }}
+                                                                            >
+                                                                                {region.nombre}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                     
@@ -201,11 +205,13 @@ const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipio
                                                             {selectedRegion.municipios.map((mun, mIdx) => {
                                                                 const isMunChecked = !hiddenMunicipios.includes(normalizarTexto(mun.nombre));
                                                                 const isMunExpanded = expandedMunicipio === mun.nombre;
+                                                                const regionColor = REGIONES[selectedRegion.nombre.toUpperCase()]?.color || '#0B5139';
 
                                                                 return (
                                                                     <div key={mIdx} className="flex flex-col rounded-lg border border-brand-panel bg-white shadow-sm overflow-hidden">
                                                                         <div 
-                                                                            className={`flex items-center justify-between p-3 pl-4 cursor-pointer transition-colors ${isMunExpanded ? 'bg-brand-light/60' : 'hover:bg-brand-soft/5'}`}
+                                                                            className={`flex items-center justify-between p-3 pl-4 cursor-pointer transition-colors ${isMunExpanded ? '' : 'hover:bg-brand-soft/5'}`}
+                                                                            style={isMunExpanded ? { backgroundColor: `${regionColor}15` } : {}}
                                                                             onClick={() => {
                                                                                 setExpandedMunicipio(isMunExpanded ? null : mun.nombre);
                                                                                 if (mun.coordenadas) {
@@ -219,7 +225,8 @@ const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipio
                                                                                     checked={isMunChecked} 
                                                                                     onChange={(e) => toggleMunicipioCheckbox(mun.nombre, e)}
                                                                                     onClick={(e) => e.stopPropagation()}
-                                                                                    className="w-4 h-4 text-brand rounded focus:ring-brand accent-brand cursor-pointer shrink-0"
+                                                                                    className="w-4 h-4 rounded cursor-pointer shrink-0"
+                                                                                    style={{ color: regionColor }}
                                                                                 />
                                                                                 <span className="text-[13px] text-brand-dark font-medium">{mun.nombre}</span>
                                                                             </div>

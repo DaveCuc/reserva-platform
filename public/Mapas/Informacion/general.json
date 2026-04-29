@@ -3,6 +3,11 @@
     {
       "nombre": "REGIÓN SEPTENTRIONAL",
       "descripcion": "Zona de alta producción agrícola, destacando en granos, hortalizas y forrajes, con un fuerte comercio local y artesanías tradicionales.",
+      "coordenadas": {
+        "lat": 18.715363,
+        "lng": -97.540542,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "Tecamachalco",
@@ -153,16 +158,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "REGIÓN DEL VALLE ZAPOTITLÁN-TEHUACÁN",
       "descripcion": "Corazón de la Reserva de la Biosfera, esta región se define por su ecosistema semiárido, su flora única como agaves y cactáceas, y su valiosa producción de artesanías en barro, ónix y palma.",
+      "coordenadas": {
+        "lat": 18.3333,
+        "lng": -97.4667,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "Tehuacán",
@@ -297,16 +302,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "REGIÓN SIERRA NEGRA",
       "descripcion": "Región montañosa cuya economía combina la agricultura de subsistencia y el cultivo de caña de azúcar con oficios artesanales como la alfarería y los textiles de lana.",
+      "coordenadas": {
+        "lat": 18.338908,
+        "lng": -97.082068,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "Ajalpan",
@@ -381,16 +386,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "REGIÓN CHAZUMBA",
       "descripcion": "Parte de la Mixteca, esta región se enfoca en la agricultura tradicional de maíz y café, con una destacada producción artesanal de cestería de palma y textiles.",
+      "coordenadas": {
+        "lat": 18.175745,
+        "lng": -97.711160,
+        "zoom": 12
+      },
       "municipios": [
         {
           "nombre": "San Pedro Tequixtepec",
@@ -449,16 +454,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "DISTRITO 3",
       "descripcion": "Región de contrastes que va desde el cultivo de frambuesa hasta la agricultura de traspatio, con un valioso patrimonio cultural y artesanías en talavera y barro.",
+      "coordenadas": {
+        "lat": 17.936560,
+        "lng": -97.337001,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "Concepción Buena Vista",
@@ -536,16 +541,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "DISTRITO 4",
       "descripcion": "Ubicada en la Cañada Oaxaqueña, esta región basa su economía en la agricultura de maguey y granos básicos, con una rica tradición en alfarería, cestería de palma y textiles bordados.",
+      "coordenadas": {
+        "lat": 18.028012,
+        "lng": -97.051907,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "Teotitlán de Flores Magón",
@@ -680,16 +685,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "DISTRITO 5",
       "descripcion": "Región de gran biodiversidad agrícola con cultivos como café y aguacate, oficios artesanales únicos como el vidrio soplado y un profundo arraigo cultural.",
+      "coordenadas": {
+        "lat": 17.730013,
+        "lng": -96.905846,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "San Juan Tepeuxila",
@@ -875,16 +880,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "DISTRITO 10",
       "descripcion": "Perteneciente a la Mixteca Alta, su economía se centra en la agricultura de milpa y frutales, preservando técnicas ancestrales en la tejeduría y la alfarería.",
+      "coordenadas": {
+        "lat": 17.603133,
+        "lng": -97.132082,
+        "zoom": 11
+      },
       "municipios": [
         {
           "nombre": "San Pedro Cántaros Coxcaltepec",
@@ -1000,16 +1005,16 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     },
     {
       "nombre": "DISTRITO 11",
       "descripcion": "Pequeña región de la Mixteca cuya economía se apoya en el cultivo de maguey para mezcal, la agricultura familiar y la producción artesanal de cestería y textiles.",
+      "coordenadas": {
+        "lat": 17.904905,
+        "lng": -97.157669,
+        "zoom": 10
+      },
       "municipios": [
         {
           "nombre": "Santa Catarina Zapoquila",
@@ -1049,12 +1054,7 @@
             "zoom": 14
           }
         }
-      ],
-      "coordenadas": {
-        "lat": 18.11111,
-        "lng": -97.179541,
-        "zoom": 9
-      }
+      ]
     }
   ]
 }
