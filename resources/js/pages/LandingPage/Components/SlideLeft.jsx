@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 
 
-const SlideLeft = ({ capasActivas, setCapasActivas, mapRef }) => {
+const SlideLeft = ({ capasActivas, setCapasActivas, mapRef, setRightSlideOpen, setActiveInfoPanel }) => {
     // Estado para controlar si el menú está abierto o cerrado
     const [isOpen, setIsOpen] = useState(true);
 
-    const handleMapAction = (layer, lat, lng, zoom) => {
-        setCapasActivas(prev => ({ ...prev, [layer]: !prev[layer] }));
+    const handleMapAction = (layer, lat, lng, zoom, hasJson = false) => {
+        const isActiveNow = !capasActivas[layer];
+        setCapasActivas(prev => ({ ...prev, [layer]: isActiveNow }));
+        
         if (mapRef?.current) {
             mapRef.current.setView([lat, lng], zoom);
+        }
+
+        if (hasJson && isActiveNow) {
+            setActiveInfoPanel(layer);
+            setRightSlideOpen(true);
+        } else if (hasJson && !isActiveNow) {
+            setActiveInfoPanel(prev => prev === layer ? null : prev);
         }
     };
 
@@ -38,7 +47,7 @@ const SlideLeft = ({ capasActivas, setCapasActivas, mapRef }) => {
             <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
 
                 <button
-                    onClick={() => handleMapAction('reserva', 18.11111, -97.179541, 9)}
+                    onClick={() => handleMapAction('reserva', 18.11111, -97.179541, 9, true)}
                     className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.reserva ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
                 >
                     Reserva de la Biosfera
@@ -47,7 +56,7 @@ const SlideLeft = ({ capasActivas, setCapasActivas, mapRef }) => {
                 <div className="flex flex-col gap-3">
                     <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">Regiones</h3>
                     <button
-                        onClick={() => handleMapAction('general', 18.11111, -97.179541, 9)}
+                        onClick={() => handleMapAction('general', 18.11111, -97.179541, 9, true)}
                         className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.general ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
                     >
                         General

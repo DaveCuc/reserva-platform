@@ -31,7 +31,7 @@ const MapResizer = () => {
     return null;
 };
 
-const ReservaMap = ({ capasActivas, mapRef }) => {
+const ReservaMap = ({ capasActivas, mapRef, hiddenMunicipios }) => {
     const [geoJsonData, setGeoJsonData] = useState(null);
 
     useEffect(() => {
@@ -71,7 +71,7 @@ const ReservaMap = ({ capasActivas, mapRef }) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
 
-                {capasActivas?.general && <GeneralMap />}
+                {capasActivas?.general && <GeneralMap hiddenMunicipios={hiddenMunicipios} />}
                 <RutasMap capasActivas={capasActivas} />
                 <PuntosInteresMap capasActivas={capasActivas} />
 

@@ -86,7 +86,7 @@ Object.entries(REGIONES).forEach(([nombreRegion, datos]) => {
     });
 });
 
-const GeneralMap = () => {
+const GeneralMap = ({ hiddenMunicipios = [] }) => {
     const [mapas, setMapas] = useState({ general: null });
 
     // Cargar los archivos GeoJSON al montar el componente
@@ -113,7 +113,16 @@ const GeneralMap = () => {
 
     // Filtro: Solo dibuja el polígono si el municipio está en nuestra lista de REGIONES
     const filtrarMunicipios = (feature) => {
-        return !!getMunicipioInfo(feature);
+        const info = getMunicipioInfo(feature);
+        if (!info) return false;
+
+        // Si el municipio está oculto, no lo renderizamos
+        const nombreNormalizado = normalizarTexto(info.nombreOriginal);
+        if (hiddenMunicipios.includes(nombreNormalizado)) {
+            return false;
+        }
+
+        return true;
     };
 
     // Estilo: Asigna el color correspondiente a la región

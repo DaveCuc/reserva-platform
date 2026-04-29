@@ -1,55 +1,276 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+const normalizarTexto = (texto) => {
+    if (!texto) return "";
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+};
 
-const SlideRight = ({ mapRef }) => {
-    // Estado para controlar si el panel de información está abierto o cerrado
-    const [isOpen, setIsOpen] = useState(true);
+const LAYER_TITLES = {
+    reserva: "Reserva de la Biosfera",
+    general: "Regiones y Municipios"
+};
 
-    const handleZoom = (lat, lng, zoom = 13) => {
-        if (mapRef?.current) {
-            mapRef.current.setView([lat, lng], zoom);
+const LAYER_ORDER = ['reserva', 'general'];
+
+const SlideRight = ({ mapRef, rightSlideOpen, setRightSlideOpen, hiddenMunicipios, setHiddenMunicipios, activeInfoPanel, setActiveInfoPanel, capasActivas }) => {
+    const [reservaInfo, setReservaInfo] = useState(null);
+    const [regiones, setRegiones] = useState([]);
+
+    const [selectedRegion, setSelectedRegion] = useState(null);
+    const [expandedMunicipio, setExpandedMunicipio] = useState(null);
+
+    useEffect(() => {
+        Promise.all([
+            fetch('/Mapas/Informacion/reserva.json').then(res => res.json()),
+            fetch('/Mapas/Informacion/general.json').then(res => res.json())
+        ]).then(([reservaData, generalData]) => {
+            setReservaInfo(reservaData);
+            setRegiones(generalData.regiones || []);
+        }).catch(err => console.error("Error loading info:", err));
+    }, []);
+
+    const handleZoom = (lat, lng, zoom = 14) => {
+        if (mapRef?.current && lat && lng) {
+            mapRef.current.flyTo([lat, lng], zoom, { duration: 1.5 });
         }
     };
 
-    return (
-        <div className={`relative h-full w-80 shrink-0 bg-white shadow-2xl z-[1001] transition-all duration-300 ease-in-out flex flex-col ${isOpen ? 'mr-0' : '-mr-80'}`}>
+    const toggleRegionCheckbox = (region, e) => {
+        e.stopPropagation(); 
+        const regionMuns = region.municipios.map(m => normalizarTexto(m.nombre));
+        const allHidden = regionMuns.every(m => hiddenMunicipios.includes(m));
 
-            {/* Pestaña flotante que sobresale para abrir/cerrar */}
+        if (allHidden) {
+            setHiddenMunicipios(prev => prev.filter(m => !regionMuns.includes(m)));
+        } else {
+            setHiddenMunicipios(prev => {
+                const newHidden = new Set([...prev, ...regionMuns]);
+                return Array.from(newHidden);
+            });
+        }
+    };
+
+    const toggleMunicipioCheckbox = (municipioName, e) => {
+        e.stopPropagation();
+        const normalName = normalizarTexto(municipioName);
+        if (hiddenMunicipios.includes(normalName)) {
+            setHiddenMunicipios(prev => prev.filter(m => m !== normalName));
+        } else {
+            setHiddenMunicipios(prev => [...prev, normalName]);
+        }
+    };
+
+    // Filtramos las capas activas que sí tienen contenido JSON definido en LAYER_TITLES, respetando el orden del menú izquierdo
+    const activeLayersWithJSON = LAYER_ORDER.filter(key => capasActivas[key] && LAYER_TITLES[key]);
+
+    return (
+        <div className={`relative h-full w-96 shrink-0 bg-white shadow-2xl z-[1001] transition-all duration-300 ease-in-out flex flex-col ${rightSlideOpen ? 'mr-0' : '-mr-96'}`}>
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setRightSlideOpen(!rightSlideOpen)}
                 className="absolute top-1/2 -left-10 -translate-y-1/2 flex items-center justify-center w-10 h-16 bg-white rounded-l-xl shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.2)] text-brand-text hover:text-brand hover:bg-brand-light transition-all border border-r-0 border-brand-panel z-[1002]"
-                title={isOpen ? "Cerrar Información" : "Abrir Información"}
+                title={rightSlideOpen ? "Cerrar Información" : "Abrir Información"}
             >
-                <svg viewBox="0 0 24 24" className={`w-6 h-6 transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" className={`w-6 h-6 transition-transform duration-300 ${rightSlideOpen ? '' : 'rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
             </button>
 
-            {/* Cabecera */}
-            <div className="pt-24 flex items-center p-5 border-b border-brand-panel">
+            <div className="pt-24 flex items-center p-5 border-b border-brand-panel shrink-0">
                 <h2 className="text-2xl font-semibold text-brand-text">Información</h2>
             </div>
 
-            {/* Contenido de la información */}
-            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4 bg-brand-soft/5">
+                
+                {activeLayersWithJSON.length === 0 ? (
+                    <div className="flex flex-col gap-4 justify-center items-center h-full text-brand-ink">
+                        <svg className="w-12 h-12 text-brand-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p className="text-sm text-center px-4">No hay capas activas con información detallada.</p>
+                    </div>
+                ) : (
+                    activeLayersWithJSON.map((layerKey) => {
+                        const isExpanded = activeInfoPanel === layerKey;
+                        
+                        return (
+                            <div key={layerKey} className="flex flex-col rounded-lg border border-brand-panel bg-white shadow-sm overflow-hidden shrink-0">
+                                {/* Encabezado del Acordeón Principal */}
+                                <div 
+                                    className={`flex items-center justify-between p-4 cursor-pointer transition-colors ${isExpanded ? 'bg-brand text-white' : 'hover:bg-brand-soft/5 text-brand-dark'}`}
+                                    onClick={() => setActiveInfoPanel(isExpanded ? null : layerKey)}
+                                >
+                                    <h3 className="text-[16px] font-semibold">{LAYER_TITLES[layerKey]}</h3>
+                                    <svg viewBox="0 0 24 24" className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-white' : 'text-brand-ink'}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </div>
 
-                <div className="flex flex-col gap-3">
-                    <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">N. Municipio/Ruta</h3>
-                    <p className="text-sm font-medium text-brand-ink uppercase tracking-wider">Lista de Municipios/ Negocios</p>
-                    <ol className="list-decimal list-inside pl-2 space-y-2 text-brand-text marker:text-brand-soft">
-                        <li onClick={() => handleZoom(18.3273, -97.4752)} className="hover:text-brand bg-brand-light p-2 rounded-md transition-colors cursor-pointer">Zapotitlán Salinas</li>
-                        <li onClick={() => handleZoom(18.3145, -97.6149)} className="hover:text-brand bg-brand-light p-2 rounded-md transition-colors cursor-pointer">San Juan Raya</li>
-                        <li onClick={() => handleZoom(18.2252, -97.4865)} className="hover:text-brand bg-brand-light p-2 rounded-md transition-colors cursor-pointer">Los Reyes Metzontla</li>
-                        <li onClick={() => handleZoom(18.3964, -97.4452)} className="hover:text-brand bg-brand-light p-2 rounded-md transition-colors cursor-pointer">San Antonio Texcala</li>
-                        <li onClick={() => handleZoom(18.1111, -97.1795, 9)} className="hover:text-brand bg-brand-light p-2 rounded-md transition-colors cursor-pointer">Tehuacán Centro</li>
-                    </ol>
-                </div>
+                                {/* Contenido Expansible */}
+                                <div className={`transition-all duration-300 ease-in-out ${isExpanded ? 'opacity-100 max-h-[2000px]' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                                    <div className="p-5 border-t border-brand-panel bg-white flex flex-col gap-6">
+                                        
+                                        {/* --- CONTENIDO RESERVA --- */}
+                                        {layerKey === 'reserva' && reservaInfo && (
+                                            <div className="flex flex-col gap-5">
+                                                <p className="text-[14px] text-brand-ink leading-relaxed">{reservaInfo.descripcion}</p>
+                                                
+                                                {reservaInfo.aspectos_clave && (
+                                                    <div className="flex flex-col gap-3 mt-2 bg-brand-light/30 p-4 rounded-lg border border-brand-panel">
+                                                        <h4 className="font-semibold text-brand-text flex items-center gap-2">
+                                                            <svg className="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                            Aspectos Clave
+                                                        </h4>
+                                                        <ul className="flex flex-col gap-3 text-[13px] text-brand-ink">
+                                                            {reservaInfo.aspectos_clave.biodiversidad && (
+                                                                <li><strong className="text-brand-dark">Biodiversidad:</strong> {reservaInfo.aspectos_clave.biodiversidad}</li>
+                                                            )}
+                                                            {reservaInfo.aspectos_clave.fauna && (
+                                                                <li><strong className="text-brand-dark">Fauna:</strong> {reservaInfo.aspectos_clave.fauna}</li>
+                                                            )}
+                                                            {reservaInfo.aspectos_clave.patrimonio_mixto && (
+                                                                <li><strong className="text-brand-dark">Patrimonio:</strong> {reservaInfo.aspectos_clave.patrimonio_mixto}</li>
+                                                            )}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
 
-                <div className="flex flex-col gap-3">
-                    <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">Municipio/Ruta</h3>
-                    <p className="text-brand-ink text-base">Descripcion / Datos del negocio</p>
-                </div>
+                                        {/* --- CONTENIDO GENERAL (Regiones y Municipios) --- */}
+                                        {layerKey === 'general' && (
+                                            <div className="flex flex-col gap-6">
+                                                {/* REGIONES */}
+                                                <div className="flex flex-col gap-3">
+                                                    <div className="flex flex-col gap-1">
+                                                        <h4 className="text-sm font-semibold text-brand-dark uppercase tracking-wider">Lista de Regiones</h4>
+                                                        <p className="text-xs text-brand-soft italic">Selecciona para explorar.</p>
+                                                    </div>
 
+                                                    <div className="flex flex-col gap-2">
+                                                        {regiones.map((region, idx) => {
+                                                            const regionMuns = region.municipios.map(m => normalizarTexto(m.nombre));
+                                                            const isRegionChecked = !regionMuns.every(m => hiddenMunicipios.includes(m));
+                                                            const isSelected = selectedRegion?.nombre === region.nombre;
+
+                                                            return (
+                                                                <div 
+                                                                    key={idx} 
+                                                                    className={`flex flex-col rounded-lg border transition-all cursor-pointer overflow-hidden ${isSelected ? 'border-brand ring-1 ring-brand bg-brand-light/30 shadow-sm' : 'border-brand-panel bg-white hover:bg-brand-soft/5'}`}
+                                                                    onClick={() => {
+                                                                        setSelectedRegion(region);
+                                                                        if (region.coordenadas) {
+                                                                            handleZoom(region.coordenadas.lat, region.coordenadas.lng, region.coordenadas.zoom || 9);
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <div className="flex items-center justify-between p-3">
+                                                                        <div className="flex items-center gap-3">
+                                                                            <input 
+                                                                                type="checkbox" 
+                                                                                checked={isRegionChecked} 
+                                                                                onChange={(e) => toggleRegionCheckbox(region, e)}
+                                                                                onClick={(e) => e.stopPropagation()}
+                                                                                className="w-4 h-4 text-brand rounded focus:ring-brand accent-brand cursor-pointer shrink-0"
+                                                                            />
+                                                                            <span className={`font-semibold text-[14px] transition-colors ${isSelected ? 'text-brand' : 'text-brand-text'}`}>{region.nombre}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    {isSelected && (
+                                                                        <div className="p-3 pt-0 text-[12px] text-brand-ink leading-relaxed pl-10 border-t border-brand-panel/30 mt-2">
+                                                                            {region.descripcion}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+
+                                                {/* MUNICIPIOS */}
+                                                <div className="flex flex-col gap-3 pt-6 border-t border-brand-panel">
+                                                    <div className="flex flex-col gap-1">
+                                                        <h4 className="text-sm font-semibold text-brand-dark uppercase tracking-wider">Municipios</h4>
+                                                        {selectedRegion ? (
+                                                            <p className="text-xs text-brand-soft italic">Mostrando municipios de: <span className="font-semibold text-brand-text">{selectedRegion.nombre}</span></p>
+                                                        ) : (
+                                                            <p className="text-xs text-brand-soft italic">Selecciona una región arriba.</p>
+                                                        )}
+                                                    </div>
+
+                                                    {selectedRegion && (
+                                                        <div className="flex flex-col gap-2">
+                                                            {selectedRegion.municipios.map((mun, mIdx) => {
+                                                                const isMunChecked = !hiddenMunicipios.includes(normalizarTexto(mun.nombre));
+                                                                const isMunExpanded = expandedMunicipio === mun.nombre;
+
+                                                                return (
+                                                                    <div key={mIdx} className="flex flex-col rounded-lg border border-brand-panel bg-white shadow-sm overflow-hidden">
+                                                                        <div 
+                                                                            className={`flex items-center justify-between p-3 pl-4 cursor-pointer transition-colors ${isMunExpanded ? 'bg-brand-light/60' : 'hover:bg-brand-soft/5'}`}
+                                                                            onClick={() => {
+                                                                                setExpandedMunicipio(isMunExpanded ? null : mun.nombre);
+                                                                                if (mun.coordenadas) {
+                                                                                    handleZoom(mun.coordenadas.lat, mun.coordenadas.lng, mun.coordenadas.zoom || 14);
+                                                                                }
+                                                                            }}
+                                                                        >
+                                                                            <div className="flex items-center gap-3">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    checked={isMunChecked} 
+                                                                                    onChange={(e) => toggleMunicipioCheckbox(mun.nombre, e)}
+                                                                                    onClick={(e) => e.stopPropagation()}
+                                                                                    className="w-4 h-4 text-brand rounded focus:ring-brand accent-brand cursor-pointer shrink-0"
+                                                                                />
+                                                                                <span className="text-[13px] text-brand-dark font-medium">{mun.nombre}</span>
+                                                                            </div>
+                                                                            <svg viewBox="0 0 24 24" className={`w-4 h-4 shrink-0 text-brand-ink transition-transform duration-200 ${isMunExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                                        </div>
+
+                                                                        {isMunExpanded && (
+                                                                            <div className="p-4 bg-brand-light/20 flex flex-col gap-4 text-[12px] border-t border-brand-panel/50">
+                                                                                {mun.agricultura && (
+                                                                                    <div>
+                                                                                        <span className="font-semibold text-brand-text flex items-center gap-2 mb-1">
+                                                                                            <svg className="w-3.5 h-3.5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                                                                                            Agricultura
+                                                                                        </span>
+                                                                                        <p className="text-brand-ink">{mun.agricultura.productos}</p>
+                                                                                    </div>
+                                                                                )}
+                                                                                {mun.artesanias && (
+                                                                                    <div>
+                                                                                        <span className="font-semibold text-brand-text flex items-center gap-2 mb-1">
+                                                                                            <svg className="w-3.5 h-3.5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                                                                                            Artesanías
+                                                                                        </span>
+                                                                                        <p className="text-brand-ink">{mun.artesanias.productos}</p>
+                                                                                    </div>
+                                                                                )}
+                                                                                {mun.turismo_potencial && (
+                                                                                    <div>
+                                                                                        <span className="font-semibold text-brand-text flex items-center gap-2 mb-1">
+                                                                                            <svg className="w-3.5 h-3.5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                                                            Turismo
+                                                                                        </span>
+                                                                                        <p className="text-brand-ink">{mun.turismo_potencial.atracciones}</p>
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })
+                )}
             </div>
         </div>
     );

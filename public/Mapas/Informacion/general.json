@@ -1,0 +1,1060 @@
+{
+  "regiones": [
+    {
+      "nombre": "REGIÓN SEPTENTRIONAL",
+      "descripcion": "Zona de alta producción agrícola, destacando en granos, hortalizas y forrajes, con un fuerte comercio local y artesanías tradicionales.",
+      "municipios": [
+        {
+          "nombre": "Tecamachalco",
+          "agricultura": {
+            "productos": "Granos (frijol, haba), frutas (aguacate, granada), hortalizas y forraje.",
+            "notas": "El comercio de los productos se da dentro del municipio."
+          },
+          "artesanias": {
+            "productos": "Tejidos (bolsas, canastas), muebles de madera y palma, y papel picado.",
+            "materiales": "Fibra de plástico, madera, palma, papel de china."
+          },
+          "turismo_potencial": {
+            "atracciones": "Recorrido por el exconvento franciscano y la plaza de la 5, destacado por su valor histórico."
+          },
+          "coordenadas": {
+            "lat": 18.8833,
+            "lng": -97.7333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Palmar de Bravo",
+          "agricultura": {
+            "productos": "Maíz, alfalfa, trigo y haba.",
+            "notas": "Productos para autoconsumo y venta local."
+          },
+          "artesanias": {
+            "productos": "Artesanías de fibra de nopal y pirotecnia.",
+            "materiales": "Fibra de nopal."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta por el centro histórico, la iglesia de San Agustín y ex haciendas."
+          },
+          "coordenadas": {
+            "lat": 18.8333,
+            "lng": -97.6167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Yehualtepec",
+          "agricultura": {
+            "productos": "Maíz, frijol, hortalizas y maguey espadín.",
+            "notas": "Impulso a la producción de mezcal."
+          },
+          "artesanias": {
+            "productos": "Máscaras de látex elaboradas artesanalmente para festividades.",
+            "materiales": "Látex y arcilla para moldes."
+          },
+          "turismo_potencial": {
+            "atracciones": "Visita a iglesias históricas del siglo XVI y exploración del ecosistema semiárido."
+          },
+          "coordenadas": {
+            "lat": 18.7833,
+            "lng": -97.65,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Tlacotepec de Benito Juárez",
+          "agricultura": {
+            "productos": "Maíz, frijol, cebada y zanahoria.",
+            "notas": "Se implementan prácticas agroecológicas."
+          },
+          "artesanias": null,
+          "turismo_potencial": {
+            "atracciones": "Zona arqueológica de los Teteles de Santo Nombre y la iglesia de la Santa Cruz (siglo XVI)."
+          },
+          "coordenadas": {
+            "lat": 18.65,
+            "lng": -97.65,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Tepanco de López",
+          "agricultura": {
+            "productos": "Maíz, frijol, hortalizas (jitomate de invernadero) y plantas de ornato (gladiola).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería de palma natural como tenates (cestas redondas) y chiquihuites (cestas cuadradas).",
+            "materiales": "Palma natural."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo y ciclismo en cerros locales y cercanía a la Reserva de la Biosfera."
+          },
+          "coordenadas": {
+            "lat": 18.5833,
+            "lng": -97.5667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santiago Miahuatlán",
+          "agricultura": {
+            "productos": "Chile miahuateco y maguey.",
+            "notas": "El chile es valorado para mole poblano y el maguey se usa para producir mezcal."
+          },
+          "artesanias": {
+            "productos": "No se especializa en un tipo de artesanía; es más conocido por su feria anual.",
+            "materiales": ""
+          },
+          "turismo_potencial": {
+            "atracciones": "Agroturismo (ruta del mezcal), senderismo en el Cerro el Ichpoluca."
+          },
+          "coordenadas": {
+            "lat": 18.55,
+            "lng": -97.4333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Cañada Morelos",
+          "agricultura": {
+            "productos": "Maíz, frijol, zanahoria, trigo y frutas como mango y melón.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Alfarería (ollas, platos), figuras de madera, muebles rústicos y prendas bordadas.",
+            "materiales": "Barro, madera, manta."
+          },
+          "turismo_potencial": {
+            "atracciones": "Exploración del Cerro de Texoyuca (vestigios aztecas) y turismo gastronómico."
+          },
+          "coordenadas": {
+            "lat": 18.7333,
+            "lng": -97.4167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Chapulco",
+          "agricultura": {
+            "productos": "Maíz, chiles, nopales, hierbas aromáticas y uva criolla.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Figuras religiosas elaboradas con palma natural y tallo de trigo para festividades.",
+            "materiales": "Palma natural, tallo de trigo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Actividades recreativas en la Laguna de Chapulco (senderismo, ciclismo, paseos en lancha)."
+          },
+          "coordenadas": {
+            "lat": 18.6167,
+            "lng": -97.4167,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "REGIÓN DEL VALLE ZAPOTITLÁN-TEHUACÁN",
+      "descripcion": "Corazón de la Reserva de la Biosfera, esta región se define por su ecosistema semiárido, su flora única como agaves y cactáceas, y su valiosa producción de artesanías en barro, ónix y palma.",
+      "municipios": [
+        {
+          "nombre": "Tehuacán",
+          "agricultura": {
+            "productos": "Maíz, frijol, maguey (para pulque), nopal y muégano (producto local).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Alfarería de barro bruñido, piezas de ónix, muebles de palo de rosa y textiles bordados.",
+            "materiales": "Barro, piedra ónix, madera, tela e hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta 'Guardianes del Desierto' que conecta comunidades y paisajes del valle."
+          },
+          "coordenadas": {
+            "lat": 18.4667,
+            "lng": -97.3927,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Zapotitlán",
+          "agricultura": {
+            "productos": "Agave, tetetzo (cactácea), maíz y frijol.",
+            "notas": "Uso tradicional de plantas para alimentación y medicina."
+          },
+          "artesanias": {
+            "productos": "Cestería de palma, cerámica tradicional, artículos de madera tallada y textiles indígenas.",
+            "materiales": "Palma, barro, madera."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta del mezcal, Jardín Botánico, Zona Arqueológica de Cuthá y senderismo a huellas de dinosaurios."
+          },
+          "coordenadas": {
+            "lat": 18.3333,
+            "lng": -97.4667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Gabriel Chilac",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza y ajo.",
+            "notas": "El ajo es muy representativo de la zona."
+          },
+          "artesanias": {
+            "productos": "Cerámica artesanal, tejidos multicolores y cestería de palma y fibra de maguey.",
+            "materiales": "Barro, tela, fibra de maguey, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Feria del Día de Muertos y balneario de aguas sulfurosas en Axocotzinco."
+          },
+          "coordenadas": {
+            "lat": 18.3167,
+            "lng": -97.35,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San José Miahuatlán",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza y maguey.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles y prendas tradicionales, cerámica decorativa y cestería de palma.",
+            "materiales": "Hilo, tela, barro, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas con enfoque en la historia y naturaleza de la región."
+          },
+          "coordenadas": {
+            "lat": 18.2833,
+            "lng": -97.2833,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Juan N. Méndez",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza.",
+            "notas": "Agricultura de subsistencia."
+          },
+          "artesanias": {
+            "productos": "Cerámica tradicional, tejidos artesanales y tallado en madera.",
+            "materiales": "Barro, tela, madera."
+          },
+          "turismo_potencial": {
+            "atracciones": "Turismo cultural y natural en comunidades pequeñas."
+          },
+          "coordenadas": {
+            "lat": 18.5333,
+            "lng": -97.7667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Atexcal",
+          "agricultura": {
+            "productos": "Cultivos básicos como maíz y frijol, y recolección de plantas medicinales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles tradicionales, cerámica artesanal y cestería de palma.",
+            "materiales": "Tela, barro, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Caminos ecoturísticos y turismo comunitario."
+          },
+          "coordenadas": {
+            "lat": 18.35,
+            "lng": -97.6167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Caltepec",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza para producción local.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica, tejidos artesanales, tallado en madera y cestería de palma.",
+            "materiales": "Barro, tela, madera, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo y turismo cultural."
+          },
+          "coordenadas": {
+            "lat": 18.1833,
+            "lng": -97.4833,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "REGIÓN SIERRA NEGRA",
+      "descripcion": "Región montañosa cuya economía combina la agricultura de subsistencia y el cultivo de caña de azúcar con oficios artesanales como la alfarería y los textiles de lana.",
+      "municipios": [
+        {
+          "nombre": "Ajalpan",
+          "agricultura": {
+            "productos": "Maíz, frijol, caña de azúcar y alfalfa.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Tejas y ladrillos de barro, tenates de palma, canastas de carrizo, pan tradicional y paletas de sabores exóticos (aguacate, mole).",
+            "materiales": "Barro, palma, carrizo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderismo en el Cerro Colorado, recorrido por el centro histórico y visita a ex-haciendas."
+          },
+          "coordenadas": {
+            "lat": 18.3833,
+            "lng": -97.2167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Coyomeapan",
+          "agricultura": {
+            "productos": "Maíz nativo, calabaza, durazno y aguacate criollo (agricultura de subsistencia).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Prendas de lana teñida como chales, abrigos y huipiles.",
+            "materiales": "Lana teñida."
+          },
+          "turismo_potencial": {
+            "atracciones": "Centro ecoturístico Las Cabañas (lagos, grutas, cascadas) y el Cerro del Zizintépetl."
+          },
+          "coordenadas": {
+            "lat": 18.2667,
+            "lng": -97.0167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Coxcatlán",
+          "agricultura": {
+            "productos": "Caña de azúcar y maíz.",
+            "notas": "La caña de azúcar es de gran importancia regional."
+          },
+          "artesanias": {
+            "productos": "Cestería de carrizo con canastas de distintos tamaños y diseños.",
+            "materiales": "Carrizo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Visita a la Presa Purrón (la más antigua de América) y la Cueva Cuna del Maíz."
+          },
+          "coordenadas": {
+            "lat": 18.2667,
+            "lng": -97.15,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Zinacatepec",
+          "agricultura": {
+            "productos": "Maíz, zapote, alfalfa, chiles, tomates y nopal.",
+            "notas": ""
+          },
+          "artesanias": null,
+          "turismo_potencial": {
+            "atracciones": "Exploración de la Reserva de la Biosfera, en particular una cueva de murciélagos."
+          },
+          "coordenadas": {
+            "lat": 18.3333,
+            "lng": -97.2,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "REGIÓN CHAZUMBA",
+      "descripcion": "Parte de la Mixteca, esta región se enfoca en la agricultura tradicional de maíz y café, con una destacada producción artesanal de cestería de palma y textiles.",
+      "municipios": [
+        {
+          "nombre": "San Pedro Tequixtepec",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza de subsistencia.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería en palma y cerámica decorativa y funcional.",
+            "materiales": "Palma, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderos para ecoturismo y visitas a mercados locales."
+          },
+          "coordenadas": {
+            "lat": 18.0667,
+            "lng": -97.7167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santiago Chazumba",
+          "agricultura": {
+            "productos": "Maíz, frijol y café para consumo local.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles bordados con motivos indígenas y cerámica artesanal.",
+            "materiales": "Tela, hilo, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta cultural con énfasis en textiles y tradiciones indígenas."
+          },
+          "coordenadas": {
+            "lat": 18.1833,
+            "lng": -97.6833,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Totoltepec de Guerrero",
+          "agricultura": {
+            "productos": "Maíz, frijol y palma.",
+            "notas": "La palma es usada para sombreros y canastas."
+          },
+          "artesanias": {
+            "productos": "Sombreros y canastas de palma; alfarería de barro bruñido.",
+            "materiales": "Palma, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta de artesanías, gastronomía tradicional y senderismo."
+          },
+          "coordenadas": {
+            "lat": 18.4667,
+            "lng": -97.8167,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "DISTRITO 3",
+      "descripcion": "Región de contrastes que va desde el cultivo de frambuesa hasta la agricultura de traspatio, con un valioso patrimonio cultural y artesanías en talavera y barro.",
+      "municipios": [
+        {
+          "nombre": "Concepción Buena Vista",
+          "agricultura": {
+            "productos": "Frambuesa.",
+            "notas": "Es la principal actividad económica."
+          },
+          "artesanias": {
+            "productos": "Artesanías de talavera.",
+            "materiales": "Barro (arcilla) y arenilla."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderismo y exploración en el Fraccionamiento Turístico Buenavista."
+          },
+          "coordenadas": {
+            "lat": 17.9167,
+            "lng": -97.5167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Juan Bautista Coixtlahuaca",
+          "agricultura": {
+            "productos": "Maíz, trigo y frijol en huertos de traspatio para autoconsumo.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Conocido por su patrimonio religioso (arte sacro), más que por una artesanía específica de venta.",
+            "materiales": ""
+          },
+          "turismo_potencial": {
+            "atracciones": "Visita al Conjunto Conventual Dominico, parte de la Ruta de la Mixteca."
+          },
+          "coordenadas": {
+            "lat": 17.7167,
+            "lng": -97.3333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Miguel Tequixtepec",
+          "agricultura": {
+            "productos": "Maíz, frijol, chile y esfuerzos para fomentar el aguacate.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Artesanías de barro como cazuelas, ollas, platos y comales.",
+            "materiales": "Barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo a sitios cercanos como Hierve el Agua y Monte Albán."
+          },
+          "coordenadas": {
+            "lat": 17.8,
+            "lng": -97.35,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Tepelmeme Villa De Morelos",
+          "agricultura": {
+            "productos": "Productos derivados de la palma.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Artesanías de barro negro; bordados y textiles.",
+            "materiales": "Barro negro, tela, hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Puente Colosal (cueva con vestigios precolombinos) y senderismo."
+          },
+          "coordenadas": {
+            "lat": 17.9167,
+            "lng": -97.3833,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "DISTRITO 4",
+      "descripcion": "Ubicada en la Cañada Oaxaqueña, esta región basa su economía en la agricultura de maguey y granos básicos, con una rica tradición en alfarería, cestería de palma y textiles bordados.",
+      "municipios": [
+        {
+          "nombre": "Teotitlán de Flores Magón",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza, maguey y nopal.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Alfarería de barro bruñido y textiles bordados.",
+            "materiales": "Barro, tela, hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta 'Guardianes del Desierto'."
+          },
+          "coordenadas": {
+            "lat": 18.1333,
+            "lng": -97.0667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Juan de los Cues",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería tradicional de palma y cerámica artesanal.",
+            "materiales": "Palma, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderos para turismo cultural y natural."
+          },
+          "coordenadas": {
+            "lat": 18.05,
+            "lng": -97.05,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Martín Toxpalan",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza y plantas medicinales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica artesanal y manualidades multicolor en madera y cartón.",
+            "materiales": "Barro, madera, cartón."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo y gastronomía tradicional."
+          },
+          "coordenadas": {
+            "lat": 18.1,
+            "lng": -97.05,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Antonio Nanahuatipam",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles tradicionales y cestería en palma.",
+            "materiales": "Hilo, tela, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Caminos ecoturísticos y eventos culturales."
+          },
+          "coordenadas": {
+            "lat": 18.1333,
+            "lng": -97.1167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santa María Tecomavaca",
+          "agricultura": {
+            "productos": "Maíz, frijol y maguey.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica tradicional y tallado en madera.",
+            "materiales": "Barro, madera."
+          },
+          "turismo_potencial": {
+            "atracciones": "Turismo cultural en senderos comunitarios."
+          },
+          "coordenadas": {
+            "lat": 17.9667,
+            "lng": -97.0167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santa María Ixcatlan",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza y maguey.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Barro bruñido y tejidos tradicionales de palma.",
+            "materiales": "Barro, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas artesanales y gastronomía típica."
+          },
+          "coordenadas": {
+            "lat": 17.85,
+            "lng": -97.1667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Mazatlan Villa de Flores",
+          "agricultura": {
+            "productos": "Maíz, frijol y calabaza.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería de palma y cerámica tradicional.",
+            "materiales": "Palma, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Recorridos comunitarios por sitios históricos."
+          },
+          "coordenadas": {
+            "lat": 18.0167,
+            "lng": -96.9167,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "DISTRITO 5",
+      "descripcion": "Región de gran biodiversidad agrícola con cultivos como café y aguacate, oficios artesanales únicos como el vidrio soplado y un profundo arraigo cultural.",
+      "municipios": [
+        {
+          "nombre": "San Juan Tepeuxila",
+          "agricultura": {
+            "productos": "Aguacate, café, durazno, frijol y jitomate.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Comales, tejidos de palma y carpintería.",
+            "materiales": ""
+          },
+          "turismo_potencial": null,
+          "coordenadas": {
+            "lat": 17.7333,
+            "lng": -96.7833,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Pedro Jaltepetongo",
+          "agricultura": {
+            "productos": "Aguacate criollo, frijol negro y maíz blanco.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Petates de palma.",
+            "materiales": "Palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta de la Reserva para explorar cascadas y el Sótano de San Agustín."
+          },
+          "coordenadas": {
+            "lat": 17.7167,
+            "lng": -97.0167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santiago Nacaltepec",
+          "agricultura": {
+            "productos": "Maíz, frijol, jitomate y chile huacle.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Tenates de palma, muebles y faroles de herrería.",
+            "materiales": "Palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Cercanía al centro ecoturístico 'Cascada de Niebla'."
+          },
+          "coordenadas": {
+            "lat": 17.5,
+            "lng": -96.9333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santa Maria Papalo",
+          "agricultura": {
+            "productos": "Café, caña de azúcar, maíz, limón y aguacate.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Artículos de vidrio soplado a partir de vidrio reciclado.",
+            "materiales": "Vidrio reciclado."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo y ciclismo por bosques y exploración de cavernas."
+          },
+          "coordenadas": {
+            "lat": 17.8333,
+            "lng": -96.7833,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santos Reyes Papalo",
+          "agricultura": {
+            "productos": "Aguacate Hass y uso de plantas medicinales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Bordados y alfarería de barro colorado (comales, ollas).",
+            "materiales": "Barro colorado."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas de senderismo y ecoturismo."
+          },
+          "coordenadas": {
+            "lat": 17.8333,
+            "lng": -96.85,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Concepción Papalo",
+          "agricultura": {
+            "productos": "Pápalo o pápaloquelite.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Alfarería de barro.",
+            "materiales": "Barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Casa Museo de María Sabina, Cerro de Adoración y Sótano de San Agustín."
+          },
+          "coordenadas": {
+            "lat": 17.85,
+            "lng": -96.8833,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Juan Bautista Cuicatlán",
+          "agricultura": {
+            "productos": "Chile chihuacle, mango, melón, limón y papaya.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Globos de Cantoya y alebrijes de madera.",
+            "materiales": "Papel de china, madera, alambre."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderismo en la Reserva de la Biósfera y visita a pinturas rupestres."
+          },
+          "coordenadas": {
+            "lat": 17.8,
+            "lng": -96.9667,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santa María Texcatitlan",
+          "agricultura": {
+            "productos": "Aprovechamiento forestal (pino, encino, cedro).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Artesanías tejidas de palma como sombreros y bolsas.",
+            "materiales": "Palma."
+          },
+          "turismo_potencial": null,
+          "coordenadas": {
+            "lat": 17.7333,
+            "lng": -97.0333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Valerio Trujano",
+          "agricultura": {
+            "productos": "Café, caña de azúcar, maíz, pasto y limón.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Alebrijes, talla en madera y bordados.",
+            "materiales": "Madera, palma."
+          },
+          "turismo_potencial": null,
+          "coordenadas": {
+            "lat": 17.7667,
+            "lng": -97,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Pedro Jocotipac",
+          "agricultura": {
+            "productos": "Maíz (autoconsumo), frijol y trigo.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Tejido de palma para elaborar sombreros y canastas.",
+            "materiales": "Palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ecoturismo para la protección de la guacamaya verde y visita a cuevas."
+          },
+          "coordenadas": {
+            "lat": 17.7667,
+            "lng": -97.0833,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "DISTRITO 10",
+      "descripcion": "Perteneciente a la Mixteca Alta, su economía se centra en la agricultura de milpa y frutales, preservando técnicas ancestrales en la tejeduría y la alfarería.",
+      "municipios": [
+        {
+          "nombre": "San Pedro Cántaros Coxcaltepec",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza, maguey y nopales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica funcional y decorativa; textiles bordados y tejidos.",
+            "materiales": "Barro, tela, hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderismo y recorrido por mercados tradicionales."
+          },
+          "coordenadas": {
+            "lat": 17.5167,
+            "lng": -97.1333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santiago Huauclilla",
+          "agricultura": {
+            "productos": "Maíz, frijol, calabaza, frutales y maguey.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Tejidos en telar de cintura y cestería artesanal.",
+            "materiales": "Tela, hilo, palma."
+          },
+          "turismo_potencial": {
+            "atracciones": "Turismo de naturaleza y gastronomía regional."
+          },
+          "coordenadas": {
+            "lat": 17.4333,
+            "lng": -97.05,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santiago Apoala",
+          "agricultura": {
+            "productos": "Maíz, frijol, chiles y plantas medicinales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles, bordados y cerámica decorativa.",
+            "materiales": "Tela, hilo, barro."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta artesanal y cultural, visitas a talleres y sitios arqueológicos."
+          },
+          "coordenadas": {
+            "lat": 17.65,
+            "lng": -97.1333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Santa Maria Apazco",
+          "agricultura": {
+            "productos": "Maíz, frijol, maguey y frutas locales.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería fina de palma y artesanía en madera.",
+            "materiales": "Palma, madera."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas ecoturísticas y paseos culturales."
+          },
+          "coordenadas": {
+            "lat": 17.5667,
+            "lng": -97.1,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "Asunción Nochixtlan",
+          "agricultura": {
+            "productos": "Maíz, trigo, frijol y calabaza.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Textiles bordados en lana y algodón; cestería en palma y carrizo.",
+            "materiales": "Tela, hilo, palma, carrizo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Ruta cultural con énfasis en textiles y gastronomía."
+          },
+          "coordenadas": {
+            "lat": 17.4667,
+            "lng": -97.2167,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Miguel Huautla",
+          "agricultura": {
+            "productos": "Maíz, trigo, frijol y frutales (manzana, durazno, aguacate).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica tradicional y tejeduría en telar de cintura (sarapes, mantas).",
+            "materiales": "Barro, tela, hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderos para ecoturismo y tours botánicos."
+          },
+          "coordenadas": {
+            "lat": 17.7333,
+            "lng": -97.1333,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    },
+    {
+      "nombre": "DISTRITO 11",
+      "descripcion": "Pequeña región de la Mixteca cuya economía se apoya en el cultivo de maguey para mezcal, la agricultura familiar y la producción artesanal de cestería y textiles.",
+      "municipios": [
+        {
+          "nombre": "Santa Catarina Zapoquila",
+          "agricultura": {
+            "productos": "Calabaza, maguey (para mezcal) y nopal.",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cestería en palma y textiles bordados en telar de cintura.",
+            "materiales": "Palma, fibras naturales, tela, hilo."
+          },
+          "turismo_potencial": {
+            "atracciones": "Senderos para ecoturismo y visitas a comunidades artesanales."
+          },
+          "coordenadas": {
+            "lat": 18.0167,
+            "lng": -97.5333,
+            "zoom": 14
+          }
+        },
+        {
+          "nombre": "San Juan Bautista Atatlahuaca",
+          "agricultura": {
+            "productos": "Calabaza, hortalizas y frutas (agricultura familiar).",
+            "notas": ""
+          },
+          "artesanias": {
+            "productos": "Cerámica tradicional y productos de carpintería artesanal.",
+            "materiales": "Barro, madera."
+          },
+          "turismo_potencial": {
+            "atracciones": "Rutas culturales, gastronomía tradicional y sitios arqueológicos."
+          },
+          "coordenadas": {
+            "lat": 17.5167,
+            "lng": -96.8167,
+            "zoom": 14
+          }
+        }
+      ],
+      "coordenadas": {
+        "lat": 18.11111,
+        "lng": -97.179541,
+        "zoom": 9
+      }
+    }
+  ]
+}
