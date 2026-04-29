@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, ZoomControl, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import GeneralMap from './GeneralMap';
 import RutasMap from './RutasMap';
@@ -18,7 +18,20 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const ReservaMap = ({ capasActivas }) => {
+// Componente para recalcular el tamaño del mapa al redimensionarse su contenedor
+const MapResizer = () => {
+    const map = useMap();
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => {
+            map.invalidateSize();
+        });
+        resizeObserver.observe(map.getContainer());
+        return () => resizeObserver.disconnect();
+    }, [map]);
+    return null;
+};
+
+const ReservaMap = ({ capasActivas, mapRef }) => {
     const [geoJsonData, setGeoJsonData] = useState(null);
 
     useEffect(() => {
@@ -45,10 +58,14 @@ const ReservaMap = ({ capasActivas }) => {
         <div className="map-wrapper w-full h-full">
             <MapContainer
                 center={centroTehuacan}
-                zoom={10}
+                zoom={9}
                 style={{ height: "100%", width: "100%" }}
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
+                zoomControl={false}
+                ref={mapRef}
             >
+                <MapResizer />
+                <ZoomControl position="bottomright" />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

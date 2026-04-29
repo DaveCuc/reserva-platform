@@ -34,7 +34,7 @@ const MapSection = () => {
 
 const InfoSection = () => {
     return (
-        <section className="p-10 max-w-7xl mx-auto bg-brand-soft">
+        <section className="p-10  mx-auto bg-brand-soft">
             <div className=" p-5  py-15 text-white">
                 <div className="container mx-auto px-4">
                     <motion.div {...fadeUp} >

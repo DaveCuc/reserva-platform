@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 
 
-const SlideLeft = ({ capasActivas, setCapasActivas }) => {
+const SlideLeft = ({ capasActivas, setCapasActivas, mapRef }) => {
     // Estado para controlar si el menú está abierto o cerrado
     const [isOpen, setIsOpen] = useState(true);
 
+    const handleMapAction = (layer, lat, lng, zoom) => {
+        setCapasActivas(prev => ({ ...prev, [layer]: !prev[layer] }));
+        if (mapRef?.current) {
+            mapRef.current.setView([lat, lng], zoom);
+        }
+    };
+
     return (
-        <div className={`absolute top-0 left-0 h-full w-72 bg-white shadow-2xl z-[1001] transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`relative h-full w-72 shrink-0 bg-white shadow-2xl z-[1001] transition-all duration-300 ease-in-out flex flex-col ${isOpen ? 'ml-0' : '-ml-72'}`}>
 
             {/* Pestaña flotante que sobresale para abrir/cerrar */}
             <button
@@ -20,61 +27,89 @@ const SlideLeft = ({ capasActivas, setCapasActivas }) => {
             </button>
 
             {/* Cabecera: Título */}
-            <div className="flex items-center p-5 border-b border-brand-panel">
-                <h2 className="text-2xl font-semibold text-brand-text">Mapas</h2>
+            <div className="pt-24 flex items-center p-5 border-b border-brand-panel">
+                <h2 className="text-2xl font-semibold text-brand-text">Mapa</h2>
             </div>
 
-            {/* Botones de navegación (Capas) */}
-            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
+
+
+
+
+            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+
                 <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, reserva: !prev.reserva }))}
+                    onClick={() => handleMapAction('reserva', 18.11111, -97.179541, 9)}
                     className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.reserva ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
                 >
-                    Reserva
-                </button>
-                <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, general: !prev.general }))}
-                    className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.general ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
-                >
-                    General
+                    Reserva de la Biosfera
                 </button>
 
+                <div className="flex flex-col gap-3">
+                    <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">Regiones</h3>
+                    <button
+                        onClick={() => handleMapAction('general', 18.11111, -97.179541, 9)}
+                        className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.general ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
+                    >
+                        General
+                    </button>
+                </div>
 
-                {/* Rutas */}
+                <div className="flex flex-col gap-3">
+                    <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">Rutas Turisticas</h3>
+                    {/* Rutas */}
 
-                {/* Ruta 1: Onix y Sal */}
-                <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, ruta1: !prev.ruta1 }))}
-                    className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta1 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
-                >
-                    Onix y Sal
-                </button>
+                    {/* Ruta 1: Onix y Sal */}
+                    <button
+                        onClick={() => handleMapAction('ruta1', 18.3273, -97.4752, 13)}
+                        className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta1 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
+                    >
+                        Onix y Sal
+                    </button>
 
-                {/* Ruta 2: Dinosaurios */}
-                <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, ruta2: !prev.ruta2 }))}
-                    className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta2 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
-                >
-                    Dinosaurios
-                </button>
+                    {/* Ruta 2: Dinosaurios */}
+                    <button
+                        onClick={() => handleMapAction('ruta2', 18.3145, -97.6149, 13)}
+                        className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta2 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
+                    >
+                        Dinosaurios
+                    </button>
 
-                {/* Ruta 3: Mezcal y Barro */}
-                <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, ruta3: !prev.ruta3 }))}
-                    className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta3 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
-                >
-                    Mezcal y Barro
-                </button>
+                    {/* Ruta 3: Mezcal y Barro */}
+                    <button
+                        onClick={() => handleMapAction('ruta3', 18.2252, -97.4865, 13)}
+                        className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.ruta3 ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
+                    >
+                        Mezcal y Barro
+                    </button>
+                </div>
 
-                {/* Puntos de Interés */}
-                <button
-                    onClick={() => setCapasActivas(prev => ({ ...prev, puntos: !prev.puntos }))}
-                    className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.puntos ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
-                >
-                    Puntos de Interés
-                </button>
+                <div className="flex flex-col gap-3">
+                    <h3 className="text-lg font-semibold text-brand-dark border-b border-brand-panel pb-2">Puntos de Interés</h3>
+
+
+
+                    <button
+                        onClick={() => handleMapAction('puntos', 18.11111, -97.179541, 9)}
+                        className={`w-full text-left px-4 py-3 rounded-md transition-colors font-medium shadow-sm ${capasActivas?.puntos ? 'bg-brand-soft text-white' : 'text-brand-ink hover:bg-brand-panel hover:text-brand-text'}`}
+                    >
+                        Localidades
+                    </button>
+
+                </div>
 
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     );
 }

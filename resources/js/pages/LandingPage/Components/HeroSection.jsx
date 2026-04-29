@@ -26,12 +26,12 @@ export default function HeroSection() {
 
     const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
     const imageBlur = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(3px)"]);
-    const logoOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const logoScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.05]);
-    const logoY = useTransform(scrollYProgress, [0, 0.3], [0, -200]);
+    const logoOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+    const logoScale = useTransform(scrollYProgress, [0, 0.25], [1, 1.05]);
+    const logoY = useTransform(scrollYProgress, [0, 0.25], [0, -300]);
 
-    const textOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
-    const textY = useTransform(scrollYProgress, [0.1, 0.4], [50, 0]);
+    const textOpacity = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
+    const textY = useTransform(scrollYProgress, [0.1, 0.25], [50, 0]);
 
     return (
         <div ref={containerRef} className="relative h-[200vh] bg-black">
@@ -79,7 +79,7 @@ export default function HeroSection() {
                         <img
                             src="/logo2.svg"
                             alt="Logo"
-                            className="w-[80%] md:w-[60%] lg:w-[50%] max-w-[800px] h-auto object-contain drop-shadow-2xl"
+                            className="w-[80%] md:w-[60%] lg:w-[50%] max-w-[1000px] h-auto object-contain drop-shadow-2xl"
                         />
                     </motion.div>
                 </motion.div>
