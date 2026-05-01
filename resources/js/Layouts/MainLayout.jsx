@@ -1,6 +1,7 @@
 import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { Layout, Compass, List, BarChart, LogOut, Menu, Store, FileText } from "lucide-react";
+import { Layout, Compass, List, BarChart, LogOut, Menu, Store, FileText, Mail } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import Dropdown from '@/Components/Dropdown';
@@ -11,15 +12,22 @@ const Logo = () => (
 );
 
 const guestRoutes = [
+    { icon: Compass, label: "Explorar mas cursos", href: "/search" },
     { icon: Layout, label: "Mi cursos", href: "/dashboard" },
     { icon: Store, label: "Mi negocio", href: "/trade" },
-    { icon: Compass, label: "Explorar mas cursos", href: "/search" },
+    { icon: Compass, label: "Descubrir", href: "/discover" },
+
+
+
 ];
 
 const teacherRoutes = [
     { icon: List, label: "Cursos", href: "/teacher/courses" },
     { icon: BarChart, label: "Estadísticas", href: "/teacher/analytics" },
-    { icon: FileText, label: "Solicitudes", href: "/teacher/solicitudes" }
+    { icon: Mail, label: "Solicitudes", href: "/teacher/solicitudes" },
+    { icon: FileText, label: "Articulos", href: "/teacher/articles" },
+
+
 ];
 
 const SidebarItem = ({ icon: Icon, label, href }) => {
@@ -149,11 +157,11 @@ export default function MainLayout({ children }) {
                     <NavbarRoutes />
                 </div>
             </div>
-            
+
             <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
                 <Sidebar />
             </div>
-            
+
             <main className="md:pl-56 pt-[80px] h-full p-6">
                 {children}
             </main>

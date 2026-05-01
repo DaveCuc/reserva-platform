@@ -38,6 +38,26 @@ Route::get('/negocio/{trade}', function (\App\Models\Directorio $trade) {
     ]);
 })->name('negocio');
 
+Route::get('/articulos/{article}', function (\App\Models\Article $article) {
+    if (!$article->is_published) {
+        abort(404);
+    }
+    
+    $article->load(['user', 'category']);
+    
+    $recentArticles = \App\Models\Article::where('is_published', true)
+        ->where('id', '!=', $article->id)
+        ->with(['user', 'category'])
+        ->orderBy('published_at', 'desc')
+        ->take(4)
+        ->get();
+        
+    return Inertia::render('LandingPage/Articulos/Index', [
+        'article' => $article,
+        'recentArticles' => $recentArticles
+    ]);
+})->name('articulos.show');
+
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---
 Route::get('/api/directorio', function (\Illuminate\Http\Request $request) {
     $query = \App\Models\Directorio::query()
@@ -166,6 +186,27 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('search');
 
+    Route::get('/discover', function (\Illuminate\Http\Request $request) {
+        $categories = \App\Models\Category::orderBy('name')->get();
+        
+        $articles = \App\Models\Article::with(['category', 'user'])
+            ->where('is_published', true)
+            ->when($request->title, function($query, $title) {
+                $query->where('title', 'like', "%{$title}%");
+            })
+            ->when($request->categoryId, function($query, $categoryId) {
+                $query->where('category_id', $categoryId);
+            })
+            ->orderBy('published_at', 'desc')
+            ->get();
+
+        return Inertia::render('Dashboard/Discover/Index', [
+            'categories' => $categories,
+            'articles' => $articles,
+            'filters' => $request->only(['title', 'categoryId'])
+        ]);
+    })->name('discover');
+
     Route::get('/courses/{course}', function (\App\Models\Course $course) {
         $firstChapter = $course->chapters()->where('is_published', true)->orderBy('position', 'asc')->first();
         if (!$firstChapter) return redirect('/');
@@ -286,6 +327,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/teacher/courses/{course}/chapters', [\App\Http\Controllers\TeacherCourseController::class, 'createChapter']);
     Route::put('/teacher/courses/{course}/chapters/reorder', [\App\Http\Controllers\TeacherCourseController::class, 'reorderChapters']);
 
+    // Teacher Articles
+    Route::get('/teacher/articles', [\App\Http\Controllers\TeacherArticleController::class, 'index'])->name('teacher.articles.index');
+    Route::get('/teacher/articles/create', function () {
+        return Inertia::render('Dashboard/Teacher/Articles/Create/Index');
+    })->name('teacher.articles.create');
+    Route::post('/teacher/articles', [\App\Http\Controllers\TeacherArticleController::class, 'store'])->name('teacher.articles.store');
+    Route::get('/teacher/articles/{article}', [\App\Http\Controllers\TeacherArticleController::class, 'edit'])->name('teacher.articles.edit');
+    Route::patch('/teacher/articles/{article}', [\App\Http\Controllers\TeacherArticleController::class, 'update'])->name('teacher.articles.update');
+    Route::delete('/teacher/articles/{article}', [\App\Http\Controllers\TeacherArticleController::class, 'destroy'])->name('teacher.articles.destroy');
+    Route::patch('/teacher/articles/{article}/publish', [\App\Http\Controllers\TeacherArticleController::class, 'publish'])->name('teacher.articles.publish');
+    Route::patch('/teacher/articles/{article}/unpublish', [\App\Http\Controllers\TeacherArticleController::class, 'unpublish'])->name('teacher.articles.unpublish');
+    Route::post('/teacher/articles/{article}/image', [\App\Http\Controllers\TeacherArticleController::class, 'uploadImage'])->name('teacher.articles.image');
+    Route::post('/teacher/articles/{article}/card-image', [\App\Http\Controllers\TeacherArticleController::class, 'uploadCardImage'])->name('teacher.articles.card-image');
+
     // Capítulos individuales (Sub-Editor)
     Route::get('/teacher/courses/{course}/chapters/{chapter}', [\App\Http\Controllers\TeacherChapterController::class, 'edit'])->name('teacher.courses.chapters.edit');
     Route::patch('/teacher/courses/{course}/chapters/{chapter}', [\App\Http\Controllers\TeacherChapterController::class, 'update']);
@@ -384,10 +439,3 @@ Route::post('/webhook', function(\Illuminate\Http\Request $request) {
     return response('Webhook Handled By Laravel', 200);
 });
 
-// borrar al finalizar migración
-
-
-Route::get('/migrar-tablas', function () {
-    Artisan::call('migrate', ['--force' => true]);
-    return "¡Tablas creadas con éxito!";
-});
