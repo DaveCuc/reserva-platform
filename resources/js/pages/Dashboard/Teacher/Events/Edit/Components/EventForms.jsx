@@ -8,8 +8,13 @@ import axios from "axios";
 // Generic Field Editor Component to reduce duplication for simple string/date inputs
 const GenericForm = ({ initialData, eventId, field, label, type = "text", placeholder }) => {
   const [isEditing, setIsEditing] = useState(false);
+  let formInitialValue = initialData[field] || "";
+  if (type === "date" && formInitialValue) {
+    formInitialValue = formInitialValue.substring(0, 10);
+  }
+
   const { data, setData, patch, processing } = useForm({
-    [field]: initialData[field] || "",
+    [field]: formInitialValue,
   });
 
   const toggleEdit = () => setIsEditing((c) => !c);
@@ -24,6 +29,14 @@ const GenericForm = ({ initialData, eventId, field, label, type = "text", placeh
     });
   };
 
+  let displayValue = initialData[field] || "No especificado";
+  if (type === "date" && initialData[field]) {
+    const dateStr = initialData[field].substring(0, 10);
+    displayValue = new Date(dateStr + 'T12:00:00').toLocaleDateString('es-ES', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
+
   return (
     <div className="mt-6 border bg-brand-pale rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
@@ -35,7 +48,7 @@ const GenericForm = ({ initialData, eventId, field, label, type = "text", placeh
 
       {!isEditing && (
         <p className={`text-sm mt-2 ${!initialData[field] && "text-brand-ink italic"}`}>
-          {initialData[field] || "No especificado"}
+          {displayValue}
         </p>
       )}
 
@@ -60,7 +73,7 @@ const GenericForm = ({ initialData, eventId, field, label, type = "text", placeh
 export const TitleForm = (props) => <GenericForm {...props} field="title" label="Título del Evento" placeholder="Ej. Gira Universitaria..." />;
 export const ShortDescriptionForm = (props) => <GenericForm {...props} field="short_description" label="Ubicación Resumida (Para Portada)" placeholder="Ej. Tampico, Madero y Altamira" />;
 export const DateForm = (props) => <GenericForm {...props} field="event_date" label="Fecha del Evento" type="date" />;
-export const TimeForm = (props) => <GenericForm {...props} field="event_time" label="Hora del Evento" type="time" />;
+export const TimeForm = (props) => <GenericForm {...props} field="event_time" label="Horarios del Evento" type="text" placeholder="Ej. 9:00 a.m. – 6:00 p.m. (GMT-6)" />;
 export const LocationForm = (props) => <GenericForm {...props} field="location" label="Ubicación Completa" placeholder="Ej. Multiple Venues - University Roadshow" />;
 export const RsvpForm = (props) => <GenericForm {...props} field="rsvp_link" label="Link de RSVP (Google Forms, etc.)" type="url" placeholder="https://forms.gle/..." />;
 

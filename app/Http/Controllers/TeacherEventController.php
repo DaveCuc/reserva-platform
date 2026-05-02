@@ -48,7 +48,7 @@ class TeacherEventController extends Controller
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'event_date' => 'nullable|date',
-            'event_time' => 'nullable|string',
+            'event_time' => 'nullable|string|max:255',
             'rsvp_link' => 'nullable|url|max:255',
             'topics' => 'nullable|array',
             'hosts' => 'nullable|array',

@@ -44,16 +44,22 @@ export default function NewsSection({ recentEvents = [] }) {
 
                                         <div className="relative z-10 flex h-full flex-col justify-end p-5 md:p-6">
                                             <Badge variant="outline" className="mb-3 w-fit rounded-full border-white/35 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
-                                                {event.event_date ? new Date(event.event_date).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Próximamente'}
+                                                {event.topics && event.topics.length > 0 ? event.topics[0] : 'Evento'}
                                             </Badge>
 
                                             <CardTitle className="mb-3 text-2xl font-bold leading-tight text-white line-clamp-3">
                                                 {event.title}
                                             </CardTitle>
 
-                                            <p className="mb-5 text-sm leading-6 text-white/90 line-clamp-3">
+                                            <p className="mb-3 text-sm leading-6 text-white/90 line-clamp-3">
                                                 {event.short_description || "Descubre más detalles sobre este evento."}
                                             </p>
+
+                                            {event.event_date && (
+                                                <p className="mb-5 text-sm font-bold text-white">
+                                                    {new Date(event.event_date.substring(0, 10) + 'T12:00:00').toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                                </p>
+                                            )}
 
                                             <Button asChild variant="landing_page_secondary" className="w-fit rounded-full px-5 py-2 text-sm font-semibold">
                                                 <Link href={`/eventos/${event.id}`} className="inline-flex items-center gap-2">

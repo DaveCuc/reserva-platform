@@ -1,37 +1,70 @@
 import React from 'react';
-import { Calendar } from 'lucide-react';
 
 export default function EventLocation({ event }) {
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
-    return new Date(dateStr).toLocaleDateString('es-ES', {
+    const cleanDate = dateStr.substring(0, 10);
+    return new Date(cleanDate + 'T12:00:00').toLocaleDateString('es-ES', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
   };
 
   return (
-    <section className="w-full bg-brand">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16 text-white">
-        <h3 className="text-xl font-bold mb-6 flex items-center">
-          <Calendar className="w-6 h-6 mr-3 opacity-80" /> Cuándo y Dónde
-        </h3>
+    <section className="w-full bg-brand-mint text-[#202124] py-12 md:py-16">
+      <div className="max-w-[1140px] mx-auto px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row flex-wrap gap-10 md:gap-8 justify-between">
 
-        <div className="space-y-6">
-          <div>
-            <h4 className="text-brand-mint text-sm font-semibold uppercase tracking-wider mb-2">Cuándo</h4>
-            <p className="font-medium text-lg">
-              {event.event_date ? formatDate(event.event_date) : "Fecha por confirmar"}
-            </p>
-            {event.event_time && <p className="text-white/90 mt-1">{event.event_time}</p>}
+          {/* CUÁNDO */}
+          <div className="flex-1 min-w-[300px]">
+            <div className="flex flex-row gap-5 items-start">
+              <div className="w-[45px] min-w-[45px] shrink-0">
+                <img
+                  src="https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2,f_auto,g_center,q_auto:good/v1/gcs/platform-data-goog/contentbuilder/GDG_Bevy_WebIcons_Date_sMFTBzv.svg"
+                  alt="Cuándo"
+                  className="w-full h-auto max-w-full"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-1 tracking-tight">Cuándo</h3>
+                <p className="text-base leading-relaxed text-[#202124]">
+                  {event.event_date ? formatDate(event.event_date) : "Fecha por confirmar"}
+                  {event.event_time && <><br />{event.event_time}</>}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-brand-mint text-sm font-semibold uppercase tracking-wider mb-2">Dónde</h4>
-            <p className="font-medium text-lg leading-relaxed">
-              {event.location || "Ubicación por confirmar"}
-            </p>
-
+          {/* DÓNDE */}
+          <div className="flex-1 min-w-[300px]">
+            <div className="flex flex-row gap-5 items-start">
+              <div className="w-[45px] min-w-[45px] shrink-0">
+                <img
+                  src="https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2,f_auto,g_center,q_auto:good/v1/gcs/platform-data-goog/contentbuilder/GDG_Bevy_WebIcons_Location_o00TWea.svg"
+                  alt="Dónde"
+                  className="w-full h-auto max-w-full"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-1 tracking-tight">Dónde</h3>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location || "Ubicación por confirmar")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-[#202124]"
+                >
+                  <p className="text-base leading-relaxed">
+                    {event.location ? event.location.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    )) : "Ubicación por confirmar"}
+                  </p>
+                </a>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
