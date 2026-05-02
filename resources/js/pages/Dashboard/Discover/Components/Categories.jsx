@@ -10,7 +10,9 @@ import {
     Camera,
     Music,
     Palette,
-    TreePine
+    TreePine,
+    Calendar,
+    LayoutGrid
 } from "lucide-react";
 
 // Mapeo simple de nombres a iconos basados en el seed
@@ -30,6 +32,11 @@ const iconMap = {
 export const Categories = ({ items }) => {
     return (
         <div className="flex items-center gap-x-2 overflow-x-auto pb-2 scrollbar-hide">
+            <CategoryItem
+                label="Todos"
+                value={null}
+                icon={LayoutGrid}
+            />
             {items.map((item) => (
                 <CategoryItem
                     key={item.id}

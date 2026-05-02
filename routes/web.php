@@ -11,11 +11,17 @@ use Inertia\Inertia;
 // --- DOMINIO 1: PÁGINAS PÚBLICAS (HOME/LANDING) ---
 
 Route::get('/', function () {
+    $recentEvents = \App\Models\Event::where('is_published', true)
+        ->orderBy('published_at', 'desc')
+        ->take(3)
+        ->get();
+
     return Inertia::render('LandingPage/Inicio', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'recentEvents' => $recentEvents,
     ]);
 })->name('home');
 
@@ -57,6 +63,11 @@ Route::get('/articulos/{article}', function (\App\Models\Article $article) {
         'recentArticles' => $recentArticles
     ]);
 })->name('articulos.show');
+
+// Eventos (Public)
+Route::get('/eventos', [\App\Http\Controllers\EventController::class, 'index'])->name('eventos.index');
+Route::get('/eventos/{evento}', [\App\Http\Controllers\EventController::class, 'show'])->name('eventos.show');
+
 
 // --- API ENDPOINT DE MIGRACIÓN PARA DIRECTORIO ---
 Route::get('/api/directorio', function (\Illuminate\Http\Request $request) {
@@ -189,20 +200,34 @@ Route::middleware('auth')->group(function () {
     Route::get('/discover', function (\Illuminate\Http\Request $request) {
         $categories = \App\Models\Category::orderBy('name')->get();
         
-        $articles = \App\Models\Article::with(['category', 'user'])
-            ->where('is_published', true)
-            ->when($request->title, function($query, $title) {
-                $query->where('title', 'like', "%{$title}%");
-            })
-            ->when($request->categoryId, function($query, $categoryId) {
-                $query->where('category_id', $categoryId);
-            })
-            ->orderBy('published_at', 'desc')
-            ->get();
+        $isEvents = $request->categoryId === 'eventos';
+        $articles = [];
+        $events = [];
+
+        if ($isEvents) {
+            $events = \App\Models\Event::where('is_published', true)
+                ->when($request->title, function($query, $title) {
+                    $query->where('title', 'like', "%{$title}%");
+                })
+                ->orderBy('published_at', 'desc')
+                ->get();
+        } else {
+            $articles = \App\Models\Article::with(['category', 'user'])
+                ->where('is_published', true)
+                ->when($request->title, function($query, $title) {
+                    $query->where('title', 'like', "%{$title}%");
+                })
+                ->when($request->categoryId, function($query, $categoryId) {
+                    $query->where('category_id', $categoryId);
+                })
+                ->orderBy('published_at', 'desc')
+                ->get();
+        }
 
         return Inertia::render('Dashboard/Discover/Index', [
             'categories' => $categories,
             'articles' => $articles,
+            'events' => $events,
             'filters' => $request->only(['title', 'categoryId'])
         ]);
     })->name('discover');
@@ -340,6 +365,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/teacher/articles/{article}/unpublish', [\App\Http\Controllers\TeacherArticleController::class, 'unpublish'])->name('teacher.articles.unpublish');
     Route::post('/teacher/articles/{article}/image', [\App\Http\Controllers\TeacherArticleController::class, 'uploadImage'])->name('teacher.articles.image');
     Route::post('/teacher/articles/{article}/card-image', [\App\Http\Controllers\TeacherArticleController::class, 'uploadCardImage'])->name('teacher.articles.card-image');
+
+    // Teacher Events
+    Route::get('/teacher/events', [\App\Http\Controllers\TeacherEventController::class, 'index'])->name('teacher.events.index');
+    Route::get('/teacher/events/create', function () {
+        return Inertia::render('Dashboard/Teacher/Events/Create/Index');
+    })->name('teacher.events.create');
+    Route::post('/teacher/events', [\App\Http\Controllers\TeacherEventController::class, 'store'])->name('teacher.events.store');
+    Route::get('/teacher/events/{event}', [\App\Http\Controllers\TeacherEventController::class, 'edit'])->name('teacher.events.edit');
+    Route::patch('/teacher/events/{event}', [\App\Http\Controllers\TeacherEventController::class, 'update'])->name('teacher.events.update');
+    Route::delete('/teacher/events/{event}', [\App\Http\Controllers\TeacherEventController::class, 'destroy'])->name('teacher.events.destroy');
+    Route::patch('/teacher/events/{event}/publish', [\App\Http\Controllers\TeacherEventController::class, 'publish'])->name('teacher.events.publish');
+    Route::patch('/teacher/events/{event}/unpublish', [\App\Http\Controllers\TeacherEventController::class, 'unpublish'])->name('teacher.events.unpublish');
+    Route::post('/teacher/events/{event}/image', [\App\Http\Controllers\TeacherEventController::class, 'uploadImage'])->name('teacher.events.image');
+    Route::post('/teacher/events/{event}/cover-image', [\App\Http\Controllers\TeacherEventController::class, 'uploadCoverImage'])->name('teacher.events.cover-image');
+    Route::post('/teacher/events/{event}/person-image', [\App\Http\Controllers\TeacherEventController::class, 'uploadPersonImage'])->name('teacher.events.person-image');
 
     // Capítulos individuales (Sub-Editor)
     Route::get('/teacher/courses/{course}/chapters/{chapter}', [\App\Http\Controllers\TeacherChapterController::class, 'edit'])->name('teacher.courses.chapters.edit');

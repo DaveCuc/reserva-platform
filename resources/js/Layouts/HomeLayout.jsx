@@ -83,7 +83,7 @@ export const HomeNavbar = () => {
     const { url } = usePage();
 
     const currentPath = url.split("?")[0];
-    const isAlwaysSolid = currentPath === "/mapa" || currentPath === "/cursos" || currentPath.startsWith("/articulos");
+    const isAlwaysSolid = currentPath === "/mapa" || currentPath.startsWith("/eventos") || currentPath === "/cursos" || currentPath.startsWith("/articulos");
 
     useEffect(() => {
         if (isAlwaysSolid) {

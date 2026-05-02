@@ -34,7 +34,7 @@ export default function ArticleEditor({ article, categories }) {
   return (
     <MainLayout>
       <Head title={`Editar Artículo: ${article.title}`} />
-      
+
       {!article.is_published && (
         <Banner variant="warningSolid" label="Este artículo no es visible al público hasta que lo publiques." />
       )}
@@ -51,10 +51,10 @@ export default function ArticleEditor({ article, categories }) {
               Completa todos los campos {completionText}
             </span>
           </div>
-          <Actions 
-            disabled={!isComplete} 
-            articleId={article.id} 
-            isPublished={article.is_published} 
+          <Actions
+            disabled={!isComplete}
+            articleId={article.id}
+            isPublished={article.is_published}
           />
         </div>
 
@@ -68,30 +68,32 @@ export default function ArticleEditor({ article, categories }) {
 
             <TitleForm initialData={article} articleId={article.id} />
             <ShortDescriptionForm initialData={article} articleId={article.id} />
-            
+
             <div className="mt-6 border bg-brand-pale rounded-md p-4">
               <div className="font-medium flex items-center justify-between">
                 Autor
               </div>
-              <Input 
-                value={article.user?.name || ""} 
-                disabled 
-                className="mt-4 bg-brand-soft" 
+              <Input
+                value={article.user?.name || ""}
+                disabled
+                className="mt-4 bg-brand-soft"
               />
             </div>
 
+
             <CategoryForm initialData={article} articleId={article.id} options={mappedCategories} />
-            <ImageForm 
-              initialData={article} 
-              articleId={article.id} 
-              label="Imagen de portada (dentro del artículo)" 
+
+            <ImageForm
+              initialData={article}
+              articleId={article.id}
+              label="Imagen de portada (dentro del artículo)"
               endpoint={`/teacher/articles/${article.id}/image`}
               field="image_url"
             />
-            <ImageForm 
-              initialData={article} 
-              articleId={article.id} 
-              label="Imagen de tarjeta (vista previa)" 
+            <ImageForm
+              initialData={article}
+              articleId={article.id}
+              label="Imagen de tarjeta (vista previa)"
               endpoint={`/teacher/articles/${article.id}/card-image`}
               field="card_image_url"
             />

@@ -10,14 +10,14 @@ import CursosSection from './Components/CursosSection';
 
 
 
-export default function Welcome() {
+export default function Welcome({ recentEvents }) {
     return (
         <HomeLayout>
             <Head title="Inicio" />
 
             <HeroSection />
 
-            <NewsSection />
+            <NewsSection recentEvents={recentEvents} />
 
             <MapSection />
 
