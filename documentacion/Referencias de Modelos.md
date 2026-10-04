@@ -7,7 +7,7 @@ Este documento detalla la función de cada modelo en `app/Models`, sus métodos 
 ## 1. Módulo Core / Usuarios
 
 ### `User`
-El modelo principal de autenticación. Representa a estudiantes, profesores y administradores.
+El modelo principal de autenticación. Representa tanto al **Alumno/Productor** como al **Profesor** (con la bandera `is_teacher`).
 *   **Se conecta con:**
     *   `directorios()`: Un usuario (`HasMany`) puede ser propietario o gestor de múltiples negocios en el directorio turístico.
 *   **Funciones / Traits:** Usa `HasFactory`, `Notifiable`, y `TwoFactorAuthenticatable` para gestionar inicios de sesión biométricos y de doble factor. Además mapea el casteo de `password` a tipo `hashed`.
@@ -22,16 +22,16 @@ Categorías base para clasificar los cursos ofertados.
     *   `courses()`: Una categoría (`HasMany`) agrupa a múltiples cursos.
 
 ### `Course`
-El pilar del sistema educativo. Representa un curso creado por un profesor.
+El pilar del sistema educativo. Representa un curso creado por un Profesor.
 *   **Se conecta con:**
     *   `category()`: Pertenece (`BelongsTo`) a una categoría específica.
-    *   `user()`: Pertenece (`BelongsTo`) al profesor que lo creó.
+    *   `user()`: Pertenece (`BelongsTo`) al Profesor que lo creó.
     *   `chapters()`: Tiene muchos (`HasMany`) capítulos, ordenados por su posición.
     *   `attachments()`: Tiene muchos (`HasMany`) archivos adjuntos (PDFs, guías).
     *   `exams()`: Tiene muchos (`HasMany`) exámenes.
-    *   `purchases()`: Tiene muchos (`HasMany`) estudiantes inscritos a través de compras.
+    *   `purchases()`: Tiene muchos (`HasMany`) usuarios (Alumno/Productor) inscritos.
 *   **Funciones de lógica de negocio:**
-    *   `getProgressPercentageForUser(string $userId)`: Un algoritmo crítico que calcula el porcentaje de avance (0 al 100) de un estudiante, contando el número total de capítulos publicados completados más los exámenes aprobados.
+    *   `getProgressPercentageForUser(string $userId)`: Un algoritmo crítico que calcula el porcentaje de avance (0 al 100) de un Alumno/Productor, contando el número total de capítulos publicados completados más los exámenes aprobados.
 
 ### `Chapter`
 Lecciones individuales de video o texto que conforman un curso.
@@ -55,19 +55,19 @@ Archivos complementarios del curso.
 ## 3. Módulo de Inscripción y Seguimiento
 
 ### `Purchase`
-Representa el acceso de un estudiante a un curso (incluso si fue gratuito).
+Representa el acceso de un Alumno/Productor a un curso (inscripción gratuita directa).
 *   **Se conecta con:**
-    *   `course()`: Pertenece (`BelongsTo`) al curso comprado. *(Nota: La relación al usuario se deduce por la columna `user_id`, aunque no se explícita la función `user()` en el modelo).*
+    *   `course()`: Pertenece (`BelongsTo`) al curso registrado. *(Nota: La relación al usuario se deduce por la columna `user_id`, aunque no se explícita la función `user()` en el modelo).*
 
 ### `UserProgress`
-Tabla pivote que marca una lección concreta como vista/completada.
+Tabla pivote que marca una lección concreta como vista/completada por el Alumno/Productor.
 *   **Se conecta con:**
     *   `chapter()`: Pertenece (`BelongsTo`) al capítulo que se marcó como terminado.
 
 ### `Certificate`
-Los diplomas digitales generados por la plataforma.
+Los certificados digitales oficiales generados por la plataforma en formato PDF tras completar el 100% de capítulos y aprobar todos los exámenes.
 *   **Se conecta con:**
-    *   `user()`: Pertenece (`BelongsTo`) al estudiante galardonado.
+    *   `user()`: Pertenece (`BelongsTo`) al Alumno/Productor acreditado.
     *   `course()`: Pertenece (`BelongsTo`) al curso completado.
 
 ---
@@ -79,7 +79,7 @@ La entidad principal de la prueba.
 *   **Se conecta con:**
     *   `course()`: Pertenece (`BelongsTo`) al curso.
     *   `questions()`: Tiene muchas (`HasMany`) preguntas formuladas dentro de él.
-    *   `attempts()`: Tiene muchos (`HasMany`) intentos realizados por los alumnos.
+    *   `attempts()`: Tiene muchos (`HasMany`) intentos realizados por los usuarios (Alumno/Productor).
 
 ### `ExamQuestion`
 Las preguntas de opción múltiple u otro tipo.
@@ -93,10 +93,10 @@ Cada inciso de respuesta posible.
     *   `question()`: Pertenece (`BelongsTo`) a la pregunta formulada. Mapea la propiedad booleana `is_correct` (verdadero si es la respuesta correcta).
 
 ### `ExamAttempt`
-La "hoja de respuestas" de un estudiante.
+La persistencia de intento de evaluación de un Alumno/Productor.
 *   **Se conecta con:**
     *   `exam()`: Pertenece (`BelongsTo`) al examen realizado.
-    *   `user()`: Pertenece (`BelongsTo`) al estudiante que lo tomó. Almacena en un array de JSON las respuestas que el usuario mandó.
+    *   `user()`: Pertenece (`BelongsTo`) al Alumno/Productor que lo tomó. Almacena en un array de JSON las respuestas enviadas para su calificación y cálculo de aprobación.
 
 ---
 

@@ -1,22 +1,28 @@
 # **Documento de Diagramas: Casos de Uso, Arquitectura y Comportamiento de la Plataforma**
 
-> **Referencia de Alcance:** Basado íntegramente en el [*Documento de Alcance de Evaluación: Arquitectura Visual y Módulos de la Plataforma Web V3*](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/Documento%20de%20Alcance%20de%20Evaluaci%C3%B3n_%20Arquitectura%20y%20M%C3%B3dulos%20de%20la%20Plataforma%20V3.md).
+> **Referencia de Alcance:** Basado en la especificación validada de la [*Plataforma Web de la Reserva de la Biosfera Tehuacán-Cuicatlán*](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/documentacion/Diagrama_1_Casos_de_Uso.md) y el [*Documento de Alcance de Evaluación V3*](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/documentacion/Documento%20de%20Alcance%20de%20Evaluaci%C3%B3n_%20Arquitectura%20y%20M%C3%B3dulos%20de%20la%20Plataforma%20V3.md).
 
 Este documento reúne los tres diagramas fundamentales para el análisis, evaluación y comprensión integral del sistema:
-1. **Diagrama de Casos de Uso del Sistema** (En sintaxis **Mermaid** y sintaxis compatible con **PlantUML / plantuml.com**).
-2. **Diagrama de Arquitectura Conceptual y Modular de la Plataforma** (En sintaxis **Mermaid** y **PlantUML**).
-3. **Diagrama de Comportamiento de Rutas, Flujos de Navegación y Ciclo de Estados** (En sintaxis **Mermaid** y **PlantUML**).
+1. **Diagrama de Casos de Uso del Sistema** (En sintaxis **PlantUML** y **Mermaid**, validado con 29 casos de uso, 3 actores y 6 grupos funcionales).
+2. **Diagrama de Arquitectura Conceptual y Modular de la Plataforma** (En sintaxis **PlantUML** y **Mermaid**).
+3. **Diagrama de Comportamiento de Rutas, Flujos de Navegación y Ciclo de Estados** (En sintaxis **PlantUML** y **Mermaid**).
 
 ---
 
 ## **1. Diagrama de Casos de Uso del Sistema**
 
-Modela las interacciones entre los actores del sistema y los diferentes módulos y funcionalidades disponibles.
+Modela las interacciones directas entre los tres actores oficiales y las funcionalidades dentro de la frontera del sistema.
 
-### **1.1. Actores Identificados**
-* 👤 **Visitante / Turista (Público General):** Usuario sin autenticar que navega por el portal, explora la reserva en el mapa, consulta el directorio de negocios, lee artículos, revisa eventos y consulta la oferta educativa.
-* 🎓 **Usuario Autenticado / Estudiante / Emprendedor:** Usuario con cuenta activa que cursa capacitaciones, realiza exámenes, descarga certificados oficiales en PDF, registra y gestiona sus propios comercios turísticos y subsana observaciones.
-* 🛡️ **Administrador / Docente / Evaluador:** Usuario con privilegios de gestión que activa el *Modo Profesor* para diseñar cursos y exámenes, audita y dictamina solicitudes comerciales (con aprobación o rechazo justificado) y gestiona noticias y eventos.
+### **1.1. Actores Oficiales**
+* 👤 **Visitante:** Usuario público no autenticado. Navega por el portal libremente para consultar el inicio, mapa interactivo, directorio comercial, fichas de negocio, cursos informativos, artículos y eventos, además de iniciar sesión, registrarse o recuperar contraseña.
+* 🌾 **Alumno/Productor:** Usuario autenticado estándar. Accede a las funciones públicas, al módulo de **Formación** (explorar cursos, inscribirse, aula virtual, exámenes y descarga de certificados), a la **Gestión del Negocio** (registrar y editar su comercio local, postular su solicitud y subsanar observaciones), al **Contenido del Usuario** (enlaces de interés) y a la configuración de su **Perfil de Usuario**.
+* 👨‍🏫 **Profesor:** Usuario autenticado con atribuciones docentes y de moderación. Accede a las funciones públicas, a la **Gestión Docente** (gestión de cursos, temarios multimedia, banco de exámenes, revisión de solicitudes comerciales, emisión de dictamen aprobatorio o rechazo con observaciones, y administración de artículos y eventos) y a la configuración de su **Perfil de Usuario**.
+
+> **Reglas de Modelado:**
+> * **Frontera del Sistema:** *"Plataforma Web de la Reserva de la Biosfera Tehuacán-Cuicatlán"*.
+> * **Agrupaciones Funcionales:** Área Pública (UC01–UC10), Formación (UC11–UC17), Gestión del Negocio (UC18–UC20), Contenido del Usuario (UC29), Perfil de Usuario (UC28) y Gestión Docente (UC21–UC27).
+> * **Relación `<<include>>` Única:** `UC24 Revisar solicitudes de negocio ..> UC25 Emitir dictamen : <<include>>`.
+> * **Sin relaciones `<<extend>>`** y **sin generalización de actores**.
 
 ---
 
@@ -28,118 +34,142 @@ Modela las interacciones entre los actores del sistema y los diferentes módulos
 skinparam packageStyle rectangle
 skinparam roundcorner 10
 skinparam actorStyle awesome
+skinparam shadowing false
 left to right direction
 
+' --- ESTILOS SOBRIOS Y ACADÉMICOS ---
+skinparam rectangle {
+    BackgroundColor #F8FAFC
+    BorderColor #94A3B8
+    FontColor #334155
+}
+skinparam usecase {
+    BackgroundColor #FFFFFF
+    BorderColor #64748B
+    FontColor #0F172A
+}
+skinparam actor {
+    BackgroundColor #F1F5F9
+    BorderColor #475569
+    FontColor #1E293B
+}
+
 ' --- ACTORES ---
-actor "Visitante / Turista\n(Público General)" as Turista
-actor "Usuario / Estudiante /\nEmprendedor" as Estudiante
-actor "Administrador / Docente /\nEvaluador" as Admin
+actor "Visitante" as V
+actor "Alumno/Productor" as A
+actor "Profesor" as P
 
-' Herencia de actores
-Turista <|-- Estudiante
-Estudiante <|-- Admin
+' --- FRONTERA DEL SISTEMA ---
+rectangle "Plataforma Web de la Reserva de la Biosfera Tehuacán-Cuicatlán" {
 
-' --- PAQUETES DE CASOS DE USO ---
+    rectangle "Área Pública" {
+        usecase "UC01 Explorar página de inicio" as UC01
+        usecase "UC02 Consultar mapa" as UC02
+        usecase "UC03 Consultar directorio comercial" as UC03
+        usecase "UC04 Consultar detalle de negocio" as UC04
+        usecase "UC05 Consultar cursos" as UC05
+        usecase "UC06 Consultar artículos" as UC06
+        usecase "UC07 Consultar eventos" as UC07
+        usecase "UC08 Iniciar sesión" as UC08
+        usecase "UC09 Registrarse" as UC09
+        usecase "UC10 Recuperar contraseña" as UC10
+    }
 
-rectangle "Área Pública y Exploración Territorial" {
-    usecase "UC01: Explorar Portal de Inicio y Rutas" as UC_Inicio
-    usecase "UC02: Explorar Mapa Interactivo con Capas" as UC_Mapa
-    usecase "UC03: Filtrar por Región, Municipio y Giro" as UC_FiltrosMapa
-    usecase "UC04: Consultar Directorio Comercial" as UC_Directorio
-    usecase "UC05: Ver Ficha Detallada de Negocio" as UC_FichaNegocio
-    usecase "UC06: Ver Galería, Certificaciones y Ubicación" as UC_DetallesFicha
-    usecase "UC07: Leer Artículos y Guías de Interés" as UC_Articulos
-    usecase "UC08: Consultar Agenda de Eventos y Confirmar RSVP" as UC_Eventos
-    usecase "UC09: Consultar Oferta de Cursos y Muro Docente" as UC_CursosPublicos
-    
-    UC_Mapa ..> UC_FiltrosMapa : <<include>>
-    UC_FichaNegocio ..> UC_DetallesFicha : <<include>>
+    rectangle "Formación" {
+        usecase "UC11 Explorar cursos" as UC11
+        usecase "UC12 Inscribirse a curso" as UC12
+        usecase "UC13 Consultar mis cursos" as UC13
+        usecase "UC14 Estudiar en aula virtual" as UC14
+        usecase "UC15 Resolver examen" as UC15
+        usecase "UC16 Consultar resultados" as UC16
+        usecase "UC17 Descargar certificado" as UC17
+    }
+
+    rectangle "Gestión del Negocio" {
+        usecase "UC18 Gestionar mi negocio" as UC18
+        usecase "UC19 Enviar solicitud a revisión" as UC19
+        usecase "UC20 Subsanar observaciones" as UC20
+    }
+
+    rectangle "Contenido del Usuario" {
+        usecase "UC29 Consultar enlaces de interés" as UC29
+    }
+
+    rectangle "Perfil de Usuario" {
+        usecase "UC28 Configurar perfil" as UC28
+    }
+
+    rectangle "Gestión Docente" {
+        usecase "UC21 Gestionar cursos" as UC21
+        usecase "UC22 Gestionar exámenes" as UC22
+        usecase "UC23 Gestionar contenido de cursos" as UC23
+        usecase "UC24 Revisar solicitudes de negocio" as UC24
+        usecase "UC25 Emitir dictamen" as UC25
+        usecase "UC26 Gestionar artículos" as UC26
+        usecase "UC27 Gestionar eventos" as UC27
+    }
 }
 
-rectangle "Autenticación y Seguridad" {
-    usecase "UC10: Iniciar Sesión (Recordar Credenciales)" as UC_Login
-    usecase "UC11: Recuperar Contraseña por Correo" as UC_Recuperar
-    usecase "UC12: Gestionar Perfil y Contraseña" as UC_Perfil
-}
+' --- RELACIÓN INCLUDE ---
+UC24 ..> UC25 : <<include>>
 
-rectangle "Formación y Capacitación (LMS)" {
-    usecase "UC13: Inscribirse a Cursos Gratuitos" as UC_Inscribir
-    usecase "UC14: Monitorear Progreso en 'Mis Cursos'" as UC_MisCursos
-    usecase "UC15: Visualizar Lecciones en Aula Virtual" as UC_Aula
-    usecase "UC16: Descargar Materiales de Apoyo en PDF" as UC_DescargarPDF
-    usecase "UC17: Resolver Evaluaciones y Exámenes" as UC_Examen
-    usecase "UC18: Descargar Diploma Oficial en PDF" as UC_Diploma
-    
-    UC_Aula ..> UC_DescargarPDF : <<include>>
-    UC_Examen <.. UC_Diploma : <<extend>> (Aprobado al 100%)
-}
+' --- ASOCIACIONES: VISITANTE ---
+V --> UC01
+V --> UC02
+V --> UC03
+V --> UC04
+V --> UC05
+V --> UC06
+V --> UC07
+V --> UC08
+V --> UC09
+V --> UC10
 
-rectangle "Gestión Comercial del Emprendedor ('Mi Negocio')" {
-    usecase "UC19: Registrar Negocio (Formulario 4 Fases)" as UC_RegistrarNegocio
-    usecase "UC20: Ubicar Coordenadas en Mapa Interactivo" as UC_GeoPin
-    usecase "UC21: Cargar Galería y Sellos Ambientales" as UC_CargarArchivos
-    usecase "UC22: Enviar Solicitud a Moderación" as UC_EnviarRevision
-    usecase "UC23: Consultar Motivo de Rechazo y Subsanar" as UC_Subsanar
-    
-    UC_RegistrarNegocio ..> UC_GeoPin : <<include>>
-    UC_RegistrarNegocio ..> UC_CargarArchivos : <<include>>
-    UC_RegistrarNegocio ..> UC_EnviarRevision : <<include>>
-    UC_EnviarRevision <.. UC_Subsanar : <<extend>> (Si es devuelto)
-}
+' --- ASOCIACIONES: ALUMNO/PRODUCTOR ---
+' Área pública
+A --> UC01
+A --> UC02
+A --> UC03
+A --> UC04
+A --> UC05
+A --> UC06
+A --> UC07
+' Formación
+A --> UC11
+A --> UC12
+A --> UC13
+A --> UC14
+A --> UC15
+A --> UC16
+A --> UC17
+' Gestión del Negocio
+A --> UC18
+A --> UC19
+A --> UC20
+' Contenido del Usuario
+A --> UC29
+' Perfil de Usuario
+A --> UC28
 
-rectangle "Espacio Docente y Creación de Contenidos" {
-    usecase "UC24: Activar 'Modo Profesor' (Topbar Verde)" as UC_ModoProfesor
-    usecase "UC25: Crear y Configurar Cursos" as UC_CrearCurso
-    usecase "UC26: Reordenar Temario (Drag & Drop)" as UC_ReordenarTemario
-    usecase "UC27: Editar Capítulos Multimedia y PDFs" as UC_EditarCapitulo
-    usecase "UC28: Construir Exámenes y Banco de Preguntas" as UC_ConstructorExamen
-    usecase "UC29: Publicar / Despublicar Cursos" as UC_PublicarCurso
-    usecase "UC30: Publicar Artículos y Noticias" as UC_CMSArticulos
-    usecase "UC31: Publicar Eventos y Catálogo de Ponentes" as UC_CMSEventos
-    
-    UC_CrearCurso ..> UC_ReordenarTemario : <<include>>
-    UC_CrearCurso ..> UC_EditarCapitulo : <<include>>
-    UC_CrearCurso ..> UC_ConstructorExamen : <<include>>
-}
-
-rectangle "Auditoría y Moderación Comercial" {
-    usecase "UC32: Consultar Bandeja de Solicitudes" as UC_BandejaSolicitudes
-    usecase "UC33: Auditar Expediente Digital Completo" as UC_AuditarNegocio
-    usecase "UC34: Aprobar Negocio (Publicación Inmediata)" as UC_AprobarNegocio
-    usecase "UC35: Rechazar Negocio con Justificación Obligatoria" as UC_RechazarNegocio
-    
-    UC_BandejaSolicitudes ..> UC_AuditarNegocio : <<include>>
-    UC_AuditarNegocio ..> UC_AprobarNegocio : <<include>>
-    UC_AuditarNegocio ..> UC_RechazarNegocio : <<include>>
-}
-
-' --- ASOCIACIONES ACTOR -> CASOS DE USO ---
-
-Turista --> UC_Inicio
-Turista --> UC_Mapa
-Turista --> UC_Directorio
-Turista --> UC_FichaNegocio
-Turista --> UC_Articulos
-Turista --> UC_Eventos
-Turista --> UC_CursosPublicos
-Turista --> UC_Login
-Turista --> UC_Recuperar
-
-Estudiante --> UC_Perfil
-Estudiante --> UC_Inscribir
-Estudiante --> UC_MisCursos
-Estudiante --> UC_Aula
-Estudiante --> UC_Examen
-Estudiante --> UC_Diploma
-Estudiante --> UC_RegistrarNegocio
-
-Admin --> UC_ModoProfesor
-Admin --> UC_CrearCurso
-Admin --> UC_PublicarCurso
-Admin --> UC_CMSArticulos
-Admin --> UC_CMSEventos
-Admin --> UC_BandejaSolicitudes
-
+' --- ASOCIACIONES: PROFESOR ---
+' Área pública
+P --> UC01
+P --> UC02
+P --> UC03
+P --> UC04
+P --> UC05
+P --> UC06
+P --> UC07
+' Gestión Docente
+P --> UC21
+P --> UC22
+P --> UC23
+P --> UC24
+P --> UC25
+P --> UC26
+P --> UC27
+' Perfil de Usuario
+P --> UC28
 @enduml
 ```
 
@@ -149,77 +179,127 @@ Admin --> UC_BandejaSolicitudes
 
 ```mermaid
 flowchart LR
-    %% Actores
-    subgraph Actores["Actores del Sistema"]
-        T["👤 Visitante / Turista"]
-        E["🎓 Estudiante / Emprendedor"]
-        A["🛡️ Administrador / Docente"]
+    %% ESTILOS GENERALES
+    classDef boundary fill:#F8FAFC,stroke:#94A3B8,stroke-width:2px,color:#1E293B,font-weight:bold;
+    classDef pub fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef lms fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef trade fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef content fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef profile fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef doc fill:#FFFFFF,stroke:#64748B,stroke-width:1.5px,color:#0F172A;
+    classDef actor fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#1E293B,font-weight:bold;
+
+    %% ACTORES
+    subgraph ACTORES["👥 Actores"]
+        V["👤 Visitante"]:::actor
+        A["🌾 Alumno/Productor"]:::actor
+        P["👨‍🏫 Profesor"]:::actor
     end
 
-    %% Paquete Público
-    subgraph Pub["Área Pública y Territorio"]
-        UC01["Explorar Inicio y Rutas"]
-        UC02["Mapa Interactivo (Capas y Filtros)"]
-        UC03["Directorio de Comercios"]
-        UC04["Ficha de Negocio (Galería, Certificados y Mapa)"]
-        UC05["Lectura de Artículos y Noticias"]
-        UC06["Agenda de Eventos y Registro RSVP"]
-        UC07["Portal de Cursos y Muro Docente"]
-        UC08["Acceso / Recuperación de Contraseña"]
+    %% FRONTERA DEL SISTEMA
+    subgraph SISTEMA["Plataforma Web de la Reserva de la Biosfera Tehuacán-Cuicatlán"]:::boundary
+
+        subgraph G_PUB["Área Pública"]
+            UC01["UC01 Explorar página de inicio"]:::pub
+            UC02["UC02 Consultar mapa"]:::pub
+            UC03["UC03 Consultar directorio comercial"]:::pub
+            UC04["UC04 Consultar detalle de negocio"]:::pub
+            UC05["UC05 Consultar cursos"]:::pub
+            UC06["UC06 Consultar artículos"]:::pub
+            UC07["UC07 Consultar eventos"]:::pub
+            UC08["UC08 Iniciar sesión"]:::pub
+            UC09["UC09 Registrarse"]:::pub
+            UC10["UC10 Recuperar contraseña"]:::pub
+        end
+
+        subgraph G_LMS["Formación"]
+            UC11["UC11 Explorar cursos"]:::lms
+            UC12["UC12 Inscribirse a curso"]:::lms
+            UC13["UC13 Consultar mis cursos"]:::lms
+            UC14["UC14 Estudiar en aula virtual"]:::lms
+            UC15["UC15 Resolver examen"]:::lms
+            UC16["UC16 Consultar resultados"]:::lms
+            UC17["UC17 Descargar certificado"]:::lms
+        end
+
+        subgraph G_TRADE["Gestión del Negocio"]
+            UC18["UC18 Gestionar mi negocio"]:::trade
+            UC19["UC19 Enviar solicitud a revisión"]:::trade
+            UC20["UC20 Subsanar observaciones"]:::trade
+        end
+
+        subgraph G_CONTENT["Contenido del Usuario"]
+            UC29["UC29 Consultar enlaces de interés"]:::content
+        end
+
+        subgraph G_PROFILE["Perfil de Usuario"]
+            UC28["UC28 Configurar perfil"]:::profile
+        end
+
+        subgraph G_DOC["Gestión Docente"]
+            UC21["UC21 Gestionar cursos"]:::doc
+            UC22["UC22 Gestionar exámenes"]:::doc
+            UC23["UC23 Gestionar contenido de cursos"]:::doc
+            UC24["UC24 Revisar solicitudes de negocio"]:::doc
+            UC25["UC25 Emitir dictamen"]:::doc
+            UC26["UC26 Gestionar artículos"]:::doc
+            UC27["UC27 Gestionar eventos"]:::doc
+        end
+
     end
 
-    %% Paquete Estudiante
-    subgraph Est["Espacio del Estudiante y Emprendedor"]
-        UC09["Inscribirse y Monitorear 'Mis Cursos'"]
-        UC10["Aula Virtual (Video, Texto y Guías PDF)"]
-        UC11["Resolver Evaluaciones e Intentos"]
-        UC12["Descarga de Diploma en PDF"]
-        UC13["Registrar Negocio Propio (4 Fases)"]
-        UC14["Enviar a Revisión / Subsanar Observaciones"]
-        UC15["Gestión de Perfil de Usuario"]
-    end
+    %% RELACIÓN INCLUDE
+    UC24 -.->|«include»| UC25
 
-    %% Paquete Gestión
-    subgraph Gest["Espacio de Gestión y Docencia"]
-        UC16["Activar 'Modo Profesor' (Topbar Verde)"]
-        UC17["Constructor de Cursos (Temario Drag & Drop)"]
-        UC18["Constructor de Exámenes y Banco de Preguntas"]
-        UC19["Bandeja de Auditoría de Negocios"]
-        UC20["Dictamen de Negocio (Aprobar / Rechazar con Motivo)"]
-        UC21["CMS de Artículos y Eventos con Ponentes"]
-    end
+    %% ASOCIACIONES: VISITANTE
+    V --> UC01
+    V --> UC02
+    V --> UC03
+    V --> UC04
+    V --> UC05
+    V --> UC06
+    V --> UC07
+    V --> UC08
+    V --> UC09
+    V --> UC10
 
-    %% Conexiones Turista
-    T --> UC01
-    T --> UC02
-    T --> UC03
-    T --> UC04
-    T --> UC05
-    T --> UC06
-    T --> UC07
-    T --> UC08
-
-    %% Conexiones Estudiante
-    E --> UC09
-    E --> UC10
-    E --> UC11
-    E --> UC12
-    E --> UC13
-    E --> UC14
-    E --> UC15
-
-    %% Conexiones Admin
+    %% ASOCIACIONES: ALUMNO/PRODUCTOR
+    A --> UC01
+    A --> UC02
+    A --> UC03
+    A --> UC04
+    A --> UC05
+    A --> UC06
+    A --> UC07
+    A --> UC11
+    A --> UC12
+    A --> UC13
+    A --> UC14
+    A --> UC15
     A --> UC16
     A --> UC17
     A --> UC18
     A --> UC19
     A --> UC20
-    A --> UC21
+    A --> UC29
+    A --> UC28
 
-    %% Relaciones internas
-    UC11 -.->|100% de Aprobación| UC12
-    UC13 -.-> UC14
-    UC19 -.-> UC20
+    %% ASOCIACIONES: PROFESOR
+    P --> UC01
+    P --> UC02
+    P --> UC03
+    P --> UC04
+    P --> UC05
+    P --> UC06
+    P --> UC07
+    P --> UC21
+    P --> UC22
+    P --> UC23
+    P --> UC24
+    P --> UC25
+    P --> UC26
+    P --> UC27
+    P --> UC28
 ```
 
 ---
@@ -242,90 +322,91 @@ package "Dispositivos y Canales de Acceso" as CapaClientes {
     [📱 Teléfonos Inteligentes / Tablets] as Mobile
 }
 
-package "Capa de Presentación y Frontend (React SPA / UI)" as Frontend {
+package "Capa de Presentación y Frontend (React SPA / Inertia.js)" as Frontend {
     
-    package "Vistas Públicas" as UIPublica {
+    package "Vistas del Área Pública (Visitante / Todos)" as UIPublica {
         [Navbar Reactivo y Footer Institucional] as NavFooter
         [Landing Page (Hero, Rutas, Eventos, Conócenos)] as ViewLanding
         [Mapa Interactivo (Capas, Regiones, Pines, Panel Lateral)] as ViewMapa
         [Directorio Comercial (Buscador y Tarjetas)] as ViewDirectorio
         [Ficha de Negocio (Galería, Certificados, Contacto, Mapa)] as ViewFicha
-        [Visor de Artículos y Recomendados] as ViewArticulos
-        [Agenda de Eventos y Ficha con RSVP] as ViewEventos
-        [Portal de Cursos y Muro Docente] as ViewCursosPub
-        [Módulo de Acceso y Recuperación] as ViewAuth
+        [Visor de Artículos y Enlaces de Interés] as ViewArticulos
+        [Agenda de Eventos y Detalle con Enlace RSVP] as ViewEventos
+        [Portal Informativo de Cursos y Muro Docente] as ViewCursosPub
+        [Módulo de Acceso, Registro y Recuperación] as ViewAuth
     }
     
-    package "Vistas Privadas (Estudiante / Emprendedor)" as UIPrivada {
-        [Sidebar de Navegación y Topbar de Usuario] as NavPrivado
+    package "Vistas Privadas (Alumno/Productor)" as UIPrivada {
+        [Sidebar de Navegación y Barra de Usuario] as NavPrivado
         [Dashboard 'Mis Cursos' (Progreso y Completados)] as ViewMisCursos
         [Explorador de Cursos por Categoría] as ViewExplorarCursos
-        [Aula Virtual (Visor Lección, Temario Lateral, PDF)] as ViewAula
+        [Aula Virtual (Visor Lección, Temario Lateral, Descarga PDF)] as ViewAula
         [Módulo de Exámenes (Instrucciones, Test y Resultados)] as ViewExamenes
-        [Gestor 'Mi Negocio' (Asistente 4 Fases y Alertas de Rechazo)] as ViewMiNegocio
-        [Perfil y Seguridad de Usuario] as ViewPerfil
+        [Gestor 'Mi Negocio' (Edición de Expediente y Envío a Revisión)] as ViewMiNegocio
+        [Módulo 'Descubrir' (Enlaces de Interés y Eventos)] as ViewDescubrir
+        [Configuración de Perfil de Usuario] as ViewPerfil
     }
     
-    package "Vistas de Gestión (Profesor / Moderador)" as UIGestion {
-        [Topbar Verde 'Modo Profesor Activo'] as TopbarTeacher
-        [CMS Cursos (Temario Drag & Drop, Editor Capítulos)] as ViewCMSCursos
-        [Constructor Visual de Exámenes y Preguntas] as ViewCMSExamenes
-        [Bandeja de Solicitudes y Expediente de Auditoría] as ViewAuditoria
-        [CMS de Artículos y Noticias] as ViewCMSArticulos
-        [CMS de Eventos y Directorio de Ponentes] as ViewCMSEventos
+    package "Vistas de Gestión Docente (Profesor)" as UIGestion {
+        [Conmutador 'Modo Profesor' en Barra Superior] as TopbarTeacher
+        [Gestor de Cursos (Temario Drag & Drop, Editor de Capítulos)] as ViewCMSCursos
+        [Constructor Visual de Exámenes y Banco de Preguntas] as ViewCMSExamenes
+        [Bandeja de Solicitudes y Expediente de Auditoría Comercial] as ViewAuditoria
+        [Gestor de Artículos de Divulgación] as ViewCMSArticulos
+        [Gestor de Eventos Institucionales] as ViewCMSEventos
     }
 }
 
-package "Capa de Enrutamiento, Control y Lógica de Aplicación" as Backend {
+package "Capa de Enrutamiento, Control y Lógica de Aplicación (Laravel 11)" as Backend {
     [Enrutador Web y Control de Acceso por Roles] as RouterControl
     
     package "Controladores de Dominio" as Controllers {
-        [Controlador de Negocios y Directorio] as CtrlNegocios
-        [Controlador Geográfico y Mapas] as CtrlMapas
-        [Controlador Académico y Lecciones] as CtrlCursos
-        [Controlador de Evaluaciones e Intentos] as CtrlExamenes
-        [Controlador de Auditoría y Moderación] as CtrlModeracion
-        [Controlador Editorial (Artículos y Eventos)] as CtrlContenido
-        [Controlador de Perfil y Autenticación] as CtrlAuth
+        [DirectoryTradeController (Comercios y Trámites)] as CtrlNegocios
+        [CourseController (Catálogo y Aula Virtual)] as CtrlCursos
+        [ExamController (Evaluaciones de Alumnos)] as CtrlExamenes
+        [CertificateController (Generación de Diplomas PDF)] as CtrlCertificados
+        [TeacherCourseController & TeacherChapterController] as CtrlTeacherCursos
+        [TeacherExamController (Gestión de Exámenes)] as CtrlTeacherExamenes
+        [TeacherArticleController & TeacherEventController] as CtrlTeacherContenido
+        [ProfileController & Fortify (Perfil y Seguridad)] as CtrlAuth
     }
     
-    package "Motores y Servicios de Negocio" as Servicios {
-        [Motor de Cálculo de Avance Porcentual] as MotorProgreso
-        [Validador de Respuestas y Calificación de Exámenes] as MotorExamen
-        [Generador de Diplomas Oficiales en PDF] as ServicioCertificados
-        [Procesador y Optimizador de Fotografías y Galerías] as ServicioMedios
-        [Motor de Flujo de Estados de Negocio\n(Borrador -> Revisión -> Aprobado/Rechazado)] as MotorEstados
+    package "Servicios y Motores de Negocio" as Servicios {
+        [Motor de Cálculo de Avance de Curso] as MotorProgreso
+        [Motor de Calificación Automática de Exámenes] as MotorExamen
+        [Generador de Diplomas PDF (DomPDF)] as ServicioCertificados
+        [Procesador de Almacenamiento y Archivos Multimedia] as ServicioMedios
+        [Motor de Ciclo de Estados de Negocio] as MotorEstados
     }
 }
 
 package "Capa de Persistencia y Almacenamiento" as Almacenamiento {
-    database "Base de Datos Relacional" as DB {
-        [Usuarios y Perfiles]
-        [Negocios, Giros, Regiones y Municipios]
-        [Cursos, Capítulos y Materiales]
-        [Progreso de Usuarios y Compras Gratuitas]
-        [Exámenes, Preguntas, Opciones e Intentos]
-        [Artículos, Categorías y Eventos con Elenco]
-        [Certificaciones Ambientales y Dictámenes]
+    database "Base de Datos Relacional (MySQL / MariaDB)" as DB {
+        [Usuarios (users)]
+        [Comercios (directorios, giros, regiones)]
+        [Cursos y Capítulos (courses, chapters)]
+        [Progreso e Inscripciones (user_progress, purchases)]
+        [Exámenes e Intentos (exams, questions, options, attempts)]
+        [Artículos y Eventos (articles, events)]
+        [Certificaciones de Negocios (directorio_certificates)]
     }
     
-    folder "Sistema de Archivos y Medios Públicos" as Storage {
+    folder "Sistema de Archivos (Storage Público)" as Storage {
         [Imágenes de Portadas y Miniaturas]
-        [Galerías Fotográficas de Comercios]
-        [Documentos y Sellos de Certificación]
-        [Manuales y Guías en PDF de Cursos]
-        [Fotografías de Docentes y Ponentes]
+        [Galerías Fotográficas de Negocios]
+        [Documentos Adjuntos de Cursos]
+        [Archivos de Certificación Subidos por Productores]
     }
 }
 
 ' Relaciones entre capas
 CapaClientes --> Frontend : Acceso vía HTTPS
-Frontend --> RouterControl : Peticiones y Navegación
-RouterControl --> Controllers : Despacho de Acciones
-Controllers --> Servicios : Lógica de Negocio
-Controllers --> DB : Consultas y Transacciones
+Frontend --> RouterControl : Peticiones Inertia / JSON
+RouterControl --> Controllers : Despacho a Controladores
+Controllers --> Servicios : Ejecución de Lógica
+Controllers --> DB : Consultas Eloquent ORM
 Servicios --> Storage : Lectura y Escritura de Archivos
-Servicios --> DB : Registro de Estados y Avances
+Servicios --> DB : Persistencia de Estados y Notas
 
 @enduml
 ```
@@ -343,64 +424,70 @@ flowchart TD
     end
 
     %% Capa Frontend
-    subgraph FRONTEND["2. Capa de Presentación (React SPA / UI)"]
-        subgraph PUB_UI["Vistas Públicas"]
-            P1["Inicio / Landing Page"]
+    subgraph FRONTEND["2. Capa de Presentación (React SPA / Inertia.js)"]
+        subgraph PUB_UI["Área Pública (Visitante / Todos)"]
+            P1["Inicio (Hero, Rutas, Conócenos)"]
             P2["Mapa Interactivo (Capas y Pines)"]
             P3["Directorio Comercial y Filtros"]
             P4["Ficha Detallada de Negocio"]
             P5["Artículos y Agenda de Eventos"]
-            P6["Portal de Cursos y Muro Docente"]
+            P6["Portal Informativo de Cursos"]
+            P7["Acceso, Registro y Recuperación"]
         end
         
-        subgraph PRIV_UI["Espacio Privado (Estudiante)"]
+        subgraph PRIV_UI["Espacio del Alumno/Productor"]
             E1["Dashboard 'Mis Cursos'"]
-            E2["Aula Virtual y Materiales PDF"]
-            E3["Evaluaciones y Certificados"]
-            E4["Gestión 'Mi Negocio' (4 Fases)"]
+            E2["Aula Virtual y Materiales Adjuntos"]
+            E3["Evaluaciones y Certificados PDF"]
+            E4["Gestión de Mi Negocio"]
+            E5["Descubrir (Enlaces y Eventos)"]
+            E6["Configurar Perfil"]
         end
 
-        subgraph ADM_UI["Espacio de Gestión (Profesor/Admin)"]
-            A1["CMS Cursos (Temario Drag & Drop)"]
-            A2["Constructor de Exámenes"]
-            A3["Bandeja de Auditoría y Dictámenes"]
-            A4["CMS de Artículos y Eventos"]
+        subgraph ADM_UI["Espacio del Profesor"]
+            A1["Conmutador 'Modo Profesor'"]
+            A2["Gestor de Cursos y Capítulos"]
+            A3["Constructor de Exámenes"]
+            A4["Bandeja de Auditoría y Dictamen"]
+            A5["Gestor de Artículos y Eventos"]
         end
     end
 
     %% Capa Lógica y Control
-    subgraph BACKEND["3. Capa de Control y Servicios de Negocio"]
-        ROUTER["Enrutador Web & Seguridad de Acceso"]
+    subgraph BACKEND["3. Capa de Control y Servicios (Laravel 11)"]
+        ROUTER["Enrutador Web & Middleware de Autenticación"]
         
         subgraph CTRLS["Controladores de Dominio"]
-            C_NEG["Gestor de Negocios y Directorio"]
-            C_CUR["Gestor Académico y Progreso"]
-            C_EXA["Gestor de Exámenes e Intentos"]
-            C_MOD["Gestor de Moderación Comercial"]
-            C_CON["Gestor de Contenido (Artículos/Eventos)"]
+            C_NEG["DirectoryTradeController"]
+            C_CUR["CourseController & TeacherCourseController"]
+            C_EXA["ExamController & TeacherExamController"]
+            C_CERT["CertificateController"]
+            C_CON["TeacherArticleController & TeacherEventController"]
+            C_PRF["ProfileController & Fortify"]
         end
 
         subgraph SERVICES["Servicios Especializados"]
-            S_PDF["Generador de Diplomas PDF"]
+            S_PDF["Generador de Certificados PDF (DomPDF)"]
             S_PROG["Motor de Cálculo de Avance"]
-            S_IMG["Procesador de Galerías y Medios"]
-            S_STATE["Motor de Transición de Estados"]
+            S_IMG["Gestor de Archivos y Medios"]
+            S_STATE["Motor de Estados de Negocio"]
         end
     end
 
     %% Capa Persistencia
     subgraph STORAGE["4. Capa de Persistencia y Archivos"]
         subgraph BBDD["Base de Datos Relacional"]
-            DB_USR[("Usuarios y Roles")]
-            DB_NEG[("Negocios, Giros y Territorios")]
-            DB_CUR[("Cursos, Capítulos y Progreso")]
-            DB_EXA[("Exámenes, Preguntas e Intentos")]
-            DB_CON[("Artículos, Eventos y Dictámenes")]
+            DB_USR[("users")]
+            DB_NEG[("directorios, giros, regiones")]
+            DB_CUR[("courses, chapters, purchases")]
+            DB_EXA[("exams, questions, attempts")]
+            DB_CON[("articles, events")]
+            DB_CERT[("directorio_certificates")]
         end
 
-        subgraph FILES["Almacenamiento de Medios"]
+        subgraph FILES["Almacenamiento (Storage Disk)"]
             F_GAL["Galerías y Portadas"]
-            F_DOC["Certificaciones y Guías PDF"]
+            F_DOC["Documentos y Adjuntos"]
         end
     end
 
@@ -418,7 +505,7 @@ flowchart TD
 
 ## **3. Diagrama de Comportamiento de Rutas y Ciclo de Estados**
 
-Muestra el flujo de navegación integral del usuario, el ciclo de vida de los registros comerciales y el proceso formativo de evaluación y certificación.
+Muestra el flujo de navegación integral de los usuarios, el ciclo de vida del trámite comercial y el proceso de formación y acreditación.
 
 ### **3.1. Versión en PlantUML (Compatible con [plantuml.com](https://www.plantuml.com/plantuml/uml/))**
 
@@ -434,124 +521,126 @@ skinparam ArrowColor Black
 
 [*] --> InicioPublico : Ingreso a la Plataforma
 
-state "Navegación Pública (Sin Autenticación)" as Publico {
+state "Navegación del Área Pública (Visitante / Todos)" as Publico {
     InicioPublico : Portada, Rutas y Eventos Destacados
     
     InicioPublico --> MapaInteractivo : Clic en 'Mapa'
     MapaInteractivo : Filtro de capas, regiones y giros
-    MapaInteractivo --> FichaNegocio : Clic en Marcador / 'Ver Ficha'
+    MapaInteractivo --> FichaNegocio : Clic en Marcador / 'Ir al negocio'
     
     InicioPublico --> DirectorioComercial : Clic en 'Directorio'
-    DirectorioComercial : Búsqueda por giro y municipio
-    DirectorioComercial --> FichaNegocio : Clic en Tarjeta
+    DirectorioComercial : Búsqueda por giro y región
+    DirectorioComercial --> FichaNegocio : Clic en 'Ver Detalles'
     
-    FichaNegocio : Galería, Contacto, Servicios, Certificados y Mapa
+    FichaNegocio : Galería, Contacto, Actividades, Certificados y Mapa
     
-    InicioPublico --> ArticulosYEventos : Clic en 'Eventos' o 'Noticias'
-    ArticulosYEventos : Lectura, recomendaciones y registro RSVP
+    InicioPublico --> ArticulosYEventos : Clic en 'Eventos' o Enlaces
+    ArticulosYEventos : Lectura de notas y agenda con enlace RSVP
     
     InicioPublico --> OfertaCursos : Clic en 'Cursos'
-    OfertaCursos : Presentación y muro de docentes
+    OfertaCursos : Información del programa formativo y docentes
 }
 
-Publico --> Login : Clic en 'Acceder' o 'Inscribirme'
+Publico --> Login : Clic en 'Acceder'
 
-state "Autenticación" as Auth {
+state "Autenticación (Fortify)" as Auth {
     Login : Formulario de correo y contraseña
-    Login --> RecuperarPassword : ¿Olvidó su contraseña?
-    RecuperarPassword --> Login : Enlace enviado por correo
+    Login --> RecuperarPassword : ¿Olvidaste tu contraseña?
+    RecuperarPassword --> Login : Enlace con token por correo
+    Login --> RegistroUsuario : ¿No tienes cuenta? Regístrate
+    RegistroUsuario --> Dashboard : Registro Exitoso
     Login --> Dashboard : Credenciales Válidas
 }
 
-state "Espacio Privado: Estudiante y Emprendedor" as EstudianteSpace {
+state "Espacio del Alumno/Productor" as AlumnoSpace {
     Dashboard : 'Mis Cursos' (En Progreso y Completados)
     
-    state "Ciclo Académico y Certificación" as CicloLMS {
-        Dashboard --> ExplorarCursos : Buscar nuevo curso
-        ExplorarCursos --> PortadaCurso : Seleccionar curso
-        PortadaCurso --> AulaVirtual : Comenzar / Continuar
+    state "Flujo de Formación (Cursos y Certificación)" as CicloLMS {
+        Dashboard --> ExplorarCursos : 'Explorar mas cursos' (/search)
+        ExplorarCursos --> PortadaCurso : Seleccionar curso (/courses/{id})
+        PortadaCurso --> InscribirCurso : Clic 'Inscribirse' (Directo)
+        InscribirCurso --> AulaVirtual : Comenzar estudio (/courses/{c}/chapters/{ch})
         
         state AulaVirtual {
-            VerLeccion : Video, Infografía y Texto
-            DescargarPDF : Guías y manuales adjuntos
-            MarcarCompletado : Aumenta % de avance
+            VerLeccion : Video o imagen y lectura enriquecida
+            DescargarAdjuntos : Archivos PDF complementarios
+            MarcarCompletado : Registra avance de la lección
             
             VerLeccion --> MarcarCompletado
-            MarcarCompletado --> VerLeccion : Siguiente capítulo
+            MarcarCompletado --> VerLeccion : Siguiente unidad
         }
         
-        AulaVirtual --> ExamenFinal : Al cubrir temario
+        AulaVirtual --> ResolverExamen : Abrir examen (/courses/{c}/exams/{e})
         
-        state ExamenFinal {
-            InstruccionesExamen : Puntaje mínimo e intentos
-            ResponderPreguntas : Selección simple/múltiple
-            EvaluacionResultado : Cálculo instantáneo
+        state ResolverExamen {
+            InstruccionesExamen : Puntaje mínimo e intentos permitidos
+            ResponderReactivos : Cuestionario interactivo
+            EvaluacionResultado : Calificación (0-100%) y estado
             
-            InstruccionesExamen --> ResponderPreguntas
-            ResponderPreguntas --> EvaluacionResultado
+            InstruccionesExamen --> ResponderReactivos
+            ResponderReactivos --> EvaluacionResultado
         }
         
-        EvaluacionResultado --> AulaVirtual : Reprobado (Reintentar)
-        EvaluacionResultado --> DiplomaEmitido : Aprobado al 100%
-        DiplomaEmitido : Descarga de Certificado Oficial en PDF
+        EvaluacionResultado --> ResolverExamen : Reprobado (Reintentar si hay cupo)
+        EvaluacionResultado --> AulaVirtual : Continuar temario
+        
+        AulaVirtual --> DescargarCertificado : 100% de capítulos y 100% de exámenes aprobados
+        DescargarCertificado : Generación y descarga de Certificado PDF oficial
     }
     
-    state "Ciclo de Gestión Comercial ('Mi Negocio')" as CicloTrade {
-        Dashboard --> PanelNegocios : Clic en 'Mi Negocio'
-        PanelNegocios : Lista de comercios y estados
+    state "Flujo de Gestión del Negocio" as CicloTrade {
+        Dashboard --> PanelNegocios : Clic en 'Mi negocio' (/trade)
+        PanelNegocios : Listado de comercios propios y estados
         
-        PanelNegocios --> FormularioNegocio : 'Registrar Nuevo Negocio'
+        PanelNegocios --> RegistrarNegocio : Clic 'Crear Registro'
+        RegistrarNegocio : Captura de nombre comercial (Estado: Borrador)
         
-        state FormularioNegocio {
-            Paso1_General : Giro, descripciones y actividades
-            Paso2_Contacto : Teléfonos, redes y propietario
-            Paso3_Ubicacion : Municipio y pin en mapa
-            Paso4_Multimedia : Galería (10 fotos) y certificados
-            
-            Paso1_General --> Paso2_Contacto
-            Paso2_Contacto --> Paso3_Ubicacion
-            Paso3_Ubicacion --> Paso4_Multimedia
-        }
+        RegistrarNegocio --> EditarNegocio : Acceso al editor (/trades/{id}/edit)
+        EditarNegocio : Giros, descripciones, actividades, fotos, certificados y mapa
         
-        FormularioNegocio --> EstadoBorrador : Guardar
-        EstadoBorrador --> EstadoEnRevision : Clic en 'Enviar a Revisión'
-        EstadoEnRevision : En espera de auditoría administrativa
+        EditarNegocio --> EnviarRevision : Clic 'Enviar solicitud' (Datos 100% completos)
+        EnviarRevision : Estado cambia a Pendiente (is_published = false)
     }
+
+    Dashboard --> ConsultarDescubrir : Clic 'Descubrir' (Artículos y Eventos)
+    Dashboard --> ConfigurarPerfil : Menú de usuario (/profile)
 }
 
-state "Espacio de Gestión: Modo Profesor / Moderación" as AdminSpace {
-    Dashboard --> ModoProfesor : Clic en 'Modo Profesor' (Topbar Verde)
+state "Espacio del Profesor" as ProfesorSpace {
+    Dashboard --> ModoProfesor : Clic en botón 'Modo Profesor' (is_teacher = true)
     
-    state "Ciclo de Moderación Comercial" as CicloModeracion {
-        ModoProfesor --> BandejaSolicitudes : Clic en 'Solicitudes'
-        BandejaSolicitudes --> ExpedienteAuditoria : Seleccionar comercio
-        ExpedienteAuditoria : Fotos, mapa, certificados y datos
+    state "Flujo de Revisión Comercial (Auditoría y Dictamen)" as CicloModeracion {
+        ModoProfesor --> BandejaSolicitudes : Clic en 'Solicitudes' (/teacher/solicitudes)
+        BandejaSolicitudes --> ExpedienteAuditoria : Seleccionar solicitud pendiente
+        ExpedienteAuditoria : Datos, galería, certificados y ubicación
         
-        ExpedienteAuditoria --> DictamenAprobado : Clic en 'Aprobar'
-        DictamenAprobado --> PublicadoEnMapaYDirectorio : Visible al Público
+        ExpedienteAuditoria --> DictamenAprobar : Clic 'Aprobar'
+        DictamenAprobar --> PublicadoEnPortal : Estado: Aprobado (is_published = true)
         
-        ExpedienteAuditoria --> ModalRechazo : Clic en 'Rechazar'
-        ModalRechazo : Redacción obligatoria de motivos
-        ModalRechazo --> EstadoRechazado : Notificar al Usuario
+        ExpedienteAuditoria --> DictamenRechazar : Clic 'Rechazar'
+        DictamenRechazar : Modal obligatorio para capturar observaciones
+        DictamenRechazar --> EstadoRechazado : Estado: Rechazado (rejection_reason guardado)
     }
     
-    state "Ciclo Editorial y Docente" as CicloDocente {
-        ModoProfesor --> GestorCursos : Administrar Cursos
-        GestorCursos : Temario Drag & Drop, Capítulos y Exámenes
-        GestorCursos --> CursoPublicado : Publicar en Catálogo
+    state "Flujo de Gestión Pedagógica y Editorial" as CicloDocente {
+        ModoProfesor --> GestorCursos : Administrar Cursos (/teacher/courses)
+        GestorCursos : Crear curso, temario Drag & Drop y publicar
+        GestorCursos --> GestorExamenes : Constructor de Exámenes y Reactivos
         
         ModoProfesor --> GestorCMS : Administrar Artículos y Eventos
-        GestorCMS : Publicación de noticias y agenda con ponentes
+        GestorCMS : Redactar noticias y programar eventos públicos
     }
+
+    ModoProfesor --> Dashboard : Clic 'Salir del Modo'
 }
 
-' Subsanación de observaciones
-EstadoRechazado --> PanelNegocios : Alerta ámbar con observaciones
-PanelNegocios --> FormularioNegocio : Subsanar datos y fotos
-EstadoBorrador --> EstadoEnRevision : Reenvío a Moderación
+' Flujo de Subsanación de Observaciones
+EstadoRechazado --> PanelNegocios : Alumno ve alerta roja con observaciones
+PanelNegocios --> EditarNegocio : Corrige campos observados
+EditarNegocio --> EnviarRevision : Reenvía solicitud corregida (Vuelve a Pendiente)
 
-PublicadoEnMapaYDirectorio --> DirectorioComercial : Integrado al Padrón Oficial
-CursoPublicado --> ExplorarCursos : Disponible para Estudiantes
+PublicadoEnPortal --> DirectorioComercial : Visible en Directorio y Mapa
+GestorCursos --> ExplorarCursos : Cursos publicados visibles a alumnos
 
 @enduml
 ```
@@ -569,9 +658,9 @@ flowchart TD
     subgraph PUBLICO["Rutas del Área Pública"]
         INICIO --> MAPA["Mapa Interactivo (Capas y Filtros)"]
         INICIO --> DIR["Directorio Comercial"]
-        INICIO --> ART["Artículos y Noticias"]
-        INICIO --> EVE["Agenda de Eventos (RSVP)"]
-        INICIO --> CUR_PUB["Portal de Cursos (Docentes)"]
+        INICIO --> ART["Artículos de Divulgación"]
+        INICIO --> EVE["Agenda de Eventos (Enlace RSVP)"]
+        INICIO --> CUR_PUB["Portal Informativo de Cursos"]
         
         MAPA --> FICHA["Ficha Detallada de Negocio\n(Galería, Certificados, Contacto y Mapa)"]
         DIR --> FICHA
@@ -579,66 +668,70 @@ flowchart TD
 
     %% AUTENTICACIÓN
     INICIO --> LOGIN{"¿Usuario Autenticado?"}
-    LOGIN -- No --> FORM_LOGIN["Pantalla de Login / Recuperar Contraseña"]
-    FORM_LOGIN --> DASHBOARD["Dashboard Privado de Usuario"]
+    LOGIN -- No --> FORM_LOGIN["Login / Registro / Recuperar Contraseña"]
+    FORM_LOGIN --> DASHBOARD["Dashboard Privado del Usuario"]
     LOGIN -- Sí --> DASHBOARD
 
-    %% RUTAS PRIVADAS ESTUDIANTE
-    subgraph ESTUDIANTE["Espacio del Estudiante / Emprendedor"]
-        DASHBOARD --> MIS_CURSOS["Mis Cursos (En Progreso / Concluidos)"]
-        DASHBOARD --> EXPLORAR["Explorador de Cursos"]
-        DASHBOARD --> MI_NEGOCIO["Mi Negocio (Padrón Personal)"]
+    %% RUTAS DEL ALUMNO / PRODUCTOR
+    subgraph ALUMNO["Espacio del Alumno/Productor"]
+        DASHBOARD --> MIS_CURSOS["Mis Cursos (En Progreso / Completados)"]
+        DASHBOARD --> EXPLORAR["Explorar Cursos (/search)"]
+        DASHBOARD --> MI_NEGOCIO["Mi Negocio (/trade)"]
+        DASHBOARD --> DESCUBRIR["Descubrir (Enlaces de Interés)"]
+        DASHBOARD --> PERFIL_A["Configurar Perfil"]
 
         %% Flujo LMS
-        EXPLORAR --> AULA["Aula Virtual (Player de Lecciones)"]
+        EXPLORAR --> PORTADA["Portada del Curso e Inscripción Directa"]
+        PORTADA --> AULA["Aula Virtual (Lecciones y Adjuntos)"]
         MIS_CURSOS --> AULA
-        AULA --> CHECK["Marcar Completado / Descargar PDF"]
-        CHECK --> EXAMEN["Evaluación / Examen Final"]
+        AULA --> CHECK["Marcar Completado"]
+        CHECK --> EXAMEN["Resolver Examen (/take)"]
         
         EXAMEN --> NOTA{"¿Aprobó Examen?"}
-        NOTA -- No (Quedan Intentos) --> EXAMEN
-        NOTA -- Sí (100% Avance) --> DIPLOMA["🎓 Descarga de Diploma Oficial en PDF"]
+        NOTA -- No --> EXAMEN
+        NOTA -- Sí --> CHECK_CURSO{"¿100% Capítulos y Exámenes?"}
+        CHECK_CURSO -- Sí --> DIPLOMA["🎓 Descargar Certificado PDF"]
+        CHECK_CURSO -- No --> AULA
 
-        %% Flujo Negocio Emprendedor
-        MI_NEGOCIO --> REG_TRADE["Formulario de Registro (4 Fases:\nDatos, Contacto, Mapa, Galería)"]
+        %% Flujo Negocio
+        MI_NEGOCIO --> REG_TRADE["Crear Registro (Nombre Comercial)"]
         REG_TRADE --> ST_DRAFT["Estado: ⚪ Borrador"]
-        ST_DRAFT --> ST_SEND["Estado: 🟡 En Revisión"]
+        ST_DRAFT --> EDIT_TRADE["Editar Expediente (Fotos, Docs, Mapa)"]
+        EDIT_TRADE --> ST_SEND["Enviar Solicitud a Revisión"]
     end
 
-    %% RUTAS GESTIÓN / PROFESOR
-    subgraph ADMIN["Espacio de Gestión / Modo Profesor"]
-        DASHBOARD --> TEACHER_MODE["Topbar Verde: Modo Profesor"]
+    %% RUTAS DEL PROFESOR
+    subgraph DOCENTE["Espacio del Profesor"]
+        DASHBOARD --> TEACHER_MODE["Conmutador: 'Modo Profesor'"]
+        TEACHER_MODE --> PERFIL_P["Configurar Perfil"]
         
         %% Gestión Académica
-        TEACHER_MODE --> CMS_CURSOS["Constructor de Cursos (Drag & Drop)"]
-        CMS_CURSOS --> CMS_EXAMS["Constructor de Exámenes y Preguntas"]
-        CMS_EXAMS --> PUB_CURSO["🟢 Curso Publicado"]
+        TEACHER_MODE --> CMS_CURSOS["Gestión de Cursos y Capítulos"]
+        CMS_CURSOS --> CMS_EXAMS["Gestión de Exámenes y Reactivos"]
+        CMS_CURSOS --> PUB_CURSO["🟢 Publicar Curso"]
 
         %% Gestión Editorial
-        TEACHER_MODE --> CMS_CONTENIDO["CMS de Artículos y Eventos con Ponentes"]
-        CMS_CONTENIDO --> PUB_CONTENIDO["🟢 Contenido Publicado"]
+        TEACHER_MODE --> CMS_CONTENIDO["Gestión de Artículos y Eventos"]
 
         %% Moderación Comercial
         TEACHER_MODE --> BANDEJA["Bandeja de Solicitudes Comerciales"]
         ST_SEND --> BANDEJA
-        BANDEJA --> AUDITORIA["Expediente de Auditoría Integral"]
+        BANDEJA --> AUDITORIA["Revisar Solicitud de Negocio"]
         
-        AUDITORIA --> DICTAMEN{"Dictamen del Evaluador"}
-        DICTAMEN -- Aprobar --> ST_APROB["🟢 Estado: Aprobado"]
-        DICTAMEN -- Rechazar --> MODAL_RECHAZO["Modal: Redacción Obligatoria del Motivo"]
+        AUDITORIA --> DICTAMEN{"Emitir Dictamen"}
+        DICTAMEN -- Aprobar --> ST_APROB["🟢 Estado: Aprobado (Publicado)"]
+        DICTAMEN -- Rechazar --> MODAL_RECHAZO["Rechazar con Observaciones Obligatorias"]
         MODAL_RECHAZO --> ST_RECHAZ["🔴 Estado: Rechazado"]
     end
 
-    %% RETROALIMENTACIÓN Y SUBSANACIÓN
-    ST_RECHAZ --> ALERTA_USER["Alerta con Observaciones en Panel del Usuario"]
-    ALERTA_USER --> REG_TRADE
+    %% SUBSANACIÓN DE OBSERVACIONES
+    ST_RECHAZ --> ALERTA_USER["Consulta de Observaciones en Panel del Productor"]
+    ALERTA_USER --> EDIT_TRADE
     
     %% INTEGRACIÓN CON EL PORTAL PÚBLICO
     ST_APROB --> DIR
     ST_APROB --> MAPA
     PUB_CURSO --> EXPLORAR
-    PUB_CONTENIDO --> ART
-    PUB_CONTENIDO --> EVE
 ```
 
 ---
@@ -652,5 +745,5 @@ flowchart TD
 4. El diagrama se renderizará automáticamente en formato gráfico de alta definición y podrás exportarlo en **PNG, SVG o PDF**.
 
 ### **¿Cómo visualizar los códigos Mermaid?**
-1. Los bloques Mermaid se renderizan de forma nativa en la mayoría de visores de Markdown (como GitHub, GitLab, VS Code, Antigravity IDE, Notion u Obsidian).
-2. También puedes pegarlos en [Mermaid Live Editor](https://mermaid.live/) para exportarlos como imagen o integrarlos en presentaciones ejecutivas.
+1. Los bloques Mermaid se renderizan de forma nativa en visores Markdown compatibles (GitHub, VS Code, Antigravity IDE, Obsidian, Notion).
+2. También puedes pegarlos en [Mermaid Live Editor](https://mermaid.live/) para exportarlos como imagen vectorial.

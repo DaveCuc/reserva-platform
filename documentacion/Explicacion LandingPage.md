@@ -1,6 +1,6 @@
-# Documentación Detallada: Landing Page
+# Documentación Detallada: Área Pública (Landing Page)
 
-La carpeta `resources/js/Pages/LandingPage` agrupa todas las pantallas públicas principales (que no requieren inicio de sesión) del proyecto. Está estructurada modularmente: cada sección grande (Artículos, Eventos, Negocio) tiene su propia carpeta con su página principal y sus subcomponentes.
+La carpeta `resources/js/Pages/LandingPage` agrupa todas las interfaces del grupo funcional **Área Pública** que el actor **Visitante** puede consultar sin requerir inicio de sesión (casos de uso UC01 al UC07). Está estructurada modularmente: cada sección (Inicio, Directorio, Mapa, Cursos, Artículos, Eventos, Negocio) cuenta con su página principal y subcomponentes.
 
 A continuación se desglosa el funcionamiento y las conexiones de cada archivo.
 
@@ -20,7 +20,7 @@ Estos archivos son las "Páginas Principales" (Inertia Pages). Reciben datos dir
 
 ### `Cursos.jsx`
 *   **Funcionamiento:** Es el catálogo público de cursos disponibles. 
-*   **Conexiones:** Reutiliza `HomeLayout` y componentes de interfaz (Botones, Carruseles) para presentar las tarjetas de los cursos a los estudiantes potenciales.
+*   **Conexiones:** Reutiliza `HomeLayout` y componentes de interfaz (Botones, Carruseles) para presentar las tarjetas de los cursos al Visitante (UC05).
 
 ### `Mapa.jsx`
 *   **Funcionamiento:** Contenedor maestro de la experiencia cartográfica.

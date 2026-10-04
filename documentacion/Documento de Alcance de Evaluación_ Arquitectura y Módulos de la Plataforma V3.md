@@ -45,9 +45,9 @@ Para garantizar una experiencia de usuario intuitiva, atractiva y consistente en
 
 ---
 
-## **3. Módulos y Rutas del Área Pública (Ciudadanos y Turistas)**
+## **3. Módulos y Rutas del Área Pública (Visitante)**
 
-El área pública está abierta a toda la comunidad y visitantes sin necesidad de registro previo.
+El área pública está abierta a visitantes sin necesidad de autenticación previa, cubriendo los casos de uso UC01 al UC10.
 
 ```
                     ┌──────────────────────────────────────────────┐
@@ -141,7 +141,7 @@ Página dedicada a exponer a detalle la oferta, calidad y autenticidad de un pre
 ### **3.5. Portal de Cursos (Capacitación)**
 Página introductoria para el público interesado en la profesionalización comunitaria y turística.
 
-* **Presentación del Programa de Formación:** Explicación del modelo de capacitación gratuita para emprendedores y prestadores de servicios.
+* **Presentación del Programa de Formación:** Explicación del modelo de capacitación gratuita para productores y prestadores de servicios locales.
 * **Muro de Docentes y Facilitadores:** Carrusel de tarjetas con fotografías, nombres completos y cargos de los instructores e instituciones colaboradoras.
 * **Llamado a la Acción (CTA):** Botón directo para ingresar al catálogo de cursos disponibles dentro del aula virtual.
 
@@ -178,9 +178,9 @@ Entorno seguro y minimalista que centraliza la entrada a las áreas privadas.
 
 ---
 
-## **4. Entorno Privado (Dashboard) - Módulo de Estudiante / Emprendedor**
+## **4. Entorno Privado (Dashboard) - Módulos del Alumno/Productor**
 
-Una vez autenticado, el usuario accede a su panel de control personalizado, donde la barra de navegación pública se sustituye por controles orientados a su perfil.
+Una vez autenticado, el usuario **Alumno/Productor** accede a su panel de control personalizado, donde interactúa con las áreas funcionales de **Formación** (UC11 a UC17), **Gestión del Negocio** (UC18 a UC20), **Contenido del Usuario** (UC29) y **Perfil de Usuario** (UC28).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -199,29 +199,29 @@ Una vez autenticado, el usuario accede a su panel de control personalizado, dond
 
 ---
 
-### **4.1. Monitor de Aprendizaje ("Mis Cursos")**
-Panel principal donde el alumno gestiona sus capacitaciones activas y concluidas.
+### **4.1. Monitor de Aprendizaje ("Mis Cursos" - UC13)**
+Panel principal donde el usuario consulta sus cursos inscritos y su progreso formativo.
 
 * **Cursos en Progreso:**
   * Tarjetas de cursos inscritos que muestran portada, título, categoría y una **barra de progreso porcentual**.
-  * Botón directo **"Continuar"** que reanuda el curso exactamente en la lección donde se quedó.
+  * Botón directo **"Continuar"** que reanuda el curso en la lección correspondiente (UC14).
 * **Cursos Completados:**
-  * Sección dedicada a las capacitaciones que han alcanzado el 100% de avance.
-  * Habilita el botón directo para **descargar el diploma o certificado de acreditación**.
-* **Estado Vacío:** Si el usuario no se ha inscrito a ningún curso, se muestra una ilustración motivacional y un botón para dirigirse al catálogo de exploración.
+  * Sección dedicada a las capacitaciones que han alcanzado el 100% de avance y exámenes aprobados.
+  * Habilita el botón directo para **descargar el certificado oficial** (UC17).
+* **Estado Vacío:** Si el usuario no se ha inscrito a ningún curso, se muestra una ilustración motivacional y un botón para dirigirse al catálogo de exploración (UC11).
 
 ---
 
-### **4.2. Catálogo de Exploración de Cursos**
-Buscador interno para descubrir nuevos cursos y registrarse de forma inmediata.
+### **4.2. Catálogo de Exploración e Inscripción de Cursos (UC11, UC12)**
+Buscador y catálogo interno para descubrir capacitaciones e inscribirse de forma directa y gratuita.
 
 * **Buscador por Título:** Campo de texto en tiempo real para encontrar capacitaciones por palabra clave.
 * **Filtros por Categoría Temática:** Pestañas para filtrar (por ejemplo: *Ecoturismo*, *Atención al Cliente*, *Gestión Ambiental*, *Marketing Digital*).
-* **Tarjetas Informativas:** Muestran la imagen de portada, título, categoría, cantidad de lecciones/capítulos disponibles y botón **"Ver Curso"** o **"Inscribirme gratis"**.
+* **Tarjetas Informativas e Inscripción:** Muestran portada, título, categoría, cantidad de capítulos y botón directo **"Inscribirme gratis"** (UC12).
 
 ---
 
-### **4.3. Aula Virtual / Entorno de Aprendizaje Inmersivo**
+### **4.3. Aula Virtual / Entorno de Aprendizaje Inmersivo (UC14)**
 Espacio de estudio diseñado para una lectura y visualización cómoda y libre de distracciones.
 
 * **Portada del Curso:**
@@ -230,70 +230,70 @@ Espacio de estudio diseñado para una lectura y visualización cómoda y libre d
   * **Barra Lateral de Temario:** Reemplaza al menú general y lista todos los capítulos y exámenes en orden secuencial.
   * **Indicadores de Progreso:** Cada unidad completada muestra una casilla de verificación verde.
   * **Contenedor Multimedia Central:**
-    * Reproducción de video formativo de alta definición.
+    * Reproducción de video formativo.
     * Inserción de infografías e imágenes explicativas.
     * Texto educativo enriquecido con formato de fácil lectura.
-  * **Descarga de Materiales de Apoyo:** Pestaña con documentos adjuntos en PDF (manuales, guías prácticas, formatos descargables).
-  * **Botón "Marcar como completado y continuar":** Permite al alumno avanzar sistemáticamente en su porcentaje global.
+  * **Descarga de Materiales de Apoyo:** Documentos adjuntos en PDF (manuales, guías prácticas, formatos descargables).
+  * **Botón "Marcar como completado y continuar":** Permite al alumno avanzar sistemáticamente en su progreso.
 
 ---
 
-### **4.4. Sistema de Evaluaciones y Certificación**
+### **4.4. Sistema de Evaluaciones y Certificación (UC15, UC16, UC17)**
 Módulo que valida el aprendizaje obtenido para emitir el reconocimiento institucional.
 
 * **Pantalla de Instrucciones del Examen:**
   * Detalla el puntaje mínimo aprobatorio (por ejemplo: *80% de aciertos*), el número de intentos permitidos y las indicaciones generales.
-* **Interfaz de Resolución de Examen:**
-  * Presentación clara de las preguntas con opciones de respuesta de selección simple o múltiple.
+* **Interfaz de Resolución de Examen (UC15):**
+  * Presentación clara de las preguntas con opciones de respuesta de selección múltiple.
   * Botón para enviar respuestas una vez contestado el cuestionario.
-* **Pantalla de Resultados y Retroalimentación:**
+* **Pantalla de Resultados y Retroalimentación (UC16):**
   * Desglose instantáneo del puntaje alcanzado y aviso de aprobación o reprobación.
   * Contador de intentos restantes en caso de no haber superado el puntaje mínimo.
-* **Descarga de Diploma / Certificado:**
-  * Al completar todos los capítulos y aprobar las evaluaciones, el sistema genera automáticamente un **certificado oficial en formato PDF** con el nombre del participante, fecha de finalización y sellos institucionales.
+* **Descarga de Certificado (UC17):**
+  * Al completar el 100% de los capítulos publicados y aprobar todas las evaluaciones del curso, el sistema genera y descarga un **certificado oficial en formato PDF** con el nombre del participante, fecha de finalización y sellos institucionales.
 
 ---
 
-### **4.5. Gestión de Comercios Propios ("Mi Negocio")**
-Herramienta que faculta a los prestadores de servicios locales a registrar su establecimiento para que aparezca en el mapa y directorio público tras ser auditado.
+### **4.5. Gestión del Negocio Propio (UC18, UC19, UC20)**
+Herramienta que faculta a los productores y prestadores de servicios locales a registrar y gestionar su establecimiento para que sea publicado en el mapa y directorio tras la revisión y dictamen favorable.
 
 * **Tablero de Negocios del Usuario:**
   * Lista de comercios registrados por el usuario con su nombre comercial, giro, fecha de registro y **etiqueta de estado** (*Borrador*, *En Revisión*, *Aprobado*, *Rechazado*).
   * Botón principal **"Registrar Nuevo Negocio"**.
-* **Formulario Asistido en 4 Secciones:**
-  1. **Datos Generales y Giro:** Nombre comercial, selección de giro principal, descripción corta (para tarjetas del directorio), descripción extendida y selección de amenidades/servicios.
-  2. **Contacto y Representante:** Nombre y cargo del propietario/responsable, números de teléfono, WhatsApp, correo electrónico, sitio web y redes sociales.
-  3. **Ubicación Territorial:** Selección de región, municipio, dirección física descriptiva y **selector de coordenadas sobre mapa interactivo** (hacer clic en el mapa ubica el pin con precisión).
-  4. **Galería Fotográfica y Certificaciones:**
-     * Subida de hasta 10 fotografías del negocio con opción de eliminar o sustituir.
-     * Carga de documentos o sellos de certificación ecológica/turística.
-* **Flujo de Envío a Revisión y Subsanación:**
-  * **Botón "Enviar a Revisión":** Envía el expediente al equipo de moderación.
-  * **Módulo de Observaciones / Retroalimentación:** Si la solicitud es devuelta o rechazada, se despliega una alerta con el **motivo detallado redactado por el administrador**, permitiendo al usuario corregir los datos solicitados y volver a postular su negocio con un solo clic.
+* **Gestión y Edición Modular del Negocio (UC18):**
+  * El usuario completa y actualiza de manera integral los datos del establecimiento:
+    1. **Datos Generales y Giro:** Nombre comercial, selección de giro principal, descripción corta, descripción extendida y selección de servicios/amenidades.
+    2. **Contacto y Representante:** Nombre y cargo del responsable, teléfonos, WhatsApp, correo electrónico, sitio web y redes sociales.
+    3. **Ubicación Territorial:** Región, municipio, dirección descriptiva y coordenadas geográficas fijadas en mapa interactivo.
+    4. **Galería Fotográfica y Certificaciones:** Carga de fotografías del establecimiento y documentos o sellos de certificación ecológica/turística.
+* **Flujo de Envío a Revisión (UC19):**
+  * **Botón "Enviar a Revisión":** Envía formalmente la solicitud comercial al equipo docente para su auditoría. El estado pasa a `En Revisión`.
+* **Subsanación de Observaciones (UC20):**
+  * En caso de que el Profesor emita un dictamen de rechazo, el sistema despliega una alerta con las **observaciones detalladas redactadas por el evaluador**. El usuario puede editar los datos señalados, subsanar las observaciones y **reenviar la solicitud a revisión**.
 
 ---
 
-### **4.6. Módulo Descubrir (Artículos y Eventos en el Panel)**
-Acceso directo desde el panel de usuario a los artículos de interés y agenda de eventos, permitiendo a los miembros de la comunidad mantenerse informados sin salir de su sesión.
+### **4.6. Contenido del Usuario: Enlaces de Interés (UC29)**
+Acceso directo desde el panel de usuario al módulo **Descubrir** (`/discover`), permitiendo consultar artículos de interés y la agenda comunitaria de eventos sin salir de su sesión.
 
 ---
 
-### **4.7. Configuración de Perfil de Usuario**
+### **4.7. Configuración de Perfil de Usuario (UC28)**
 * Formulario para actualizar el nombre de usuario y correo electrónico.
 * Módulo para cambiar y fortalecer la contraseña de acceso.
 * Opción de eliminación definitiva de cuenta de usuario con diálogo de seguridad.
 
 ---
 
-## **5. Espacio de Trabajo: Módulo de Administración y Profesorado**
+## **5. Espacio de Gestión - Módulo de Gestión Docente (Profesor)**
 
-Los usuarios con privilegios docentes o administrativos disponen de herramientas especializadas para crear contenidos, estructurar cursos y auditar solicitudes comerciales.
+El actor **Profesor** dispone de herramientas especializadas para la creación pedagógica, administración de contenidos editoriales y la auditoría y dictamen de solicitudes comerciales (UC21 a UC27).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ Barra Superior en Color Verde ("Modo Profesor / Administrador Activo")      │
+│ Barra Superior en Color Verde ("Modo Profesor Activo")                      │
 ├───────────────────┬─────────────────────────────────────────────────────────┤
-│ MENÚ GESTIÓN      │ HERRAMIENTAS ADMINISTRATIVAS                            │
+│ MENÚ GESTIÓN      │ HERRAMIENTAS DOCENTES Y ADMINISTRATIVAS                 │
 │                   │                                                         │
 │ • Cursos          │  [ + Nuevo Curso ]   [ + Nuevo Evento ]  [ + Artículo ] │
 │ • Solicitudes     │  ┌────────────────────────────────────────────────────┐ │
@@ -306,61 +306,61 @@ Los usuarios con privilegios docentes o administrativos disponen de herramientas
 
 ---
 
-### **5.1. Gestión y Creación de Cursos (Modo Docente)**
+### **5.1. Gestión y Creación de Cursos y Exámenes (UC21, UC22, UC23)**
 Entorno completo para diseñar la experiencia pedagógica de la plataforma.
 
-* **Indicador Visual del Modo Profesor:** La barra superior adopta un color verde distintivo que señala que se está operando con permisos de autor/gestor.
-* **Listado General de Cursos:**
+* **Indicador Visual del Modo Profesor:** La barra superior adopta un color verde distintivo que señala que se está operando en la gestión docente.
+* **Listado General de Cursos (UC21):**
   * Tabla con todos los cursos creados, indicando su título, categoría, cantidad de capítulos, estado (*Borrador* o *Publicado*) y botón para editar o eliminar.
-* **Constructor y Editor de Cursos:**
+* **Constructor y Editor de Contenido de Cursos (UC23):**
   * **Ficha Informativa:** Título del curso, descripción pedagógica, selección de categoría e imagen de portada representativa.
-  * **Gestor de Temario Interactivo (Drag & Drop):** Permite organizar el orden de las lecciones y exámenes arrastrando y soltando los elementos en la posición deseada.
+  * **Gestor de Temario Interactivo:** Permite organizar el orden de las lecciones y exámenes arrastrando y soltando los elementos en la posición deseada.
   * **Editor de Capítulos Individuales:**
     * Definición de título y descripción de la lección.
     * Subida y asignación de video explicativo, imágenes o contenido en texto.
-    * Casilla para definir si el capítulo es de "Acceso gratuito / Vista previa".
+    * Casilla para definir si el capítulo es de acceso gratuito/vista previa.
     * Interruptor para publicar o despublicar la unidad individualmente.
   * **Gestor de Documentación Adjunta:** Subida y eliminación de guías en PDF vinculadas al curso.
-  * **Constructor Visual de Exámenes:**
-    * Configuración de título de la evaluación, porcentaje mínimo de aprobación y límite de intentos.
-    * Creador de preguntas: Formulario para añadir enunciados y opciones de respuesta, marcando visualmente cuál es la opción correcta.
-  * **Interruptor de Publicación General del Curso:** Valida que el curso cuente con los elementos mínimos (portada, descripción y capítulos) para habilitar su publicación en la plataforma.
+* **Constructor de Exámenes (UC22):**
+  * Configuración de título de la evaluación, porcentaje mínimo de aprobación y límite de intentos.
+  * Creador de preguntas: Formulario para añadir enunciados y opciones de respuesta, marcando visualmente cuál es la opción correcta.
+* **Publicación del Curso (UC21):** Valida que el curso cuente con los elementos mínimos para habilitar su publicación en la plataforma.
 
 ---
 
-### **5.2. Módulo de Moderación y Auditoría Comercial ("Solicitudes")**
-Centro de revisión donde el equipo evaluador asegura la calidad y veracidad de los negocios que aspiran a integrarse al mapa y directorio.
+### **5.2. Revisión de Solicitudes y Dictamen de Negocios (UC24, UC25)**
+Centro de revisión donde el Profesor audita y dictamina las solicitudes de los productores que aspiran a integrarse al mapa y directorio.
 
-* **Bandeja de Entrada de Solicitudes:**
+* **Bandeja de Entrada de Solicitudes (UC24):**
   * Tabla con filtros rápidos por estado (*Pendiente*, *Aprobado*, *Rechazado*).
   * Columnas con nombre comercial, nombre del solicitante, fecha de recepción y municipio.
-* **Expediente Digital de Auditoría (Vista Detallada):**
+* **Expediente Digital de Auditoría (UC24):**
   * Desglose completo de la información enviada por el prestador de servicios:
     * Nombre comercial, giros y servicios declarados.
     * Datos de contacto y representante.
     * Ubicación geográfica exacta sobre el mapa interactivo.
     * Galería de fotografías cargadas.
     * Visualizador de certificados y sellos ambientales adjuntos.
-* **Acciones de Dictamen:**
-  * **Botón "Aprobar":** Autoriza de inmediato el comercio, publicándolo automáticamente en el Mapa y Directorio público.
-  * **Botón "Rechazar":** Abre de forma obligatoria una **ventana modal para redactar el motivo de la declinación o corrección necesaria** (por ejemplo: *"Favor de adjuntar una foto más nítida de la fachada y corregir el número telefónico"*). Esta retroalimentación llega al panel del usuario para su corrección.
+* **Emisión de Dictamen (UC25 - <<include>> desde UC24):**
+  * **Aprobar:** Autoriza de inmediato el comercio, publicándolo automáticamente en el Mapa y Directorio público.
+  * **Rechazar:** Abre de forma obligatoria una **ventana modal para registrar las observaciones y motivos de rechazo** (por ejemplo: *"Favor de adjuntar una foto más nítida de la fachada y corregir el número telefónico"*). Esta retroalimentación llega al panel del Alumno/Productor para que pueda subsanarla (UC20).
 
 ---
 
-### **5.3. Gestor de Artículos y Enlaces de Interés**
+### **5.3. Gestión de Artículos (UC26)**
 Sistema de publicación de noticias, guías y contenido editorial de la Reserva.
 
 * **Listado de Artículos:** Tabla con títulos, autor, categoría temática, fecha y estado de publicación.
 * **Editor de Artículos:**
   * Campo de título y resumen ejecutivo (extracto para tarjetas).
   * Asignación de autor institucional y categoría.
-  * Carga de imagen miniatura (para listados) e imagen de cabecera panorámica (para lectura).
+  * Carga de imagen miniatura e imagen de cabecera panorámica.
   * Editor de cuerpo del artículo para redactar el contenido completo.
   * Botón para alternar entre *Borrador* y *Publicado*.
 
 ---
 
-### **5.4. Gestor de Eventos y Agenda Institucional**
+### **5.4. Gestión de Eventos (UC27)**
 Módulo para programar y difundir las actividades públicas y comunitarias de la Reserva.
 
 * **Listado de Eventos:** Visualización de la cartelera con fechas programadas y estatus de publicación.
@@ -369,28 +369,38 @@ Módulo para programar y difundir las actividades públicas y comunitarias de la
   * Parámetros logísticos: fecha y hora de inicio, fecha y hora de término, modalidad y dirección con coordenadas en mapa.
   * Enlace externo de registro o boletos (RSVP).
   * Carga de imágenes promocionales (imagen de tarjeta y portada panorámica).
-  * **Constructor Dinámico de Participantes:** Formulario para agregar ponentes, organizadores y facilitadores, cargando su fotografía, nombre completo y rol/cargo institucional.
+  * Constructor dinámico de ponentes y organizadores (fotografía, nombre completo y rol/cargo institucional).
   * Botón para publicar el evento en la cartelera pública.
 
 ---
 
 ## **6. Matriz Resumen de Roles y Capacidades en la Plataforma**
 
-A continuación se presenta un resumen de qué puede visualizar y ejecutar cada tipo de usuario en la plataforma:
+A continuación se presenta el resumen de interacción de cada actor oficial con los grupos funcionales y casos de uso del sistema:
 
-| Módulo / Funcionalidad | Visitante Público (Sin cuenta) | Usuario / Alumno / Emprendedor | Administrador / Profesor / Evaluador |
+| Grupo Funcional / Caso de Uso | Visitante | Alumno/Productor | Profesor |
 | :--- | :---: | :---: | :---: |
-| **Explorar Inicio, Rutas y Conócenos** | Visualiza | Visualiza | Visualiza |
-| **Consultar Mapa Geográfico y Capas** | Visualiza e interactúa | Visualiza e interactúa | Visualiza e interactúa |
-| **Consultar Directorio y Fichas de Negocios** | Visualiza e interactúa | Visualiza e interactúa | Visualiza e interactúa |
-| **Leer Artículos y Novedades** | Visualiza | Visualiza | Visualiza |
-| **Consultar Agenda de Eventos y Registro** | Visualiza y accede a RSVP | Visualiza y accede a RSVP | Visualiza y administra |
-| **Inscribirse a Cursos y Ver Lecciones** | Requiere iniciar sesión | Acceso y progreso completo | Acceso y progreso completo |
-| **Realizar Evaluaciones y Descargar Diplomas** | Requiere iniciar sesión | Resuelve y descarga diploma | Resuelve y descarga diploma |
-| **Registrar y Editar su Propio Negocio** | Requiere iniciar sesión | Registra, edita y envía | Registra, edita y envía |
-| **Crear y Modificar Cursos, Temarios y Exámenes** | No disponible | No disponible | Control total de edición |
-| **Auditar, Aprobar o Rechazar Negocios** | No disponible | No disponible | Auditoría y dictamen con motivo |
-| **Crear y Publicar Artículos y Eventos** | No disponible | No disponible | Control total de publicación |
+| **Área Pública (UC01 - UC10)** | Acceso libre | Acceso libre | Acceso libre |
+| • Explorar inicio, mapa, directorio y fichas (UC01-UC04) | Sí | Sí | Sí |
+| • Consultar cursos, artículos y eventos (UC05-UC07) | Sí | Sí | Sí |
+| • Iniciar sesión, registrarse, recuperar clave (UC08-UC10) | Sí | Autenticado | Autenticado |
+| **Formación (UC11 - UC17)** | Requiere iniciar sesión | Acceso y progreso completo | Acceso y progreso completo |
+| • Explorar e inscribirse a cursos (UC11, UC12) | No | Sí | Sí |
+| • Consultar mis cursos y estudiar en aula (UC13, UC14) | No | Sí | Sí |
+| • Resolver examen y consultar resultados (UC15, UC16) | No | Sí | Sí |
+| • Descargar certificado oficial en PDF (UC17) | No | Sí (si aprueba) | Sí (si aprueba) |
+| **Gestión del Negocio (UC18 - UC20)** | No | Acceso completo | Acceso completo |
+| • Registrar y gestionar mi negocio (UC18) | No | Sí | Sí |
+| • Enviar solicitud a revisión (UC19) | No | Sí | Sí |
+| • Subsanar observaciones tras rechazo (UC20) | No | Sí | Sí |
+| **Contenido del Usuario (UC29)** | No | Sí | Sí |
+| • Consultar enlaces de interés (/discover) | No | Sí | Sí |
+| **Perfil de Usuario (UC28)** | No | Sí | Sí |
+| • Configurar perfil personal y seguridad | No | Sí | Sí |
+| **Gestión Docente (UC21 - UC27)** | No disponible | No disponible | Control total |
+| • Gestionar cursos, exámenes y contenidos (UC21-UC23) | No | No | Sí |
+| • Revisar solicitudes de negocio y dictaminar (UC24, UC25) | No | No | Sí |
+| • Gestionar artículos y eventos (UC26, UC27) | No | No | Sí |
 
 ---
 
@@ -399,4 +409,4 @@ A continuación se presenta un resumen de qué puede visualizar y ejecutar cada 
 La plataforma integra en un único ecosistema digital tres pilares fundamentales:
 1. **Promoción y Visibilidad Territorial:** Mediante un mapa interactivo avanzado, un directorio comercial categorizado y fichas comerciales con sello oficial.
 2. **Capacitación y Profesionalización Comunitaria:** A través de un aula virtual intuitiva con reproducción de contenidos, exámenes interactivos y certificación automática.
-3. **Gobernanza y Moderación de Calidad:** Con un flujo transparente de auditoría donde los administradores evalúan cada solicitud comercial y orientan a los emprendedores mediante retroalimentación constructiva.
+3. **Gobernanza y Moderación de Calidad:** Con un flujo transparente de auditoría donde el Profesor evalúa cada solicitud comercial y orienta al Alumno/Productor mediante retroalimentación constructiva.

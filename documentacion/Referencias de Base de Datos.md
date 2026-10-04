@@ -20,20 +20,20 @@ Este apartado maneja toda la lógica de los cursos que se imparten en la platafo
 *   **attachments**: Archivos descargables adjuntos a un curso (PDFs, guías, etc.).
 *   **mux_data**: Guarda los identificadores de integración con "Mux" (el proveedor de streaming de video) asociados a cada capítulo.
 
-## 3. Módulo de Progreso y Compras
-Maneja la relación entre el estudiante y los cursos.
+## 3. Módulo de Formación y Progreso
+Maneja la relación entre el Alumno/Productor y los cursos.
 
-*   **purchases**: Registra cuando un usuario compra o se inscribe oficialmente a un curso.
+*   **purchases**: Registra cuando un Alumno/Productor se inscribe oficialmente a un curso (acceso directo gratuito).
 *   **user_progress**: Guarda una fila por cada capítulo que un usuario completa, permitiendo calcular el porcentaje de avance general.
-*   **certificates**: Registra los certificados en PDF emitidos automáticamente a un estudiante tras completar un curso.
+*   **certificates**: Registra los certificados oficiales en PDF emitidos a un Alumno/Productor tras completar el 100% de capítulos y aprobar todos los exámenes.
 
 ## 4. Módulo de Exámenes
-Permite a los profesores evaluar a los estudiantes.
+Permite al Profesor evaluar al Alumno/Productor.
 
 *   **exams**: Exámenes asignados a un curso, con título, descripción y puntaje mínimo para aprobar.
 *   **exam_questions**: Las preguntas formuladas dentro de un examen.
 *   **exam_options**: Múltiples opciones de respuesta para cada pregunta, marcando cuál es la correcta (`is_correct`).
-*   **exam_attempts**: Registra cada vez que un estudiante hace un examen, guardando sus respuestas y la calificación obtenida.
+*   **exam_attempts**: Registra cada vez que un Alumno/Productor realiza un examen, guardando sus respuestas y la calificación obtenida.
 
 ## 5. Módulo del Directorio Turístico
 Funciona como una "sección amarilla" o directorio de negocios locales.
@@ -61,11 +61,11 @@ A continuación se explica qué sucedió en cada bloque de migraciones y por qu�
 ### Evolución del Sistema (Marzo - Junio 2026)
 *En lugar de alterar las migraciones del 20 de marzo, se crearon nuevas migraciones para añadir columnas o modificar tablas, lo cual permite un control de versiones correcto y evita pérdida de datos en producción.*
 
-*   `2026_03_23_182252_add_is_teacher_to_users_table.php`: **¿Qué sucedió?** El equipo notó que necesitaban diferenciar entre estudiantes y profesores, así que añadieron una bandera booleana (`is_teacher`) a la tabla de usuarios.
-*   `2026_04_20_200000_...` al `2026_04_27_234017_...`: **¿Qué sucedió?** Fue una gran actualización enfocada en el **Directorio de Empresas**. Se añadieron muchísimas columnas a `directorios` para recolectar más datos (is_published, status de aprobación, galerías, cargo del dueño, taxonomías estrictas).
-*   `2026_05_01_012937_create_articles_table.php` al `2026_05_02_020331_...`: **¿Qué sucedió?** Se introdujeron las funciones de marketing y contenido orgánico: Artículos de Blog y Eventos/Webinars. Hubo un error de diseño con el tipo de fecha en los eventos, y en lugar de borrar la tabla, se hizo una migración para alterar el tipo de dato (`change_event_date_back_to_date`).
-*   `2026_05_06_173913_create_exams_table.php` al `2026_05_06_173915_create_exam_attempts_table.php`: **¿Qué sucedió?** Se desarrolló el **Sistema de Evaluaciones**. Se crearon de golpe las tablas de exámenes, preguntas, opciones, intentos de los estudiantes y la generación automática de certificados tras aprobar.
-*   `2026_05_19_164324_add_two_factor_columns...`: **¿Qué sucedió?** Se fortaleció la seguridad añadiendo Autenticación de Dos Factores (2FA) y Passkeys (inicios de sesión biométricos) para los usuarios.
-*   `2026_06_04_185059_drop_stripe_and_cashier_tables_and_columns.php`: **¿Qué sucedió?** Migración destructiva. Se tomó la decisión de negocio de dejar de usar "Stripe/Cashier" directamente acoplado en la base de datos, por lo que se eliminaron todas sus tablas y columnas.
-*   `2026_06_04_191801_add_rejection_reason_to_directorios_table.php`: **¿Qué sucedió?** Se añadió soporte para que los administradores puedan "rechazar" la inscripción de un negocio al directorio y dejarle un mensaje escrito explicando el porqué.
+*   `2026_03_23_182252_add_is_teacher_to_users_table.php`: **¿Qué sucedió?** Se añadió la bandera booleana (`is_teacher`) a la tabla de usuarios para habilitar el espacio de gestión del **Profesor**.
+*   `2026_04_20_200000_...` al `2026_04_27_234017_...`: **¿Qué sucedió?** Actualización enfocada en el **Directorio Comercial**. Se añadieron columnas a `directorios` para recolectar datos (is_published, status de aprobación, galerías, cargo del titular, taxonomías).
+*   `2026_05_01_012937_create_articles_table.php` al `2026_05_02_020331_...`: **¿Qué sucedió?** Se introdujeron las funciones de contenido: Artículos de Blog y Eventos Comunitarios.
+*   `2026_05_06_173913_create_exams_table.php` al `2026_05_06_173915_create_exam_attempts_table.php`: **¿Qué sucedió?** Se desarrolló el **Sistema de Evaluaciones**. Se crearon las tablas de exámenes, preguntas, opciones, intentos de los usuarios (Alumno/Productor) y la emisión de certificados tras aprobar.
+*   `2026_05_19_164324_add_two_factor_columns...`: **¿Qué sucedió?** Se fortaleció la seguridad añadiendo Autenticación de Dos Factores (2FA) y Passkeys para los usuarios.
+*   `2026_06_04_185059_drop_stripe_and_cashier_tables_and_columns.php`: **¿Qué sucedió?** Migración que eliminó las tablas y columnas de Stripe/Cashier, estableciendo la gratuidad e inscripción directa en la plataforma.
+*   `2026_06_04_191801_add_rejection_reason_to_directorios_table.php`: **¿Qué sucedió?** Se añadió soporte para que el Profesor pueda registrar observaciones obligatorias al rechazar una solicitud comercial (`rejection_reason`) para que el Alumno/Productor pueda subsanarlas.
 *   `2026_06_04_204643_create_directorio_certificates_table.php`: **¿Qué sucedió?** Última función del directorio, permitiendo que las empresas suban archivos PDF probando sus certificaciones turísticas formales.

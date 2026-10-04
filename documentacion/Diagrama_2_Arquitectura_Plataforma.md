@@ -27,7 +27,7 @@ Para facilitar la lectura y evaluación del diagrama, a continuación se describ
 ## **2. Convención de Colores por Capa**
 
 * ⬜ **Capa 1: Canales de Acceso (Gris Slate):** Dispositivos móviles, tablets y navegadores de escritorio.
-* 🟦 **Capa 2: Presentación / Frontend (Azul y Verde):** Interfaces públicas, privadas del estudiante y paneles de administración.
+* 🟦 **Capa 2: Presentación / Frontend (Azul y Verde):** Interfaces públicas (Visitante), panel privado (Alumno/Productor) y espacio docente (Profesor).
 * 🟪 **Capa 3: Control y Servicios (Púrpura):** Enrutamiento, controladores de dominio y motores de lógica de negocio.
 * 🟧 **Capa 4: Persistencia y Almacenamiento (Ámbar / Naranja):** Base de datos relacional y repositorio de archivos multimedia.
 
@@ -59,13 +59,13 @@ package "2. Capa de Presentación (Frontend SPA - React)" as Capa2 #E0F2FE {
         [Blog y Eventos (Registro RSVP)] as V_Blog
         [Portal de Cursos y Docentes] as V_CursosPub
     }
-    package "Espacio Estudiante (LMS)" as EstUI #DCFCE7 {
+    package "Espacio Alumno/Productor (Formación y Negocio)" as EstUI #DCFCE7 {
         [Dashboard 'Mis Cursos'] as V_MisCursos
         [Aula Virtual & Guías PDF] as V_Aula
-        [Exámenes & Diplomas PDF] as V_Examen
-        [Panel 'Mi Negocio' (4 Fases)] as V_Trade
+        [Exámenes & Certificados PDF] as V_Examen
+        [Panel 'Mi Negocio'] as V_Trade
     }
-    package "Espacio Gestión (Modo Profesor)" as AdmUI #F3E8FF {
+    package "Espacio Profesor (Gestión Docente)" as AdmUI #F3E8FF {
         [Modo Profesor (Topbar Verde)] as V_Teacher
         [CMS Cursos (Temario Drag & Drop)] as V_CMSCursos
         [Constructor de Exámenes] as V_CMSExams
@@ -146,16 +146,16 @@ flowchart TD
             P4["Blog y Eventos (Registro RSVP)"]:::pub
         end
 
-        subgraph F_LMS["Espacio Estudiante (LMS)"]
+        subgraph F_LMS["Espacio Alumno/Productor (Formación y Negocio)"]
             E1["Dashboard 'Mis Cursos'"]:::lms
             E2["Aula Virtual & Guías PDF"]:::lms
-            E3["Exámenes y Diplomas PDF"]:::lms
-            E4["Panel 'Mi Negocio' (4 Fases)"]:::lms
+            E3["Exámenes y Certificados PDF"]:::lms
+            E4["Panel 'Mi Negocio'"]:::lms
         end
 
-        subgraph F_ADM["Espacio Gestión (Modo Profesor)"]
+        subgraph F_ADM["Espacio Profesor (Gestión Docente)"]
             A1["Modo Profesor (Topbar Verde)"]:::admin
-            A2["CMS Cursos (Temario Drag & Drop)"]:::admin
+            A2["Gestión Cursos (Temario Drag & Drop)"]:::admin
             A3["Bandeja de Auditoría Comercial"]:::admin
         end
     end

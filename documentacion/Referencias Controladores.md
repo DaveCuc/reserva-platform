@@ -4,47 +4,47 @@ Este documento detalla la función de cada controlador en `app/Http/Controllers`
 
 ---
 
-## 1. Módulo Público / Estudiantes
+## 1. Módulo Público y Formación (Visitante y Alumno/Productor)
 
 ### `CourseController`
-Maneja la visualización de los cursos para los estudiantes y la lógica de compras.
+Maneja la visualización de los cursos y la inscripción directa para los usuarios (Alumno/Productor).
 *   **Se conecta con Modelos:** `Course`, `Chapter`, `Purchase`, `UserProgress`.
-*   **Se conecta con Vistas:** `Dashboard/Index` (Catálogo), `Course/Show` (Detalle del curso), `Course/Chapter/Show` (Ver lección).
+*   **Se conecta con Vistas:** `Dashboard/Search/Index` (Catálogo), `Courses/Show/Cover` (Portada), `Courses/Show/Index` (Aula virtual).
 *   **Métodos principales:**
-    *   `index()`: Muestra el catálogo de cursos publicados.
-    *   `show()`: Muestra la vista previa (landing page) de un curso.
-    *   `chapter()`: Muestra el contenido de un capítulo específico (video y descripción) validando si el estudiante tiene acceso.
-    *   `checkout()`: Inicia el proceso de pago/inscripción creando el registro en la tabla `purchases`.
-    *   `progress()`: Marca un capítulo como completado/no completado para el estudiante.
+    *   `index()`: Muestra el catálogo de cursos publicados (UC11).
+    *   `show()`: Muestra la portada de un curso.
+    *   `chapter()`: Muestra el contenido de un capítulo específico (video y descripción) validando el acceso (UC14).
+    *   `checkout()`: Inscribe directamente al usuario creando el registro en la tabla `purchases` (UC12).
+    *   `progress()`: Marca un capítulo como completado/no completado para persistir el avance en `UserProgress`.
 
 ### `ExamController`
-Maneja la lógica de los estudiantes al tomar un examen.
+Maneja la lógica de evaluación para el Alumno/Productor.
 *   **Se conecta con Modelos:** `Exam`, `ExamAttempt`, `ExamQuestion`, `Certificate`.
-*   **Se conecta con Vistas:** `Course/Exam/Show` (Pantalla para hacer el examen).
+*   **Se conecta con Vistas:** `Courses/Exams/Show` (Instrucciones), `Courses/Exams/Take` (Resolución).
 *   **Métodos principales:**
     *   `show()`: Valida si el usuario puede tomar el examen y renderiza la vista con las preguntas.
-    *   `submit()`: Recibe las respuestas del estudiante, las califica automáticamente verificando `is_correct` en las opciones, guarda el intento (`ExamAttempt`) y si aprueba todo, genera el `Certificate`.
+    *   `submit()`: Recibe las respuestas del usuario, las califica automáticamente verificando `is_correct` en las opciones, guarda el intento (`ExamAttempt`) y si aprueba todo el curso, habilita el certificado (UC15, UC16).
 
 ### `EventController`
-Controlador sencillo para la vista pública de eventos/masterclasses.
+Controlador para la vista pública de eventos comunitarios (UC07).
 *   **Se conecta con Modelos:** `Event`.
-*   **Se conecta con Vistas:** `Event/Index` (Calendario/Lista), `Event/Show` (Detalle).
+*   **Se conecta con Vistas:** `LandingPage/Eventos/Index` (Cartelera), `LandingPage/Eventos/Show` (Detalle y enlace RSVP).
 *   **Métodos principales:**
     *   `index()`: Lista los eventos próximos publicados.
-    *   `show()`: Muestra la información detallada de un evento para que el usuario pueda inscribirse o unirse.
+    *   `show()`: Muestra la información detallada de un evento y el enlace externo de registro (RSVP).
 
 ### `CertificateController`
-Generación de documentos PDF.
+Generación de documentos PDF oficiales (UC17).
 *   **Se conecta con Modelos:** `Certificate`.
-*   **Se conecta con Vistas:** No renderiza frontend, devuelve un archivo PDF en formato binario.
+*   **Se conecta con Vistas:** No renderiza frontend, devuelve un archivo PDF binario generado con DomPDF.
 *   **Métodos principales:**
-    *   `download()`: Recibe un ID de certificado, utiliza la librería `barryvdh/laravel-dompdf` para renderizar el HTML del diploma y fuerza la descarga del PDF en el navegador del estudiante.
+    *   `download()`: Recibe el ID del curso, valida que se haya completado el 100% de capítulos y aprobado todos los exámenes, renderiza el documento oficial con `barryvdh/laravel-dompdf` y descarga el PDF.
 
 ---
 
-## 2. Módulo de Autores / Profesores (`Teacher...`)
+## 2. Módulo de Gestión Docente (Profesor)
 
-Estos controladores están protegidos para que solo los usuarios con `is_teacher = true` (o dueños del contenido) puedan acceder a ellos.
+Estos controladores están protegidos para que solo los usuarios con rol docente (`is_teacher = true`) puedan acceder a ellos (UC21 a UC27).
 
 ### `TeacherCourseController`
 Permite al profesor gestionar la información general de sus cursos.
@@ -85,18 +85,18 @@ Gestión de contenido de marketing.
 
 ---
 
-## 3. Módulo del Directorio Turístico
+## 3. Módulo de Directorio y Gestión del Negocio
 
 ### `DirectoryTradeController`
-Es el controlador más grande de la plataforma, maneja tanto la vista del dueño del negocio como el panel de revisión del administrador.
+Maneja la vista pública del directorio, la gestión del negocio por parte del Alumno/Productor (UC18) y el panel de revisión y dictamen del Profesor (UC24, UC25).
 *   **Se conecta con Modelos:** `Directorio`, `Giro`, `Region`, `Municipio`, `DirectorioCertificate`.
-*   **Se conecta con Vistas:** `Directory/Index` (Buscador público), `Directory/Trade/Form/Index` (Wizard paso a paso del dueño), `Admin/Directory/Review` (Panel de aprobación).
+*   **Se conecta con Vistas:** `LandingPage/Directorio` (Buscador público), `Dashboard/Trades/Edit/Index` (Gestión modular del negocio), `Dashboard/Teacher/Solicitudes` (Bandeja de revisión).
 *   **Métodos principales:**
-    *   `index()`: Motor de búsqueda público con filtros (por municipio, categoría, texto).
-    *   `create() / store() / update()`: Formularios multipaso para que un negocio registre su información.
+    *   `index()`: Motor de búsqueda público con filtros (UC03).
+    *   `create() / store() / update()`: Registro y actualización modular de datos comerciales, ubicación y servicios (UC18).
     *   `uploadGallery() / deleteGalleryImage()`: Sube y borra arreglos de imágenes asociadas a la columna JSON `gallery_images`.
     *   `uploadCertificate()`: Guarda los archivos formales (PDFs) en la tabla secundaria `DirectorioCertificate`.
-    *   `adminReview() / approve() / reject()`: Flujo de moderación. El administrador puede aprobar la publicación del negocio o rechazarla llenando la columna `rejection_reason`.
+    *   `adminReview() / approve() / reject()`: Flujo de moderación (UC24, UC25). El Profesor audita la solicitud y emite su dictamen: aprueba la publicación o la rechaza registrando obligatoriamente las observaciones en `rejection_reason` para que el Alumno/Productor pueda subsanarlas (UC20).
 
 ---
 
