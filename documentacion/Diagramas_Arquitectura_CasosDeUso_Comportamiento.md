@@ -2,10 +2,11 @@
 
 > **Referencia de Alcance:** Basado en la especificación validada de la [*Plataforma Web de la Reserva de la Biosfera Tehuacán-Cuicatlán*](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/documentacion/Diagrama_1_Casos_de_Uso.md) y el [*Documento de Alcance de Evaluación V3*](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/documentacion/Documento%20de%20Alcance%20de%20Evaluaci%C3%B3n_%20Arquitectura%20y%20M%C3%B3dulos%20de%20la%20Plataforma%20V3.md).
 
-Este documento reúne los tres diagramas fundamentales para el análisis, evaluación y comprensión integral del sistema:
+Este documento reúne los diagramas fundamentales para el análisis, evaluación y comprensión integral del sistema:
 1. **Diagrama de Casos de Uso del Sistema** (En sintaxis **PlantUML** y **Mermaid**, validado con 29 casos de uso, 3 actores y 6 grupos funcionales).
 2. **Diagrama de Arquitectura Conceptual y Modular de la Plataforma** (En sintaxis **PlantUML** y **Mermaid**).
 3. **Diagrama de Comportamiento de Rutas, Flujos de Navegación y Ciclo de Estados** (En sintaxis **PlantUML** y **Mermaid**).
+4. [**Diagrama de Mapa de Rutas y Navegación de la Plataforma**](file:///c:/Users/DaveCuc/Projects/turismo-platform/tests/react-inertia-starter-main/documentacion/Diagrama_6_Mapa_de_Rutas_y_Navegacion.md) (Especificación técnica de rutas URL exactas, navegación de pantallas y redirecciones verificadas contra código).
 
 ---
 
